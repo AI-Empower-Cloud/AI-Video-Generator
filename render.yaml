@@ -1,0 +1,18 @@
+name: ai-video-generator
+services:
+  - type: web
+    name: ai-video-generator
+    env: docker
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: PYTHONUNBUFFERED
+        value: "1"
+      - key: PYTHONDONTWRITEBYTECODE
+        value: "1"
+    plan: starter
+    region: oregon
+    buildCommand: ""
+    startCommand: "streamlit run streamlit_app.py --server.port=$PORT --server.address=0.0.0.0 --server.headless=true"
+    healthCheckPath: /_stcore/health
