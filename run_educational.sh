@@ -1,5 +1,34 @@
 #!/bin/bash
 
+# 🎓 Universal Education Video Creator
+# Quick setup and run script for creating educational videos for ALL SUBJECTS
+
+echo "🎓 Universal Educational Video Generator"
+echo "========================================"
+echo ""
+
+# Function to show available subjects
+show_subjects() {
+    echo "📚 Available Subjects:"
+    echo "   1. Mathematics"
+    echo "   2. Science (Physics, Chemistry, Biology)"
+    echo "   3. History"
+    echo "   4. Language Arts & Literature"
+    echo "   5. Computer Science"
+    echo "   6. Sanskrit/Spiritual"
+    echo "   7. Psychology"
+    echo "   8. Economics"
+    echo "   9. Geography"
+    echo "  10. Art & Music"
+    echo "  11. Philosophy"
+    echo "  12. Engineering"
+    echo "  13. Medicine"
+    echo "  14. Business"
+    echo "  15. Law"
+    echo "  16. Environmental Science"
+    echo ""
+}bash
+
 # 🎓 Educational Video Creator Launcher
 # Quick script to run the educational video generator
 

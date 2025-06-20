@@ -1,7 +1,19 @@
-# 🌐 Web Service Setup Guide
+![alt text](image.png)# 🌐 Web Service Setup Guide
 
 ## Overview
-This guide helps you deploy your AI Video Generator as a web service using various platforms and methods.
+This guide helps you deploy your **Universal AI Educational Video Generator** as a web service using various platforms and methods. 
+
+### 🎓 Perfect for ALL Educators
+This platform generates educational videos for **every subject**:
+- **STEM**: Math, Physics, Chemistry, Biology, Computer Science
+- **Languages**: English, Spanish, French, German, Chinese, Arabic, etc.
+- **Humanities**: History, Geography, Literature, Philosophy
+- **Arts**: Music Theory, Art History, Creative Writing
+- **Spiritual & Religious Studies**: All faiths and philosophies
+- **Professional**: Business, Marketing, Finance, Healthcare
+- **Life Skills**: Cooking, Fitness, Personal Development
+
+**🚀 Generate 10-40 minute professional educational videos for any topic, any level, with automatic YouTube upload!**
 
 ## 🚀 Deployment Options
 

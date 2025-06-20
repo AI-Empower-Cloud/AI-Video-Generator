@@ -1,0 +1,114 @@
+{
+  "universal_education": {
+    "description": "Configuration for Universal Educational Video Generator",
+    "version": "2.0",
+    "supports": "All educational subjects and levels"
+  },
+  "subjects": {
+    "mathematics": {
+      "name": "Mathematics",
+      "topics": [
+        "Algebra Fundamentals", "Geometry Basics", "Calculus Introduction",
+        "Statistics and Probability", "Number Theory", "Trigonometry",
+        "Linear Algebra", "Differential Equations", "Mathematical Logic"
+      ],
+      "levels": ["Elementary", "Middle School", "High School", "College"],
+      "duration_range": [15, 35],
+      "voice_style": "clear_teacher",
+      "priority": "high"
+    },
+    "science": {
+      "name": "Science",
+      "topics": [
+        "Physics Laws", "Chemistry Reactions", "Biology Fundamentals",
+        "Earth Science", "Astronomy", "Quantum Physics", "Organic Chemistry",
+        "Human Anatomy", "Ecology", "Genetics", "Thermodynamics"
+      ],
+      "levels": ["Elementary", "Middle School", "High School", "College"],
+      "duration_range": [20, 40],
+      "voice_style": "scientific_narrator",
+      "priority": "high"
+    },
+    "computer_science": {
+      "name": "Computer Science",
+      "topics": [
+        "Programming Basics", "Data Structures", "Algorithms",
+        "Web Development", "Machine Learning", "Database Systems",
+        "Software Engineering", "Cybersecurity", "AI Fundamentals"
+      ],
+      "levels": ["Beginner", "Intermediate", "Advanced", "Expert"],
+      "duration_range": [25, 40],
+      "voice_style": "tech_instructor",
+      "priority": "high"
+    },
+    "history": {
+      "name": "History",
+      "topics": [
+        "Ancient Civilizations", "World Wars", "Renaissance Period",
+        "Industrial Revolution", "American History", "European History",
+        "Asian History", "African History", "Modern History"
+      ],
+      "levels": ["Elementary", "Middle School", "High School", "College"],
+      "duration_range": [25, 40],
+      "voice_style": "storyteller",
+      "priority": "medium"
+    },
+    "sanskrit_spiritual": {
+      "name": "Sanskrit/Spiritual",
+      "topics": [
+        "Gayatri Mantra", "Sanskrit Slokas", "Vedic Teachings",
+        "Bhagavad Gita", "Upanishads", "Yoga Philosophy",
+        "Meditation Techniques", "Pranayama", "Spiritual Wisdom"
+      ],
+      "levels": ["Beginner", "Intermediate", "Advanced", "Scholar"],
+      "duration_range": [20, 45],
+      "voice_style": "spiritual_guide",
+      "priority": "medium"
+    }
+  },
+  "video_settings": {
+    "default_duration": 25,
+    "quality": {
+      "resolution": [1280, 720],
+      "fps": 30,
+      "bitrate": "high"
+    },
+    "audio": {
+      "voice_clarity": "educational",
+      "background_music": "subtle",
+      "volume_balance": "voice_priority"
+    }
+  },
+  "youtube_automation": {
+    "auto_upload": true,
+    "channel_branding": "Universal Education Hub",
+    "default_tags": ["education", "learning", "tutorial", "teaching"],
+    "privacy": "public",
+    "category": "Education",
+    "schedule_uploads": true,
+    "upload_times": ["08:00", "12:00", "16:00", "20:00"]
+  },
+  "batch_creation": {
+    "daily_quota": {
+      "mathematics_videos": 2,
+      "science_videos": 2,
+      "computer_science_videos": 1,
+      "history_videos": 1,
+      "spiritual_videos": 1,
+      "total_daily": 7
+    },
+    "quality_control": {
+      "review_before_upload": false,
+      "auto_thumbnail": true,
+      "include_chapters": true,
+      "add_subtitles": false
+    }
+  },
+  "content_enhancement": {
+    "include_examples": true,
+    "include_exercises": true,
+    "include_summaries": true,
+    "interactive_elements": true,
+    "visual_aids": true
+  }
+}

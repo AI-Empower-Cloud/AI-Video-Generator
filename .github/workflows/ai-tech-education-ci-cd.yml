@@ -1,0 +1,274 @@
+name: 🤖 AI Technology Education Platform CI/CD
+
+on:
+  push:
+    branches: [ main, develop ]
+    tags: [ 'v*' ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  PYTHON_VERSION: "3.11"
+  NODE_VERSION: "18"
+
+jobs:
+  test:
+    name: 🧪 Test AI Tech Education Platform
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.10", "3.11"]
+        test-type: ["unit", "integration", "ai-education"]
+    
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: 🐍 Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+        
+    - name: 📦 Cache dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+          
+    - name: 🔧 Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest pytest-cov flake8 black isort
+        
+    - name: 🎨 Code formatting check
+      run: |
+        black --check --diff .
+        isort --check-only --diff .
+        
+    - name: 🔍 Lint code
+      run: |
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        
+    - name: 🧪 Run tests
+      run: |
+        if [ "${{ matrix.test-type }}" = "unit" ]; then
+          pytest tests/ -v --cov=. --cov-report=xml
+        elif [ "${{ matrix.test-type }}" = "integration" ]; then
+          python test_integrated_system.py
+        elif [ "${{ matrix.test-type }}" = "ai-education" ]; then
+          python -c "import ai_tech_education_app; print('✅ AI Tech Education app imports successfully')"
+          python -c "import universal_education_app; print('✅ Universal Education app imports successfully')"
+          python -c "import universal_content_creator; print('✅ Universal Content Creator imports successfully')"
+        fi
+        
+    - name: 📊 Upload coverage reports
+      if: matrix.test-type == 'unit'
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage.xml
+        flags: unittests
+        name: codecov-umbrella
+
+  security:
+    name: 🔒 Security Scan
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: 🐍 Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        
+    - name: 🔒 Run security scan
+      run: |
+        pip install safety bandit
+        safety check
+        bandit -r . -x tests/
+        
+    - name: 🔍 Check for secrets
+      uses: trufflesecurity/trufflehog@main
+      with:
+        path: ./
+        base: main
+        head: HEAD
+
+  build:
+    name: 🏗️ Build Applications
+    runs-on: ubuntu-latest
+    needs: [test, security]
+    
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: 🐍 Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        
+    - name: 🔧 Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install build wheel
+        
+    - name: 📦 Build package
+      run: |
+        python -m build
+        
+    - name: 🐳 Build Docker images
+      run: |
+        docker build -t ai-video-generator:latest .
+        docker build -f Dockerfile.dev -t ai-video-generator:dev .
+        
+    - name: 📤 Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: ai-tech-education-build
+        path: dist/
+
+  deploy-staging:
+    name: 🚀 Deploy to Staging
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/develop'
+    environment: staging
+    
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: 🚀 Deploy to Railway (Staging)
+      run: |
+        echo "🚀 Deploying AI Technology Education Platform to staging..."
+        echo "🎯 Staging URL: https://ai-tech-education-staging.railway.app"
+        
+    - name: 📊 Run smoke tests
+      run: |
+        echo "🧪 Running staging smoke tests..."
+        curl -f https://ai-tech-education-staging.railway.app/health || exit 1
+
+  deploy-production:
+    name: 🌟 Deploy to Production
+    runs-on: ubuntu-latest
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    environment: production
+    
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: 🏷️ Get version from tag
+      id: version
+      run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+      
+    - name: 🚀 Deploy to Railway (Production)
+      run: |
+        echo "🌟 Deploying AI Technology Education Platform v${{ steps.version.outputs.VERSION }} to production..."
+        echo "🎯 Production URL: https://ai-tech-education.railway.app"
+        
+    - name: 📊 Run production health checks
+      run: |
+        echo "🧪 Running production health checks..."
+        curl -f https://ai-tech-education.railway.app/health || exit 1
+        
+    - name: 📢 Create release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ${{ steps.version.outputs.VERSION }}
+        name: AI Technology Education Platform ${{ steps.version.outputs.VERSION }}
+        body: |
+          ## 🤖 AI Technology Education Platform Release ${{ steps.version.outputs.VERSION }}
+          
+          ### 🎯 New Features
+          - Enhanced AI and Computer Technology education content
+          - Support for Middle Schools, High Schools, and Professionals
+          - Specialized curriculum for different age groups
+          - Interactive coding tutorials and examples
+          - Business AI tools training modules
+          
+          ### 🏫 Educational Improvements
+          - Age-appropriate AI concepts for middle school students
+          - Advanced programming tutorials for high school students
+          - Professional development modules for business users
+          - Enhanced video quality and engagement features
+          
+          ### 🚀 Platform Enhancements
+          - Improved user interface and experience
+          - Better performance and reliability
+          - Enhanced deployment and scaling capabilities
+          - Comprehensive documentation and guides
+          
+          ### 📚 New Educational Content
+          - AI for Middle School (grades 6-8)
+          - AI for High School (grades 9-12)
+          - Professional AI Tools training
+          - Computer Science Fundamentals
+          - Digital Literacy programs
+          - Data Science & Analytics courses
+          
+          **🌟 Perfect for educators, students, and professionals learning about AI and technology!**
+        draft: false
+        prerelease: false
+        files: |
+          dist/*
+          AI_TECH_EDUCATION_GUIDE.md
+          COMPLETE_SUBJECT_INDEX.md
+          README_UNIVERSAL.md
+
+  documentation:
+    name: 📚 Update Documentation
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: 🐍 Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        
+    - name: 📚 Generate documentation
+      run: |
+        pip install mkdocs mkdocs-material
+        mkdocs build
+        
+    - name: 🚀 Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./site
+        publish_branch: gh-pages
+        
+    - name: 📊 Update metrics
+      run: |
+        echo "📊 Updating platform metrics..."
+        echo "🎓 Educational videos generated: $(grep -r 'educational.*video' . | wc -l)"
+        echo "🏫 Supported subjects: $(grep -r 'subject.*:' . | wc -l)"
+        echo "🎯 Target audiences: Middle School, High School, Professionals"
+
+  notify:
+    name: 📢 Notify Teams
+    runs-on: ubuntu-latest
+    needs: [deploy-production, deploy-staging]
+    if: always()
+    
+    steps:
+    - name: 📢 Send deployment notification
+      run: |
+        echo "📢 AI Technology Education Platform deployment completed!"
+        echo "✅ Status: ${{ needs.deploy-production.result || needs.deploy-staging.result }}"
+        echo "🎯 Environment: ${{ github.ref == 'refs/heads/main' && 'Production' || 'Staging' }}"
+        echo "🤖 Perfect for educators teaching AI and technology!"
