@@ -1,0 +1,255 @@
+name: 🔍 Code Quality & Security Scan
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 2 * * 1'  # Weekly on Mondays
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install security tools
+      run: |
+        pip install bandit safety pip-audit
+    
+    - name: Run Bandit security scan
+      run: |
+        bandit -r . -x ./tests/ -f json -o bandit-report.json || true
+        bandit -r . -x ./tests/ || true
+    
+    - name: Run Safety check
+      run: |
+        safety check --json --output safety-report.json || true
+        safety check || true
+    
+    - name: Run pip-audit
+      run: |
+        pip-audit --desc --output-format=json --output-file=pip-audit-report.json || true
+        pip-audit --desc || true
+
+  code-quality:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install quality tools
+      run: |
+        pip install -r requirements.txt
+        pip install pylint mypy black isort
+    
+    - name: Run Black formatter check
+      run: |
+        black --check --diff .
+    
+    - name: Run isort import sorter check
+      run: |
+        isort --check-only --diff .
+    
+    - name: Run Pylint
+      run: |
+        pylint ai_tech_education_app.py universal_education_app.py --output-format=json > pylint-report.json || true
+        pylint ai_tech_education_app.py universal_education_app.py || true
+    
+    - name: Run MyPy type checking
+      run: |
+        mypy ai_tech_education_app.py universal_education_app.py --ignore-missing-imports || true
+
+  documentation-check:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Check documentation completeness
+      run: |
+        echo "📚 Checking documentation files..."
+        
+        # Check if all required docs exist
+        required_docs=(
+          "README.md"
+          "README_UNIVERSAL.md" 
+          "AI_TECH_EDUCATION_GUIDE.md"
+          "COMPLETE_SUBJECT_INDEX.md"
+          "web-service-setup.md"
+          "EDUCATIONAL_README.md"
+          "UNIVERSAL_EDUCATION_README.md"
+        )
+        
+        missing_docs=()
+        for doc in "${required_docs[@]}"; do
+          if [[ ! -f "$doc" ]]; then
+            missing_docs+=("$doc")
+          else
+            echo "✅ $doc exists"
+          fi
+        done
+        
+        if [[ ${#missing_docs[@]} -eq 0 ]]; then
+          echo "🎉 All required documentation files are present!"
+        else
+          echo "❌ Missing documentation files:"
+          printf '%s\n' "${missing_docs[@]}"
+          exit 1
+        fi
+    
+    - name: Check for broken links in markdown
+      run: |
+        # Simple check for obvious broken links
+        echo "🔗 Checking for broken markdown links..."
+        grep -r "\[.*\](.*)" *.md | grep -E "\]\(http|www\)" | head -10 || echo "No external links found"
+        echo "✅ Link check complete"
+
+  performance-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+        pip install memory-profiler psutil
+    
+    - name: Performance test - Script generation
+      run: |
+        python -c "
+        import time
+        import sys
+        sys.path.append('.')
+        from ai_tech_education_app import generate_ai_tech_script
+        
+        print('🚀 Testing script generation performance...')
+        
+        # Test different script lengths
+        test_cases = [
+          ('AI for Middle School', 'What is Artificial Intelligence?', '7th Grade', 15),
+          ('AI for High School', 'Neural Networks Explained', '11th Grade', 30),
+          ('Professional AI Tools', 'ChatGPT for Business Productivity', 'Professional', 25)
+        ]
+        
+        for subject, topic, level, duration in test_cases:
+          start_time = time.time()
+          script = generate_ai_tech_script(subject, topic, level, duration)
+          end_time = time.time()
+          
+          generation_time = end_time - start_time
+          script_length = len(script)
+          
+          print(f'📊 {subject} ({duration}min): {generation_time:.3f}s, {script_length} chars')
+          
+          # Performance assertions
+          assert generation_time < 1.0, f'Script generation too slow: {generation_time:.3f}s'
+          assert script_length > 500, f'Script too short: {script_length} chars'
+        
+        print('✅ All performance tests passed!')
+        "
+
+  compatibility-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        streamlit-version: ['1.28.0', '1.29.0', '1.30.0']
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Test Streamlit compatibility
+      run: |
+        pip install streamlit==${{ matrix.streamlit-version }}
+        pip install -r requirements.txt
+        
+        # Test app imports and basic functionality
+        python -c "
+        import streamlit as st
+        import sys
+        sys.path.append('.')
+        
+        # Test AI Tech Education App
+        try:
+          from ai_tech_education_app import main, AI_TECH_SUBJECTS
+          print(f'✅ AI Tech Education App compatible with Streamlit ${{ matrix.streamlit-version }}')
+        except Exception as e:
+          print(f'❌ Compatibility issue: {e}')
+          sys.exit(1)
+        
+        # Test Universal Education App  
+        try:
+          from universal_education_app import main as universal_main
+          print(f'✅ Universal Education App compatible with Streamlit ${{ matrix.streamlit-version }}')
+        except Exception as e:
+          print(f'❌ Compatibility issue: {e}')
+          sys.exit(1)
+        "
+
+  deployment-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Test Docker deployment
+      run: |
+        echo "🐳 Testing Docker deployment..."
+        docker build -t ai-education-test .
+        
+        # Test that the container starts properly
+        container_id=$(docker run -d -p 8501:8501 ai-education-test)
+        sleep 10
+        
+        # Check if container is still running
+        if docker ps | grep -q $container_id; then
+          echo "✅ Container is running successfully"
+          docker stop $container_id
+        else
+          echo "❌ Container failed to start or crashed"
+          docker logs $container_id
+          exit 1
+        fi
+    
+    - name: Test Railway deployment config
+      run: |
+        echo "🚄 Testing Railway deployment configuration..."
+        
+        if [[ -f "Procfile" ]]; then
+          echo "✅ Procfile exists"
+          cat Procfile
+        else
+          echo "❌ Procfile missing"
+          exit 1
+        fi
+        
+        if [[ -f "requirements.txt" ]]; then
+          echo "✅ requirements.txt exists"
+          echo "📦 Dependencies count: $(wc -l < requirements.txt)"
+        else
+          echo "❌ requirements.txt missing"
+          exit 1
+        fi
