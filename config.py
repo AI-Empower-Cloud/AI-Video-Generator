@@ -48,6 +48,43 @@ class AppConfig:
     @classmethod
     def from_env(cls) -> 'AppConfig':
         """Create configuration from environment variables."""
+        
+        # Get environment name
+        env = os.getenv('APP_ENV', 'development')
+        
+        return cls(
+            # Server Settings
+            host=os.getenv('HOST', '0.0.0.0'),
+            port=int(os.getenv('PORT', '8503')),
+            debug=os.getenv('DEBUG', 'false').lower() == 'true',
+            
+            # Video Generation Settings
+            max_video_duration=int(os.getenv('MAX_VIDEO_DURATION', '30')),
+            max_video_resolution=tuple(map(int, os.getenv('MAX_VIDEO_RESOLUTION', '1920x1080').split('x'))),
+            default_resolution=tuple(map(int, os.getenv('DEFAULT_RESOLUTION', '640x480').split('x'))),
+            default_fps=int(os.getenv('DEFAULT_FPS', '24')),
+            
+            # Processing Limits
+            max_text_length=int(os.getenv('MAX_TEXT_LENGTH', '10000')),
+            max_file_size_mb=int(os.getenv('MAX_FILE_SIZE_MB', '10')),
+            max_concurrent_generations=int(os.getenv('MAX_CONCURRENT_GENERATIONS', '5')),
+            
+            # NLP Settings
+            spacy_model=os.getenv('SPACY_MODEL', 'en_core_web_sm'),
+            emotion_model=os.getenv('EMOTION_MODEL', 'j-hartmann/emotion-english-distilroberta-base'),
+            use_gpu=os.getenv('USE_GPU', 'false').lower() == 'true',
+            
+            # Storage Settings
+            output_directory=os.getenv('OUTPUT_DIRECTORY', './generated_videos'),
+            temp_directory=os.getenv('TEMP_DIRECTORY', './temp'),
+            cleanup_temp_files=os.getenv('CLEANUP_TEMP_FILES', 'true').lower() == 'true',
+            file_retention_hours=int(os.getenv('FILE_RETENTION_HOURS', '24')),
+            
+            # Security Settings
+            enable_rate_limiting=os.getenv('ENABLE_RATE_LIMITING', 'true').lower() == 'true',
+            requests_per_minute=int(os.getenv('REQUESTS_PER_MINUTE', '60')),
+            enable_file_scanning=os.getenv('ENABLE_FILE_SCANNING', 'true').lower() == 'true',
+        )
         return cls(
             host=os.getenv("HOST", "0.0.0.0"),
             port=int(os.getenv("PORT", "8503")),

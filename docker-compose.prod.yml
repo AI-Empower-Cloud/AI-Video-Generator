@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  ai-video-generator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        APP_ENV: production
+    container_name: ai-video-generator-prod
+    ports:
+      - "8503:8503"
+    environment:
+      - APP_ENV=production
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./generated_videos:/app/generated_videos
+      - ./logs:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8503/_stcore/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - ai-video-net
+
+  nginx:
+    image: nginx:alpine
+    container_name: ai-video-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/ssl:/etc/nginx/ssl
+      - ./generated_videos:/var/www/videos
+    depends_on:
+      - ai-video-generator
+    restart: unless-stopped
+    networks:
+      - ai-video-net
+
+networks:
+  ai-video-net:
+    driver: bridge
+
+volumes:
+  generated_videos:
+  logs:

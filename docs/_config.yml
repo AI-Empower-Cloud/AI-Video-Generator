@@ -1,0 +1,55 @@
+# GitHub Pages Configuration
+url: "https://yourusername.github.io"
+baseurl: "/AI-Video-Generator"
+title: "AI Video Generator"
+description: "Transform stories into engaging videos with AI-powered audio and animation"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: minima
+
+# Collections
+collections:
+  docs:
+    output: true
+    permalink: /:collection/:name/
+
+# Navigation
+navigation:
+  - title: "Home"
+    url: /
+  - title: "Documentation"
+    url: /docs/
+  - title: "API Reference"
+    url: /docs/api/
+  - title: "Examples"
+    url: /docs/examples/
+  - title: "GitHub"
+    url: https://github.com/yourusername/AI-Video-Generator
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# SEO
+google_analytics: UA-XXXXXXXXX-X
+
+# Social
+github_username: yourusername
+linkedin_username: yourusername
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - venv/
+  - __pycache__/
+  - "*.pyc"
