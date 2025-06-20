@@ -38,6 +38,11 @@ vosk>=0.3.0
 scikit-image>=0.21.0
 matplotlib>=3.7.0
 
+# Educational Video Enhancements
+indic-transliteration>=2.3.37
+python-dateutil>=2.8.0
+schedule>=1.2.0
+
 # Required spaCy models (install via: python -m spacy download <model>)
 # - en_core_web_sm
 # - en_core_web_trf

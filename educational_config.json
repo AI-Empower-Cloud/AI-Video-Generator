@@ -1,0 +1,89 @@
+{
+  "youtube_api": {
+    "setup_instructions": "To enable automatic YouTube upload, you need to set up YouTube API credentials",
+    "steps": [
+      "1. Go to Google Cloud Console (console.cloud.google.com)",
+      "2. Create a new project or select existing one",
+      "3. Enable YouTube Data API v3",
+      "4. Create credentials (OAuth 2.0 client ID)",
+      "5. Download the client_secrets.json file",
+      "6. Place it in the project root directory"
+    ],
+    "required_files": [
+      "client_secrets.json - OAuth credentials from Google Cloud Console"
+    ],
+    "scopes": [
+      "https://www.googleapis.com/auth/youtube.upload",
+      "https://www.googleapis.com/auth/youtube"
+    ]
+  },
+  "video_settings": {
+    "default_duration_minutes": 20,
+    "resolutions": {
+      "hd": [1280, 720],
+      "fhd": [1920, 1080],
+      "4k": [3840, 2160]
+    },
+    "fps_options": [24, 30, 60],
+    "quality_settings": {
+      "draft": {"fps": 24, "resolution": "hd"},
+      "standard": {"fps": 30, "resolution": "fhd"},
+      "premium": {"fps": 60, "resolution": "4k"}
+    }
+  },
+  "content_templates": {
+    "sloka_teaching": {
+      "segments": ["introduction", "pronunciation", "meaning", "repetition", "conclusion"],
+      "default_duration": 900,
+      "voice_speed": 120,
+      "music_style": "spiritual"
+    },
+    "mantra_teaching": {
+      "segments": ["invocation", "pronunciation", "meditation", "benefits", "practice"],
+      "default_duration": 1200,
+      "voice_speed": 100,
+      "music_style": "meditation"
+    },
+    "educational_lecture": {
+      "segments": ["introduction", "concept_explanation", "examples", "practice", "summary"],
+      "default_duration": 1800,
+      "voice_speed": 130,
+      "music_style": "classical"
+    }
+  },
+  "predefined_content": {
+    "popular_slokas": [
+      {
+        "name": "Gayatri Mantra",
+        "text": "ॐ भूर्भुवः स्वः तत्सवितुर्वरेण्यं भर्गो देवस्य धीमहि धियो यो नः प्रचोदयात्",
+        "category": "Vedic Mantra",
+        "duration": 20
+      },
+      {
+        "name": "Maha Mantra",
+        "text": "हरे कृष्ण हरे कृष्ण कृष्ण कृष्ण हरे हरे, हरे राम हरे राम राम राम हरे हरे",
+        "category": "Devotional",
+        "duration": 25
+      },
+      {
+        "name": "Ganesh Mantra",
+        "text": "ॐ गं गणपतये नमः",
+        "category": "Devotional",
+        "duration": 15
+      }
+    ]
+  },
+  "automation_settings": {
+    "batch_processing": {
+      "enabled": true,
+      "max_concurrent_videos": 1,
+      "delay_between_videos": 5,
+      "auto_upload": false
+    },
+    "scheduling": {
+      "enabled": false,
+      "upload_schedule": "daily_at_6am",
+      "timezone": "UTC"
+    }
+  }
+}
