@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ai_video_generator"
+version = "1.0.0"
+description = "Custom AI engine for video generation from text, audio, and images."
+authors = [
+    { name = "AI-Empower-Cloud" }
+]
+readme = "README.md"
+requires-python = ">=3.8"
+license = { file = "LICENSE" }

@@ -1,0 +1,45 @@
+# Core NLP
+spacy>=3.8.0
+coreferee>=1.1.3
+transformers>=4.0.0
+accelerate>=0.27.0
+
+# PDF Processing
+PyPDF2>=3.0.0
+
+# Web Interface
+streamlit>=1.46.0
+
+# Video Generation
+numpy>=1.24.0
+torch>=2.0.0
+moviepy>=1.0.3
+soundfile>=0.12.1
+
+# YouTube Integration
+google-auth-oauthlib>=1.2.0
+google-api-python-client>=2.0.0
+
+# Audio Processing & Speech
+pyttsx3>=2.90
+librosa>=0.10.0
+sounddevice>=0.4.6
+text-to-speech>=3.2.0
+gTTS>=2.4.0
+pygame>=2.5.0
+
+# Advanced Video & Audio
+opencv-python>=4.8.0
+pydub>=0.25.1
+speechrecognition>=3.10.0
+vosk>=0.3.0
+
+# Image Processing Enhancements
+scikit-image>=0.21.0
+matplotlib>=3.7.0
+
+# Required spaCy models (install via: python -m spacy download <model>)
+# - en_core_web_sm
+# - en_core_web_trf
+# Required coreferee models (install via: python -m coreferee install en)
+# - coreferee-model-en
