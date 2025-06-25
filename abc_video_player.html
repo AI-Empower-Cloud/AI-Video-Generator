@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎥 ABC Kids & Teacher Video Collection</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .video-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .main-video {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .main-video video {
+            width: 100%;
+            max-width: 800px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border: 3px solid rgba(255,255,255,0.2);
+        }
+
+        .video-info {
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .video-info h3 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            color: #ffd700;
+        }
+
+        .video-info p {
+            font-size: 1.1em;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .video-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .video-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        .video-card.active {
+            border-color: #ffd700;
+            box-shadow: 0 0 30px rgba(255,215,0,0.5);
+        }
+
+        .video-card video {
+            width: 100%;
+            border-radius: 15px;
+            margin-bottom: 15px;
+        }
+
+        .video-card h4 {
+            font-size: 1.3em;
+            margin-bottom: 8px;
+            color: #ffd700;
+        }
+
+        .video-card p {
+            font-size: 0.95em;
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+
+        .controls {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            color: white;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .stats {
+            text-align: center;
+            margin-top: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .stats h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #ffd700;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-letter {
+            position: absolute;
+            font-size: 3em;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+            font-weight: bold;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements">
+        <div class="floating-letter" style="top: 10%; left: 10%; animation-delay: 0s;">A</div>
+        <div class="floating-letter" style="top: 20%; right: 15%; animation-delay: 1s;">B</div>
+        <div class="floating-letter" style="top: 70%; left: 5%; animation-delay: 2s;">C</div>
+        <div class="floating-letter" style="bottom: 20%; right: 10%; animation-delay: 3s;">D</div>
+        <div class="floating-letter" style="top: 50%; left: 80%; animation-delay: 4s;">🎵</div>
+        <div class="floating-letter" style="bottom: 10%; left: 20%; animation-delay: 5s;">🎤</div>
+    </div>
+
+    <div class="header">
+        <h1>🎥 ABC Kids & Teacher Videos</h1>
+        <p>Professional Educational Content • Kids & Teacher Voices • Interactive Learning</p>
+    </div>
+
+    <div class="video-container">
+        <div class="main-video">
+            <video id="mainVideo" controls autoplay muted>
+                <source src="video_output/abc_video_teacher_kids_duet_with_audio.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            
+            <div class="video-info" id="videoInfo">
+                <h3>🎭 Teacher + Kids Duet</h3>
+                <p>Professional teacher leads while adorable kids follow along. Perfect duet combining educational expertise with natural children's enthusiasm. Features synchronized ABC learning with interactive call-and-response format.</p>
+            </div>
+        </div>
+
+        <div class="video-grid">
+            <div class="video-card active" data-video="video_output/abc_video_teacher_kids_duet_with_audio.mp4" data-title="🎭 Teacher + Kids Duet" data-desc="Professional teacher leads while adorable kids follow along. Perfect duet combining educational expertise with natural children's enthusiasm. Features synchronized ABC learning with interactive call-and-response format.">>
+                <video muted>
+                    <source src="video_output/abc_video_teacher_kids_duet_with_audio.mp4" type="video/mp4">
+                </video>
+                <h4>🎭 Teacher + Kids Duet</h4>
+                <p>Professional teacher with kids chorus - perfect educational harmony</p>
+            </div>
+
+            <div class="video-card" data-video="video_output/abc_video_kids_chorus_with_audio.mp4" data-title="🎵 Kids Chorus with Music" data-desc="Delightful group of children singing together with beautiful orchestral accompaniment. Creates a joyful classroom atmosphere perfect for group learning and sing-alongs.">>
+                <video muted>
+                    <source src="video_output/abc_video_kids_chorus_with_audio.mp4" type="video/mp4">
+                </video>
+                <h4>🎵 Kids Chorus with Music</h4>
+                <p>Group of children singing with orchestra - pure joy and learning</p>
+            </div>
+
+            <div class="video-card" data-video="video_output/abc_video_teacher_piano_with_audio.mp4" data-title="🎹 Teacher with Piano" data-desc="Gentle and professional teacher voice accompanied by soft piano melodies. Perfect for calm, focused learning sessions and individual instruction time.">>
+                <video muted>
+                    <source src="video_output/abc_video_teacher_piano_with_audio.mp4" type="video/mp4">
+                </video>
+                <h4>🎹 Teacher with Piano</h4>
+                <p>Professional teacher with gentle piano - calm and educational</p>
+            </div>
+
+            <div class="video-card" data-video="video_output/abc_video_lily_age_5_with_audio.mp4" data-title="👧 Lily (Age 5)" data-desc="Sweet kindergarten girl with authentic child voice. Natural pronunciation and genuine enthusiasm that kids can relate to and learn from.">>
+                <video muted>
+                    <source src="video_output/abc_video_lily_age_5_with_audio.mp4" type="video/mp4">
+                </video>
+                <h4>👧 Lily (Age 5)</h4>
+                <p>Adorable kindergarten girl - sweet and authentic child voice</p>
+            </div>
+
+            <div class="video-card" data-video="video_output/abc_video_ms_johnson_with_audio.mp4" data-title="👩‍🏫 Ms. Johnson" data-desc="Warm and experienced kindergarten teacher voice. Professional yet nurturing approach perfect for classroom instruction and educational apps.">>
+                <video muted>
+                    <source src="video_output/abc_video_ms_johnson_with_audio.mp4" type="video/mp4">
+                </video>
+                <h4>👩‍🏫 Ms. Johnson</h4>
+                <p>Kindergarten teacher - warm, professional, and experienced</p>
+            </div>
+        </div>
+
+        <div class="controls">
+            <a href="abc_songs_player.html" class="btn">🎵 Audio Player</a>
+            <a href="stunning_music_player.html" class="btn">🎶 Music Collection</a>
+            <button onclick="downloadAll()" class="btn">📥 Download All Videos</button>
+        </div>
+
+        <div class="stats">
+            <h3>📊 Video Collection Stats</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">5</div>
+                    <div>Educational Videos</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">3</div>
+                    <div>Voice Types</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">2</div>
+                    <div>Kids Voices</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div>Educational Quality</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function playVideo(src, title, description) {
+            const mainVideo = document.getElementById('mainVideo');
+            const videoInfo = document.getElementById('videoInfo');
+            
+            // Update main video
+            mainVideo.src = src;
+            mainVideo.load();
+            mainVideo.play();
+            
+            // Update info
+            videoInfo.innerHTML = `
+                <h3>${title}</h3>
+                <p>${description}</p>
+            `;
+            
+            // Update active card
+            document.querySelectorAll('.video-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+        }
+
+        function downloadAll() {
+            const videos = [
+                'video_output/abc_video_teacher_kids_duet_with_audio.mp4',
+                'video_output/abc_video_kids_chorus_with_audio.mp4',
+                'video_output/abc_video_teacher_piano_with_audio.mp4',
+                'video_output/abc_video_lily_age_5_with_audio.mp4',
+                'video_output/abc_video_ms_johnson_with_audio.mp4'
+            ];
+            
+            videos.forEach((video, index) => {
+                setTimeout(() => {
+                    const link = document.createElement('a');
+                    link.href = video;
+                    link.download = video.split('/').pop();
+                    link.click();
+                }, index * 500);
+            });
+        }
+
+        // Auto-play preview videos on hover
+        document.querySelectorAll('.video-card video').forEach(video => {
+            video.addEventListener('mouseenter', () => {
+                video.play();
+            });
+            
+            video.addEventListener('mouseleave', () => {
+                video.pause();
+                video.currentTime = 0;
+            });
+        });
+
+        // Add click handlers for video cards
+        document.querySelectorAll('.video-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const src = card.getAttribute('data-video') || card.querySelector('video source').src;
+                const title = card.getAttribute('data-title') || card.querySelector('h4').textContent;
+                const description = card.getAttribute('data-desc') || card.querySelector('p').textContent;
+                
+                playVideo(src, title, description);
+            });
+        });
+
+        function playVideo(src, title, description) {
+            const mainVideo = document.getElementById('mainVideo');
+            const videoInfo = document.getElementById('videoInfo');
+            
+            // Update main video
+            mainVideo.src = src;
+            mainVideo.load();
+            mainVideo.play();
+            
+            // Update info
+            videoInfo.innerHTML = `
+                <h3>${title}</h3>
+                <p>${description}</p>
+            `;
+            
+            // Update active card
+            document.querySelectorAll('.video-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            // Find and activate the clicked card
+            document.querySelectorAll('.video-card').forEach(card => {
+                const cardSrc = card.getAttribute('data-video') || card.querySelector('video source').src;
+                if (cardSrc === src) {
+                    card.classList.add('active');
+                }
+            });
+        }
+
+        // Initialize first video info
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('🎥 ABC Video Player Loaded!');
+            console.log('✅ 5 Educational videos ready');
+            console.log('🎯 Perfect for classroom use');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎵 Universal Music Studio - Complete Collection</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-shapes:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+        .floating-shapes:nth-child(2) { top: 60%; left: 80%; animation-delay: 2s; }
+        .floating-shapes:nth-child(3) { top: 80%; left: 20%; animation-delay: 4s; }
+        .floating-shapes:nth-child(4) { top: 30%; left: 70%; animation-delay: 1s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(120deg); }
+            66% { transform: translateY(20px) rotate(240deg); }
+        }
+
+        /* Main Container */
+        .music-studio {
+            display: flex;
+            height: 100vh;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 350px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            font-size: 3em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .studio-title {
+            font-size: 1.5em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .studio-subtitle {
+            color: #666;
+            font-size: 0.9em;
+            font-weight: 300;
+        }
+
+        /* Playlist */
+        .playlist-container {
+            height: calc(100vh - 200px);
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .playlist-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .playlist-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .playlist-container::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 10px;
+        }
+
+        .category-section {
+            margin-bottom: 25px;
+        }
+
+        .category-title {
+            font-size: 0.9em;
+            font-weight: 600;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            padding-left: 10px;
+        }
+
+        .song-item {
+            background: linear-gradient(135deg, #f8f9ff, #fff);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .song-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .song-item:hover::before {
+            left: 100%;
+        }
+
+        .song-item:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            border-color: #667eea;
+        }
+
+        .song-item.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        .song-item.playing {
+            animation: musicPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes musicPulse {
+            0%, 100% { box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3); }
+            50% { box-shadow: 0 25px 50px rgba(102, 126, 234, 0.5); }
+        }
+
+        .song-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .song-icon {
+            font-size: 1.5em;
+            margin-right: 12px;
+            width: 30px;
+            text-align: center;
+        }
+
+        .song-title {
+            font-weight: 600;
+            font-size: 1em;
+            flex: 1;
+        }
+
+        .song-duration {
+            font-size: 0.8em;
+            opacity: 0.7;
+            font-weight: 500;
+        }
+
+        .song-description {
+            font-size: 0.85em;
+            opacity: 0.8;
+            line-height: 1.4;
+            margin-left: 42px;
+        }
+
+        /* Main Player */
+        .main-player {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-player::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+            pointer-events: none;
+        }
+
+        /* Now Playing Section */
+        .now-playing-section {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .now-playing-title {
+            font-size: 2.5em;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .now-playing-description {
+            font-size: 1.1em;
+            color: #666;
+            font-weight: 400;
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Vinyl Record Animation */
+        .vinyl-container {
+            width: 300px;
+            height: 300px;
+            margin: 0 auto 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .vinyl-record {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            transition: all 0.5s ease;
+        }
+
+        .vinyl-record.spinning {
+            animation: spin 3s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .vinyl-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 80px;
+            height: 80px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2em;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .vinyl-grooves {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .groove-1 { width: 200px; height: 200px; }
+        .groove-2 { width: 160px; height: 160px; }
+        .groove-3 { width: 120px; height: 120px; }
+
+        /* Control Section */
+        .control-section {
+            position: relative;
+            z-index: 1;
+        }
+
+        .playback-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .control-button {
+            width: 70px;
+            height: 70px;
+            border: none;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .control-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .control-button:hover::before {
+            left: 100%;
+        }
+
+        .control-button:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .control-button:active {
+            transform: translateY(-2px) scale(1.05);
+        }
+
+        .play-button {
+            width: 90px;
+            height: 90px;
+            font-size: 2em;
+        }
+
+        /* Progress Section */
+        .progress-section {
+            margin-bottom: 30px;
+        }
+
+        .time-display {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(90deg, #e0e0e0, #f0f0f0);
+            border-radius: 10px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.1s ease;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 20px;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 10px;
+            animation: shimmer 2s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        /* Volume and Actions */
+        .bottom-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .volume-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .volume-icon {
+            font-size: 1.2em;
+            color: #667eea;
+        }
+
+        .volume-slider {
+            width: 120px;
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            outline: none;
+            cursor: pointer;
+            appearance: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .action-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 25px;
+            background: linear-gradient(135deg, #4ecdc4, #44a08d);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(78, 205, 196, 0.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .music-studio {
+                flex-direction: column;
+                height: auto;
+                max-height: none;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: 400px;
+            }
+            
+            .playlist-container {
+                height: 300px;
+            }
+            
+            .vinyl-container {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .now-playing-title {
+                font-size: 2em;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .music-studio {
+                padding: 10px;
+            }
+            
+            .sidebar, .main-player {
+                padding: 20px;
+            }
+            
+            .vinyl-container {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .now-playing-title {
+                font-size: 1.5em;
+            }
+            
+            .playback-controls {
+                gap: 15px;
+            }
+            
+            .control-button {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .play-button {
+                width: 80px;
+                height: 80px;
+            }
+        }
+
+        /* Loading Animation */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .loading-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid #e0e0e0;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="floating-shapes"></div>
+        <div class="floating-shapes"></div>
+        <div class="floating-shapes"></div>
+        <div class="floating-shapes"></div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Main Music Studio -->
+    <div class="music-studio">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo-section">
+                <div class="logo">🎵</div>
+                <div class="studio-title">Universal Music Studio</div>
+                <div class="studio-subtitle">Complete Music Collection • 21 Tracks • 5 Genres</div>
+            </div>
+
+            <div class="playlist-container" id="playlistContainer">
+                <!-- Playlist will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Main Player -->
+        <div class="main-player">
+            <div class="now-playing-section">
+                <div class="now-playing-title" id="nowPlayingTitle">Welcome to Universal Music Studio</div>
+                <div class="now-playing-description" id="nowPlayingDescription">Discover our complete music collection - Pop, Rock, Jazz, Classical, Blues & Educational songs!</div>
+            </div>
+
+            <div class="vinyl-container">
+                <div class="vinyl-record" id="vinylRecord">
+                    <div class="vinyl-grooves groove-1"></div>
+                    <div class="vinyl-grooves groove-2"></div>
+                    <div class="vinyl-grooves groove-3"></div>
+                    <div class="vinyl-center" id="vinylCenter">🎵</div>
+                </div>
+            </div>
+
+            <div class="control-section">
+                <div class="playback-controls">
+                    <button class="control-button" id="prevBtn" title="Previous Track">⏮</button>
+                    <button class="control-button play-button" id="playBtn" title="Play/Pause">▶</button>
+                    <button class="control-button" id="nextBtn" title="Next Track">⏭</button>
+                </div>
+
+                <div class="progress-section">
+                    <div class="time-display">
+                        <span id="currentTime">0:00</span>
+                        <span id="totalTime">0:00</span>
+                    </div>
+                    <div class="progress-track" id="progressTrack">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                </div>
+
+                <div class="bottom-section">
+                    <div class="volume-section">
+                        <span class="volume-icon">🔊</span>
+                        <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="75">
+                        <span id="volumeDisplay">75%</span>
+                    </div>
+
+                    <div class="action-buttons">
+                        <a href="#" class="action-btn" id="downloadBtn" download>
+                            💾 Download
+                        </a>
+                        <button class="action-btn" id="shuffleBtn">
+                            🔀 Shuffle
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hidden Audio Element -->
+            <audio id="audioPlayer" preload="metadata"></audio>
+        </div>
+    </div>
+
+    <script>
+        // Song Database with Categories
+        const songDatabase = {
+            "🔥 Pop Hits": [
+                {
+                    id: 1,
+                    title: "Summer Dreams",
+                    description: "Upbeat pop song perfect for summer vibes - catchy melody with modern beat!",
+                    file: "audio_output/song_pop_summer_dreams.wav",
+                    duration: "45s",
+                    icon: "�"
+                },
+                {
+                    id: 2,
+                    title: "Dancing Tonight",
+                    description: "High-energy dance pop track - get ready to move to the rhythm!",
+                    file: "audio_output/song_pop_dancing_tonight.wav",
+                    duration: "40s",
+                    icon: "�"
+                },
+                {
+                    id: 3,
+                    title: "Sunshine Love",
+                    description: "Feel-good pop ballad with romantic melodies and warm harmonies",
+                    file: "audio_output/song_pop_sunshine_love.wav",
+                    duration: "38s",
+                    icon: "☀️"
+                }
+            ],
+            "� Rock Anthems": [
+                {
+                    id: 4,
+                    title: "Thunder Road",
+                    description: "Epic rock anthem with driving guitars and powerful drums - pure energy!",
+                    file: "audio_output/song_rock_thunder_road.wav",
+                    duration: "50s",
+                    icon: "⚡"
+                },
+                {
+                    id: 5,
+                    title: "Electric Nights",
+                    description: "High-voltage rock track with electrifying riffs and pounding rhythms",
+                    file: "audio_output/song_rock_electric_nights.wav",
+                    duration: "45s",
+                    icon: "�"
+                },
+                {
+                    id: 6,
+                    title: "Wild Freedom",
+                    description: "Raw rock power with rebellious spirit - feel the freedom in every note!",
+                    file: "audio_output/song_rock_wild_freedom.wav",
+                    duration: "42s",
+                    icon: "�"
+                }
+            ],
+            "🎷 Jazz Classics": [
+                {
+                    id: 7,
+                    title: "Midnight Blue",
+                    description: "Smooth jazz with sultry saxophone vibes - perfect for late night relaxation",
+                    file: "audio_output/song_jazz_midnight_blue.wav",
+                    duration: "60s",
+                    icon: "�"
+                },
+                {
+                    id: 8,
+                    title: "Coffee House",
+                    description: "Laid-back jazz perfect for café atmospheres - sophisticated and mellow",
+                    file: "audio_output/song_jazz_coffee_house.wav",
+                    duration: "55s",
+                    icon: "☕"
+                },
+                {
+                    id: 9,
+                    title: "Smooth Sailing",
+                    description: "Easy-going jazz with walking bass lines - pure musical sophistication",
+                    file: "audio_output/song_jazz_smooth_sailing.wav",
+                    duration: "48s",
+                    icon: "⛵"
+                }
+            ],
+            "🎻 Classical Elegance": [
+                {
+                    id: 10,
+                    title: "Morning Serenade",
+                    description: "Beautiful classical composition - peaceful and uplifting orchestral arrangement",
+                    file: "audio_output/song_classical_morning_serenade.wav",
+                    duration: "90s",
+                    icon: "🌅"
+                },
+                {
+                    id: 11,
+                    title: "Peaceful Garden",
+                    description: "Serene classical piece evoking tranquil garden scenes - pure relaxation",
+                    file: "audio_output/song_classical_peaceful_garden.wav",
+                    duration: "75s",
+                    icon: "🌸"
+                },
+                {
+                    id: 12,
+                    title: "Royal Dance",
+                    description: "Majestic classical waltz with regal elegance - ballroom sophistication",
+                    file: "audio_output/song_classical_royal_dance.wav",
+                    duration: "60s",
+                    icon: "�"
+                }
+            ],
+            "� Blues Soul": [
+                {
+                    id: 13,
+                    title: "Lonely Highway",
+                    description: "Deep blues with soulful melodies - feel the emotion in every note",
+                    file: "audio_output/song_blues_lonely_highway.wav",
+                    duration: "50s",
+                    icon: "�️"
+                },
+                {
+                    id: 14,
+                    title: "Rainy Day Blues",
+                    description: "Melancholic blues perfect for contemplative moments - raw and authentic",
+                    file: "audio_output/song_blues_rainy_day_blues.wav",
+                    duration: "45s",
+                    icon: "�️"
+                },
+                {
+                    id: 15,
+                    title: "City Blues",
+                    description: "Urban blues with modern edge - the sound of the streets",
+                    file: "audio_output/song_blues_city_blues.wav",
+                    duration: "40s",
+                    icon: "�️"
+                }
+            ],
+            "✨ Premium Musical": [
+                {
+                    id: 16,
+                    title: "Teacher + Kids Duet",
+                    description: "Professional teacher leads, real kids follow, with full orchestra!",
+                    file: "audio_output/abc_kids_teacher_duet.wav",
+                    duration: "25s",
+                    icon: "👩‍🏫�"
+                },
+                {
+                    id: 17,
+                    title: "Kids Chorus + Orchestra",
+                    description: "Group of children singing with real musical backing",
+                    file: "audio_output/abc_kids_chorus_musical.wav",
+                    duration: "25s",
+                    icon: "👥🎵"
+                },
+                {
+                    id: 18,
+                    title: "Teacher + Piano",
+                    description: "Warm teacher voice with gentle piano accompaniment",
+                    file: "audio_output/abc_teacher_educational_music.wav",
+                    duration: "25s",
+                    icon: "👩‍🏫�"
+                }
+            ],
+            "🎼 Instrumental Magic": [
+                {
+                    id: 19,
+                    title: "Full Orchestra",
+                    description: "Complete orchestral ABC version with melody, piano, and drums",
+                    file: "audio_output/abc_song_full_orchestra.wav",
+                    duration: "25s",
+                    icon: "�"
+                },
+                {
+                    id: 20,
+                    title: "Piano Elegance",
+                    description: "Gentle piano accompaniment - sophisticated and calming",
+                    file: "audio_output/abc_song_with_piano.wav",
+                    duration: "25s",
+                    icon: "🎹"
+                },
+                {
+                    id: 21,
+                    title: "Rhythmic Drums",
+                    description: "Energetic drum beat version - perfect for movement!",
+                    file: "audio_output/abc_song_with_drums.wav",
+                    duration: "25s",
+                    icon: "🥁"
+                }
+            ]
+        };
+
+        // Player State
+        let currentSong = null;
+        let currentSongIndex = 0;
+        let allSongs = [];
+        let isPlaying = false;
+        let isShuffled = false;
+
+        // DOM Elements
+        const playlistContainer = document.getElementById('playlistContainer');
+        const audioPlayer = document.getElementById('audioPlayer');
+        const playBtn = document.getElementById('playBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const nowPlayingTitle = document.getElementById('nowPlayingTitle');
+        const nowPlayingDescription = document.getElementById('nowPlayingDescription');
+        const vinylRecord = document.getElementById('vinylRecord');
+        const vinylCenter = document.getElementById('vinylCenter');
+        const progressTrack = document.getElementById('progressTrack');
+        const progressFill = document.getElementById('progressFill');
+        const currentTime = document.getElementById('currentTime');
+        const totalTime = document.getElementById('totalTime');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const volumeDisplay = document.getElementById('volumeDisplay');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const shuffleBtn = document.getElementById('shuffleBtn');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+
+        // Initialize Player
+        function initPlayer() {
+            loadPlaylist();
+            setupEventListeners();
+            setVolume(75);
+            
+            // Hide loading overlay
+            setTimeout(() => {
+                loadingOverlay.classList.remove('show');
+            }, 1000);
+        }
+
+        // Load Playlist
+        function loadPlaylist() {
+            playlistContainer.innerHTML = '';
+            allSongs = [];
+            let songIndex = 0;
+
+            Object.keys(songDatabase).forEach(category => {
+                // Category Header
+                const categoryHeader = document.createElement('div');
+                categoryHeader.className = 'category-section';
+                categoryHeader.innerHTML = `<div class="category-title">${category}</div>`;
+                
+                const categoryContainer = document.createElement('div');
+                
+                songDatabase[category].forEach(song => {
+                    allSongs.push({...song, categoryIndex: songIndex});
+                    
+                    const songElement = document.createElement('div');
+                    songElement.className = 'song-item';
+                    songElement.dataset.index = songIndex;
+                    songElement.innerHTML = `
+                        <div class="song-header">
+                            <span class="song-icon">${song.icon}</span>
+                            <span class="song-title">${song.title}</span>
+                            <span class="song-duration">${song.duration}</span>
+                        </div>
+                        <div class="song-description">${song.description}</div>
+                    `;
+                    
+                    songElement.addEventListener('click', () => selectSong(songIndex));
+                    categoryContainer.appendChild(songElement);
+                    songIndex++;
+                });
+                
+                categoryHeader.appendChild(categoryContainer);
+                playlistContainer.appendChild(categoryHeader);
+            });
+        }
+
+        // Setup Event Listeners
+        function setupEventListeners() {
+            playBtn.addEventListener('click', togglePlayPause);
+            prevBtn.addEventListener('click', previousSong);
+            nextBtn.addEventListener('click', nextSong);
+            shuffleBtn.addEventListener('click', toggleShuffle);
+            
+            audioPlayer.addEventListener('loadedmetadata', updateDuration);
+            audioPlayer.addEventListener('timeupdate', updateProgress);
+            audioPlayer.addEventListener('ended', nextSong);
+            audioPlayer.addEventListener('loadstart', showLoading);
+            audioPlayer.addEventListener('canplaythrough', hideLoading);
+            
+            progressTrack.addEventListener('click', seekAudio);
+            volumeSlider.addEventListener('input', handleVolumeChange);
+            
+            // Keyboard shortcuts
+            document.addEventListener('keydown', handleKeyboard);
+        }
+
+        // Select Song
+        function selectSong(index) {
+            currentSongIndex = index;
+            currentSong = allSongs[index];
+            
+            updateNowPlaying();
+            updateActiveItem();
+            loadAudio();
+        }
+
+        // Load Audio
+        function loadAudio() {
+            showLoading();
+            audioPlayer.src = currentSong.file;
+            audioPlayer.load();
+            
+            // Update download link
+            downloadBtn.href = currentSong.file;
+            downloadBtn.download = `${currentSong.title.replace(/[^\w\s]/gi, '')}.wav`;
+            
+            // Auto-play if was playing
+            if (isPlaying) {
+                audioPlayer.play().catch(e => console.log('Auto-play prevented'));
+            }
+        }
+
+        // Update Now Playing
+        function updateNowPlaying() {
+            nowPlayingTitle.textContent = currentSong.title;
+            nowPlayingDescription.textContent = currentSong.description;
+            vinylCenter.textContent = currentSong.icon;
+        }
+
+        // Update Active Item
+        function updateActiveItem() {
+            document.querySelectorAll('.song-item').forEach(item => {
+                item.classList.remove('active', 'playing');
+            });
+            
+            const activeItem = document.querySelector(`[data-index="${currentSongIndex}"]`);
+            if (activeItem) {
+                activeItem.classList.add('active');
+                if (isPlaying) {
+                    activeItem.classList.add('playing');
+                }
+                activeItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        // Toggle Play/Pause
+        function togglePlayPause() {
+            if (!currentSong) {
+                selectSong(0);
+                return;
+            }
+            
+            if (isPlaying) {
+                pauseAudio();
+            } else {
+                playAudio();
+            }
+        }
+
+        // Play Audio
+        function playAudio() {
+            audioPlayer.play().then(() => {
+                isPlaying = true;
+                playBtn.textContent = '⏸';
+                vinylRecord.classList.add('spinning');
+                updateActiveItem();
+            }).catch(e => {
+                console.log('Play failed:', e);
+                hideLoading();
+            });
+        }
+
+        // Pause Audio
+        function pauseAudio() {
+            audioPlayer.pause();
+            isPlaying = false;
+            playBtn.textContent = '▶';
+            vinylRecord.classList.remove('spinning');
+            updateActiveItem();
+        }
+
+        // Previous Song
+        function previousSong() {
+            if (isShuffled) {
+                currentSongIndex = Math.floor(Math.random() * allSongs.length);
+            } else {
+                currentSongIndex = (currentSongIndex - 1 + allSongs.length) % allSongs.length;
+            }
+            selectSong(currentSongIndex);
+        }
+
+        // Next Song
+        function nextSong() {
+            if (isShuffled) {
+                currentSongIndex = Math.floor(Math.random() * allSongs.length);
+            } else {
+                currentSongIndex = (currentSongIndex + 1) % allSongs.length;
+            }
+            selectSong(currentSongIndex);
+        }
+
+        // Toggle Shuffle
+        function toggleShuffle() {
+            isShuffled = !isShuffled;
+            shuffleBtn.style.background = isShuffled ? 
+                'linear-gradient(135deg, #ff6b6b, #ee5a24)' : 
+                'linear-gradient(135deg, #4ecdc4, #44a08d)';
+            shuffleBtn.textContent = isShuffled ? '🔀 Shuffled' : '🔀 Shuffle';
+        }
+
+        // Update Duration
+        function updateDuration() {
+            if (audioPlayer.duration) {
+                totalTime.textContent = formatTime(audioPlayer.duration);
+            }
+            hideLoading();
+        }
+
+        // Update Progress
+        function updateProgress() {
+            if (audioPlayer.duration) {
+                const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+                progressFill.style.width = progress + '%';
+                currentTime.textContent = formatTime(audioPlayer.currentTime);
+            }
+        }
+
+        // Seek Audio
+        function seekAudio(e) {
+            if (audioPlayer.duration) {
+                const rect = progressTrack.getBoundingClientRect();
+                const clickX = e.clientX - rect.left;
+                const width = rect.width;
+                const seekTime = (clickX / width) * audioPlayer.duration;
+                audioPlayer.currentTime = seekTime;
+            }
+        }
+
+        // Handle Volume Change
+        function handleVolumeChange() {
+            const volume = volumeSlider.value;
+            setVolume(volume);
+        }
+
+        // Set Volume
+        function setVolume(volume) {
+            audioPlayer.volume = volume / 100;
+            volumeDisplay.textContent = volume + '%';
+            volumeSlider.value = volume;
+        }
+
+        // Show/Hide Loading
+        function showLoading() {
+            loadingOverlay.classList.add('show');
+        }
+
+        function hideLoading() {
+            loadingOverlay.classList.remove('show');
+        }
+
+        // Handle Keyboard
+        function handleKeyboard(e) {
+            switch(e.code) {
+                case 'Space':
+                    e.preventDefault();
+                    togglePlayPause();
+                    break;
+                case 'ArrowLeft':
+                    previousSong();
+                    break;
+                case 'ArrowRight':
+                    nextSong();
+                    break;
+                case 'ArrowUp':
+                    e.preventDefault();
+                    setVolume(Math.min(100, parseInt(volumeSlider.value) + 10));
+                    break;
+                case 'ArrowDown':
+                    e.preventDefault();
+                    setVolume(Math.max(0, parseInt(volumeSlider.value) - 10));
+                    break;
+                case 'KeyS':
+                    toggleShuffle();
+                    break;
+            }
+        }
+
+        // Format Time
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            loadingOverlay.classList.add('show');
+            initPlayer();
+        });
+    </script>
+</body>
+</html>

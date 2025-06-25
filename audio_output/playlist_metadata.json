@@ -1,0 +1,60 @@
+{
+  "generated": "2025-06-20T23:49:46.958615",
+  "total_songs": 4,
+  "categories": {
+    "Enhanced": [
+      {
+        "title": "\ud83c\udf1f Teacher + Kids Duet (Enhanced)",
+        "file": "abc_kids_teacher_duet_enhanced.wav",
+        "original": "abc_kids_teacher_duet.wav",
+        "effects": "Professional audio processing"
+      },
+      {
+        "title": "\ud83c\udf1f Kids Chorus Musical (Enhanced)",
+        "file": "abc_kids_chorus_musical_enhanced.wav",
+        "original": "abc_kids_chorus_musical.wav",
+        "effects": "Professional audio processing"
+      },
+      {
+        "title": "\ud83c\udf1f Full Orchestra (Enhanced)",
+        "file": "abc_song_full_orchestra_enhanced.wav",
+        "original": "abc_song_full_orchestra.wav",
+        "effects": "Professional audio processing"
+      },
+      {
+        "title": "\ud83c\udf1f Teacher Educational (Enhanced)",
+        "file": "abc_teacher_educational_music_enhanced.wav",
+        "original": "abc_teacher_educational_music.wav",
+        "effects": "Professional audio processing"
+      }
+    ],
+    "Ambient": [],
+    "Upbeat": []
+  },
+  "songs": [
+    {
+      "title": "\ud83c\udf1f Teacher + Kids Duet (Enhanced)",
+      "file": "abc_kids_teacher_duet_enhanced.wav",
+      "original": "abc_kids_teacher_duet.wav",
+      "effects": "Professional audio processing"
+    },
+    {
+      "title": "\ud83c\udf1f Kids Chorus Musical (Enhanced)",
+      "file": "abc_kids_chorus_musical_enhanced.wav",
+      "original": "abc_kids_chorus_musical.wav",
+      "effects": "Professional audio processing"
+    },
+    {
+      "title": "\ud83c\udf1f Full Orchestra (Enhanced)",
+      "file": "abc_song_full_orchestra_enhanced.wav",
+      "original": "abc_song_full_orchestra.wav",
+      "effects": "Professional audio processing"
+    },
+    {
+      "title": "\ud83c\udf1f Teacher Educational (Enhanced)",
+      "file": "abc_teacher_educational_music_enhanced.wav",
+      "original": "abc_teacher_educational_music.wav",
+      "effects": "Professional audio processing"
+    }
+  ]
+}

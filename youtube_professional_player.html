@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📺 Professional YouTube-Style ABC Educational Videos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255,0,150,0.1), rgba(0,255,255,0.1));
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
+        }
+
+        .header h1 {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            z-index: 1;
+            position: relative;
+        }
+
+        .header .subtitle {
+            font-size: 1.4em;
+            opacity: 0.9;
+            z-index: 1;
+            position: relative;
+        }
+
+        .main-player {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 0 20px;
+        }
+
+        .main-video {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            border: 4px solid rgba(255,255,255,0.2);
+        }
+
+        .main-video video {
+            width: 100%;
+            display: block;
+        }
+
+        .video-info {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 25px;
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            margin: 20px auto;
+            max-width: 1000px;
+            text-align: left;
+        }
+
+        .video-info h2 {
+            font-size: 2.2em;
+            margin-bottom: 15px;
+            color: #ffd700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .video-info p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            opacity: 0.95;
+        }
+
+        .video-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 10px;
+        }
+
+        .stat-number {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .video-card {
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 25px;
+            padding: 25px;
+            backdrop-filter: blur(15px);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.8s ease;
+        }
+
+        .video-card:hover::before {
+            left: 100%;
+        }
+
+        .video-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+            border-color: rgba(255,215,0,0.6);
+        }
+
+        .video-card.active {
+            border-color: #ffd700;
+            box-shadow: 0 0 40px rgba(255,215,0,0.6);
+            transform: scale(1.05);
+        }
+
+        .video-thumbnail {
+            width: 100%;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-thumbnail video {
+            width: 100%;
+            border-radius: 15px;
+        }
+
+        .play-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            color: #333;
+            transition: all 0.3s ease;
+            opacity: 0;
+        }
+
+        .video-card:hover .play-overlay {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .video-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 12px;
+            color: #ffd700;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .video-card p {
+            font-size: 1em;
+            opacity: 0.85;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .video-duration {
+            display: inline-block;
+            background: rgba(0,0,0,0.7);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        .controls {
+            text-align: center;
+            margin: 50px 0;
+            padding: 0 20px;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            border: none;
+            padding: 18px 35px;
+            border-radius: 50px;
+            color: white;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 0 15px 15px 0;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        }
+
+        .btn.download {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+        }
+
+        .btn.playlist {
+            background: linear-gradient(45deg, #9b59b6, #8e44ad);
+        }
+
+        .features {
+            background: rgba(255, 255, 255, 0.1);
+            margin: 50px 20px;
+            padding: 40px;
+            border-radius: 25px;
+            backdrop-filter: blur(15px);
+            text-align: center;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .features h3 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            color: #ffd700;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .feature-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .feature-item h4 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            color: #ffd700;
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-letter {
+            position: absolute;
+            font-size: 4em;
+            opacity: 0.1;
+            animation: float 8s ease-in-out infinite;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(10deg); }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5em;
+            }
+            
+            .video-grid {
+                grid-template-columns: 1fr;
+                padding: 0 15px;
+            }
+            
+            .btn {
+                display: block;
+                margin: 10px auto;
+                width: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements">
+        <div class="floating-letter" style="top: 5%; left: 8%; animation-delay: 0s;">A</div>
+        <div class="floating-letter" style="top: 15%; right: 12%; animation-delay: 1s;">B</div>
+        <div class="floating-letter" style="top: 65%; left: 5%; animation-delay: 2s;">C</div>
+        <div class="floating-letter" style="bottom: 15%; right: 8%; animation-delay: 3s;">📺</div>
+        <div class="floating-letter" style="top: 45%; left: 85%; animation-delay: 4s;">🎬</div>
+        <div class="floating-letter" style="bottom: 5%; left: 15%; animation-delay: 5s;">🌟</div>
+    </div>
+
+    <div class="header">
+        <h1>📺 Professional ABC Educational Videos</h1>
+        <p class="subtitle">YouTube-Style • TV Quality • Full Songs • Animated Characters</p>
+    </div>
+
+    <div class="main-player">
+        <div class="main-video">
+            <video id="mainVideo" controls autoplay muted>
+                <source src="video_output/youtube_professional_professional_teacher_female.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        
+        <div class="video-info" id="videoInfo">
+            <h2>🍎 Professional ABC Learning</h2>
+            <p>High-quality educational video featuring a professional teacher voice with full ABC song pronunciation. Includes animated TV-style backgrounds, colorful characters, and synchronized alphabet display. Perfect for classroom use and educational apps.</p>
+            
+            <div class="video-stats">
+                <div class="stat">
+                    <div class="stat-number">65.7s</div>
+                    <div class="stat-label">Duration</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">1080p</div>
+                    <div class="stat-label">Quality</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">30fps</div>
+                    <div class="stat-label">Frame Rate</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">TV</div>
+                    <div class="stat-label">Style</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="video-grid">
+        <div class="video-card active" data-video="video_output/youtube_professional_professional_teacher_female.mp4" data-title="🍎 Professional ABC Learning" data-desc="High-quality educational video featuring a professional teacher voice with full ABC song pronunciation. Includes animated TV-style backgrounds, colorful characters, and synchronized alphabet display. Perfect for classroom use and educational apps." data-duration="65.7s">
+            <div class="video-thumbnail">
+                <video muted>
+                    <source src="video_output/youtube_professional_professional_teacher_female.mp4" type="video/mp4">
+                </video>
+                <div class="play-overlay">▶</div>
+            </div>
+            <h3>🍎 Professional ABC Learning</h3>
+            <p>Professional teacher with full ABC song and TV-style animation</p>
+            <span class="video-duration">⏱️ 65.7s</span>
+        </div>
+
+        <div class="video-card" data-video="video_output/youtube_professional_sweet_girl_lily.mp4" data-title="🌸 Sweet Lily's ABC Adventure" data-desc="Delightful young girl voice singing the complete ABC song with cheerful animations. Features child-friendly character movements and colorful educational visuals. Great for engaging young learners." data-duration="45.7s">
+            <div class="video-thumbnail">
+                <video muted>
+                    <source src="video_output/youtube_professional_sweet_girl_lily.mp4" type="video/mp4">
+                </video>
+                <div class="play-overlay">▶</div>
+            </div>
+            <h3>🌸 Sweet Lily's ABC Adventure</h3>
+            <p>Sweet child voice with animated adventure and full alphabet</p>
+            <span class="video-duration">⏱️ 45.7s</span>
+        </div>
+
+        <div class="video-card" data-video="video_output/youtube_professional_energetic_boy_tommy.mp4" data-title="⚽ Tommy's Exciting ABC Fun" data-desc="Energetic boy voice with enthusiastic ABC song delivery. Features dynamic animations, sports themes, and exciting visual effects. Perfect for active learning and keeping kids engaged." data-duration="36.1s">
+            <div class="video-thumbnail">
+                <video muted>
+                    <source src="video_output/youtube_professional_energetic_boy_tommy.mp4" type="video/mp4">
+                </video>
+                <div class="play-overlay">▶</div>
+            </div>
+            <h3>⚽ Tommy's Exciting ABC Fun</h3>
+            <p>Energetic boy voice with sports-themed ABC excitement</p>
+            <span class="video-duration">⏱️ 36.1s</span>
+        </div>
+
+        <div class="video-card" data-video="video_output/youtube_professional_classroom_teacher.mp4" data-title="🏫 Classroom ABC Lesson" data-desc="Professional classroom-style ABC lesson with educational explanations. Features traditional teaching approach with modern animations. Ideal for structured learning environments and schools." data-duration="64.2s">
+            <div class="video-thumbnail">
+                <video muted>
+                    <source src="video_output/youtube_professional_classroom_teacher.mp4" type="video/mp4">
+                </video>
+                <div class="play-overlay">▶</div>
+            </div>
+            <h3>🏫 Classroom ABC Lesson</h3>
+            <p>Structured classroom-style teaching with professional approach</p>
+            <span class="video-duration">⏱️ 64.2s</span>
+        </div>
+
+        <div class="video-card" data-video="video_output/youtube_professional_gentle_grandma_mary.mp4" data-title="👵 Grandma's Gentle ABC Story" data-desc="Warm, gentle grandmother voice telling ABC stories with examples. Features cozy animations and storytelling approach. Perfect for bedtime learning and calm educational moments." data-duration="73.9s">
+            <div class="video-thumbnail">
+                <video muted>
+                    <source src="video_output/youtube_professional_gentle_grandma_mary.mp4" type="video/mp4">
+                </video>
+                <div class="play-overlay">▶</div>
+            </div>
+            <h3>👵 Grandma's Gentle ABC Story</h3>
+            <p>Gentle grandmother voice with storytelling and examples</p>
+            <span class="video-duration">⏱️ 73.9s</span>
+        </div>
+
+        <div class="video-card" data-video="video_output/youtube_professional_super_fun_abc.mp4" data-title="🎉 Super Fun ABC Party" data-desc="High-energy ABC party with enthusiastic voice and party animations. Features celebration themes, confetti effects, and upbeat learning. Great for making alphabet learning exciting and memorable." data-duration="45.0s">
+            <div class="video-thumbnail">
+                <video muted>
+                    <source src="video_output/youtube_professional_super_fun_abc.mp4" type="video/mp4">
+                </video>
+                <div class="play-overlay">▶</div>
+            </div>
+            <h3>🎉 Super Fun ABC Party</h3>
+            <p>High-energy party atmosphere with celebration and confetti</p>
+            <span class="video-duration">⏱️ 45.0s</span>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button onclick="downloadAll()" class="btn download">📥 Download All Videos</button>
+        <button onclick="playPlaylist()" class="btn playlist">📺 Play All Playlist</button>
+        <a href="abc_songs_player.html" class="btn">🎵 Audio Only</a>
+        <a href="stunning_music_player.html" class="btn">🎶 Music Collection</a>
+    </div>
+
+    <div class="features">
+        <h3>🌟 Professional Features</h3>
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon">📺</div>
+                <h4>TV Quality</h4>
+                <p>Professional broadcast-quality animations and visuals</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🎤</div>
+                <h4>Real Voices</h4>
+                <p>Clear pronunciation with natural-sounding speech</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🎨</div>
+                <h4>Animated Characters</h4>
+                <p>TV-style animated characters and backgrounds</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🎯</div>
+                <h4>Educational</h4>
+                <p>Designed specifically for effective alphabet learning</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">📱</div>
+                <h4>YouTube Ready</h4>
+                <p>Optimized for YouTube and social media platforms</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🎪</div>
+                <h4>Multiple Styles</h4>
+                <p>Various teaching approaches and character types</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Video data for easy management
+        const videos = [
+            {
+                src: "video_output/youtube_professional_professional_teacher_female.mp4",
+                title: "🍎 Professional ABC Learning",
+                description: "High-quality educational video featuring a professional teacher voice with full ABC song pronunciation. Includes animated TV-style backgrounds, colorful characters, and synchronized alphabet display. Perfect for classroom use and educational apps.",
+                duration: "65.7s"
+            },
+            {
+                src: "video_output/youtube_professional_sweet_girl_lily.mp4",
+                title: "🌸 Sweet Lily's ABC Adventure",
+                description: "Delightful young girl voice singing the complete ABC song with cheerful animations. Features child-friendly character movements and colorful educational visuals. Great for engaging young learners.",
+                duration: "45.7s"
+            },
+            {
+                src: "video_output/youtube_professional_energetic_boy_tommy.mp4",
+                title: "⚽ Tommy's Exciting ABC Fun",
+                description: "Energetic boy voice with enthusiastic ABC song delivery. Features dynamic animations, sports themes, and exciting visual effects. Perfect for active learning and keeping kids engaged.",
+                duration: "36.1s"
+            },
+            {
+                src: "video_output/youtube_professional_classroom_teacher.mp4",
+                title: "🏫 Classroom ABC Lesson",
+                description: "Professional classroom-style ABC lesson with educational explanations. Features traditional teaching approach with modern animations. Ideal for structured learning environments and schools.",
+                duration: "64.2s"
+            },
+            {
+                src: "video_output/youtube_professional_gentle_grandma_mary.mp4",
+                title: "👵 Grandma's Gentle ABC Story",
+                description: "Warm, gentle grandmother voice telling ABC stories with examples. Features cozy animations and storytelling approach. Perfect for bedtime learning and calm educational moments.",
+                duration: "73.9s"
+            },
+            {
+                src: "video_output/youtube_professional_super_fun_abc.mp4",
+                title: "🎉 Super Fun ABC Party",
+                description: "High-energy ABC party with enthusiastic voice and party animations. Features celebration themes, confetti effects, and upbeat learning. Great for making alphabet learning exciting and memorable.",
+                duration: "45.0s"
+            }
+        ];
+
+        let currentVideoIndex = 0;
+        let isPlaylistMode = false;
+
+        // Play selected video
+        function playVideo(src, title, description, duration) {
+            const mainVideo = document.getElementById('mainVideo');
+            const videoInfo = document.getElementById('videoInfo');
+            
+            // Update main video
+            mainVideo.src = src;
+            mainVideo.load();
+            mainVideo.play();
+            
+            // Update info
+            videoInfo.innerHTML = `
+                <h2>${title}</h2>
+                <p>${description}</p>
+                <div class="video-stats">
+                    <div class="stat">
+                        <div class="stat-number">${duration}</div>
+                        <div class="stat-label">Duration</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">1080p</div>
+                        <div class="stat-label">Quality</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">30fps</div>
+                        <div class="stat-label">Frame Rate</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">TV</div>
+                        <div class="stat-label">Style</div>
+                    </div>
+                </div>
+            `;
+            
+            // Update active card
+            document.querySelectorAll('.video-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            // Find and activate current card
+            document.querySelectorAll('.video-card').forEach(card => {
+                const cardSrc = card.getAttribute('data-video');
+                if (cardSrc === src) {
+                    card.classList.add('active');
+                    currentVideoIndex = Array.from(document.querySelectorAll('.video-card')).indexOf(card);
+                }
+            });
+        }
+
+        // Download all videos
+        function downloadAll() {
+            videos.forEach((video, index) => {
+                setTimeout(() => {
+                    const link = document.createElement('a');
+                    link.href = video.src;
+                    link.download = video.src.split('/').pop();
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }, index * 1000);
+            });
+            
+            alert('🎊 Starting download of all 6 professional ABC videos!\nTV-quality educational content downloading...');
+        }
+
+        // Play all videos in playlist mode
+        function playPlaylist() {
+            isPlaylistMode = true;
+            currentVideoIndex = 0;
+            const firstVideo = videos[0];
+            playVideo(firstVideo.src, firstVideo.title, firstVideo.description, firstVideo.duration);
+            
+            alert('📺 Playlist mode activated!\nVideos will play automatically one after another.');
+        }
+
+        // Auto-advance playlist
+        document.getElementById('mainVideo').addEventListener('ended', () => {
+            if (isPlaylistMode && currentVideoIndex < videos.length - 1) {
+                currentVideoIndex++;
+                const nextVideo = videos[currentVideoIndex];
+                setTimeout(() => {
+                    playVideo(nextVideo.src, nextVideo.title, nextVideo.description, nextVideo.duration);
+                }, 1000);
+            } else if (isPlaylistMode) {
+                alert('🎉 Playlist complete! All ABC videos watched.');
+                isPlaylistMode = false;
+            }
+        });
+
+        // Add click handlers for video cards
+        document.querySelectorAll('.video-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const src = card.getAttribute('data-video');
+                const title = card.getAttribute('data-title');
+                const description = card.getAttribute('data-desc');
+                const duration = card.getAttribute('data-duration');
+                
+                isPlaylistMode = false; // Exit playlist mode when manually selecting
+                playVideo(src, title, description, duration);
+            });
+        });
+
+        // Auto-play preview videos on hover
+        document.querySelectorAll('.video-thumbnail video').forEach(video => {
+            video.addEventListener('mouseenter', () => {
+                video.play();
+            });
+            
+            video.addEventListener('mouseleave', () => {
+                video.pause();
+                video.currentTime = 0;
+            });
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('📺 Professional ABC Video Player Loaded!');
+            console.log('✅ 6 YouTube-quality educational videos ready');
+            console.log('🎬 TV-style animations with full ABC songs');
+            console.log('🎯 Perfect for YouTube, education, and classroom use');
+        });
+    </script>
+</body>
+</html>

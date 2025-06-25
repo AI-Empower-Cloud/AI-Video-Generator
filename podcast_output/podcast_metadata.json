@@ -1,0 +1,32 @@
+{
+  "created": "2025-06-25T17:58:24.739342",
+  "total_files": 18,
+  "files": [
+    "podcast_abc_stories_20250625_175819.mp3",
+    "podcast_abc_stories_20250625_175819.mp3",
+    "podcast_abc_stories_20250625_175819.mp3",
+    "podcast_abc_stories_20250625_175820.mp3",
+    "podcast_abc_stories_20250625_175820.mp3",
+    "podcast_science_fun_20250625_175820.mp3",
+    "podcast_science_fun_20250625_175820.mp3",
+    "podcast_science_fun_20250625_175821.mp3",
+    "podcast_science_fun_20250625_175821.mp3",
+    "podcast_science_fun_20250625_175821.mp3",
+    "podcast_math_adventures_20250625_175822.mp3",
+    "podcast_math_adventures_20250625_175822.mp3",
+    "podcast_math_adventures_20250625_175822.mp3",
+    "podcast_math_adventures_20250625_175822.mp3",
+    "podcast_math_adventures_20250625_175823.mp3",
+    "interview_teacher_interview_20250625_175823.mp3",
+    "interview_student_showcase_20250625_175823.mp3",
+    "interview_expert_discussion_20250625_175824.mp3"
+  ],
+  "categories": [
+    "abc_stories",
+    "science_fun",
+    "math_adventures",
+    "teacher_interview",
+    "student_showcase",
+    "expert_discussion"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "created": "2025-06-25T18:03:42.190180",
+  "total_interviews": 4,
+  "scenarios": [
+    "education_roundtable",
+    "student_voice_panel",
+    "innovative_teaching",
+    "literacy_specialists"
+  ],
+  "files": [
+    "live_interview_education_roundtable_20250625_180330.mp3",
+    "live_interview_student_voice_panel_20250625_180334.mp3",
+    "live_interview_innovative_teaching_20250625_180336.mp3",
+    "live_interview_literacy_specialists_20250625_180339.mp3"
+  ],
+  "features": [
+    "Dynamic conversation generation",
+    "Multiple participant types",
+    "Contextual responses",
+    "Professional audio quality",
+    "Complete transcripts"
+  ]
+}

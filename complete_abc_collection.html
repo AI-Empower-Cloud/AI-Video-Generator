@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎵 Complete ABC Song Collection - Voice + Music</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        h1 {
+            color: #764ba2;
+            text-align: center;
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.3em;
+            margin-bottom: 30px;
+        }
+        .section {
+            margin: 40px 0;
+        }
+        .section-title {
+            font-size: 2em;
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .song-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .song-card {
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8f4f8 100%);
+            border-radius: 15px;
+            padding: 25px;
+            border-left: 5px solid #4ecdc4;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .song-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        .musical-card {
+            border-left: 5px solid #ff6b6b;
+            background: linear-gradient(135deg, #fff8f8 0%, #ffe8e8 100%);
+        }
+        .song-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .song-description {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        .song-stats {
+            background: rgba(78, 205, 196, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-size: 0.9em;
+        }
+        .musical-stats {
+            background: rgba(255, 107, 107, 0.1);
+        }
+        .audio-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        audio {
+            flex: 1;
+            min-width: 300px;
+            height: 40px;
+        }
+        .download-btn {
+            background: linear-gradient(135deg, #4ecdc4, #44a08d);
+            color: white;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .stats-overview {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        .stat-item {
+            display: inline-block;
+            margin: 0 20px;
+            font-size: 1.1em;
+        }
+        .comparison {
+            background: #fff3cd;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #ffc107;
+        }
+        .feature-tag {
+            display: inline-block;
+            background: #4ecdc4;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            margin: 2px;
+        }
+        .musical-tag {
+            background: #ff6b6b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎵 Complete ABC Song Collection</h1>
+        <p class="subtitle">Voice + Music • Kids Learning • Professional Quality</p>
+        
+        <div class="stats-overview">
+            <div class="stat-item">🎵 <strong>19 Total Songs</strong></div>
+            <div class="stat-item">🗣️ <strong>4 Voice Versions</strong></div>
+            <div class="stat-item">👶 <strong>4 Kids Voices</strong></div>
+            <div class="stat-item">👩‍� <strong>4 Teacher Voices</strong></div>
+            <div class="stat-item">�🎼 <strong>7 Musical Versions</strong></div>
+            <div class="stat-item">⏱️ <strong>240+ seconds</strong></div>
+        </div>
+
+        <div class="comparison">
+            <h3>🎯 What's the Difference?</h3>
+            <p><strong>🗣️ Voice Versions:</strong> AI-generated speech with Emma's friendly teacher voice - great for learning pronunciation and letter recognition.</p>
+            <p><strong>👶 Kids Voices:</strong> Realistic children's voices (ages 4-6) with natural kid speech patterns - perfect for peer learning!</p>
+            <p><strong>👩‍🏫 Teacher Voices:</strong> Professional educator voices including kindergarten teachers, bilingual teachers, and caring grandparents.</p>
+            <p><strong>🎼 Musical Versions:</strong> Real melodies, chords, and rhythms - actual music you can sing along with! Perfect for making learning fun and memorable.</p>
+        </div>
+
+        <!-- Musical Versions Section (Featured First!) -->
+        <div class="section">
+            <h2 class="section-title">🎼 Real Musical Versions</h2>
+            <p>✨ <strong>NEW!</strong> Actual melodies, chords & rhythms • Sing-along ready • Professional music quality</p>
+            
+            <div class="song-grid">
+                <div class="song-card musical-card">
+                    <div class="song-title">🎼 Full Orchestra ABC</div>
+                    <div class="song-stats musical-stats">
+                        <span class="feature-tag musical-tag">Real Music</span>
+                        <span class="feature-tag musical-tag">Melody + Chords + Drums</span>
+                        <span class="feature-tag musical-tag">25.0s</span>
+                    </div>
+                    <div class="song-description">
+                        <strong>🎉 THE COMPLETE EXPERIENCE!</strong> Full musical version with melody line, piano chord accompaniment, and drum beat. Perfect for sing-alongs and making learning memorable!
+                    </div>
+                    <div class="audio-controls">
+                        <audio controls>
+                            <source src="audio_output/abc_song_full_orchestra.wav" type="audio/wav">
+                        </audio>
+                        <a href="audio_output/abc_song_full_orchestra.wav" download class="download-btn">💾 Download</a>
+                    </div>
+                </div>
+
+                <div class="song-card musical-card">
+                    <div class="song-title">🎹 ABC with Piano</div>
+                    <div class="song-stats musical-stats">
+                        <span class="feature-tag musical-tag">Real Music</span>
+                        <span class="feature-tag musical-tag">Melody + Piano</span>
+                        <span class="feature-tag musical-tag">25.0s</span>
+                    </div>
+                    <div class="song-description">
+                        Beautiful melody with piano chord accompaniment. Gentle and musical - perfect for calm learning sessions and bedtime routines.
+                    </div>
+                    <div class="audio-controls">
+                        <audio controls>
+                            <source src="audio_output/abc_song_with_piano.wav" type="audio/wav">
+                        </audio>
+                        <a href="audio_output/abc_song_with_piano.wav" download class="download-btn">💾 Download</a>
+                    </div>
+                </div>
+
+                <div class="song-card musical-card">
+                    <div class="song-title">🥁 ABC with Rhythm</div>
+                    <div class="song-stats musical-stats">
+                        <span class="feature-tag musical-tag">Real Music</span>
+                        <span class="feature-tag musical-tag">Melody + Drums</span>
+                        <span class="feature-tag musical-tag">25.0s</span>
+                    </div>
+                    <div class="song-description">
+                        Melody with drum beat - great for rhythm practice and getting kids moving! Perfect for active learning and dance sessions.
+                    </div>
+                    <div class="audio-controls">
+                        <audio controls>
+                            <source src="audio_output/abc_song_with_drums.wav" type="audio/wav">
+                        </audio>
+                        <a href="audio_output/abc_song_with_drums.wav" download class="download-btn">💾 Download</a>
+                    </div>
+                </div>
+
+                <div class="song-card musical-card">
+                    <div class="song-title">🎵 Pure Melody ABC</div>
+                    <div class="song-stats musical-stats">
+                        <span class="feature-tag musical-tag">Real Music</span>
+                        <span class="feature-tag musical-tag">Melody Only</span>
+                        <span class="feature-tag musical-tag">25.0s</span>
+                    </div>
+                    <div class="song-description">
+                        Clean melody line without accompaniment. Perfect for singing along or adding your own instruments. Great for music education.
+                    </div>
+                    <div class="audio-controls">
+                        <audio controls>
+                            <source src="audio_output/abc_song_melody_only.wav" type="audio/wav">
+                        </audio>
+                        <a href="audio_output/abc_song_melody_only.wav" download class="download-btn">💾 Download</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Kids Voices Section -->
+        <div class="section">
+            <h2 class="section-title">👶 Kids Voices Collection</h2>
+            <p>✨ <strong>NEW!</strong> Realistic children's voices • Natural kid speech patterns • Ages 4-6</p>
+            
+            <div class="song-grid">
+                <div class="song-card">
+                    <div class="song-title">👧 Lily (Age 5)</div>
+                    <div class="song-stats">
+                        <span class="feature-tag">Kids Voice</span>
+                        <span class="feature-tag">Kindergarten</span>
+                        <span class="feature-tag">Sweet & Excited</span>
+                    </div>
+                    <div class="song-description">
+                        Sweet kindergarten girl learning her ABCs. Perfect excited learner personality - shows how real kids sound when they're enthusiastic about learning!
+                    </div>
+                    <div class="audio-controls">
+                        <audio controls>
+                            <source src="audio_output/abc_kids_lily_age_5.wav" type="audio/wav">
+                        </audio>
+                        <a href="audio_output/abc_kids_lily_age_5.wav" download class="download-btn">💾 Download</a>
+                    </div>
+                </div>
+
+                <div class="song-card">
+                    <div class="song-title">👦 Tommy (Age 6)</div>
+                    <div class="song-stats">
+                        <span class="feature-tag">Kids Voice</span>
+                        <span class="feature-tag">First Grade</span>
+                        <span class="feature-tag">Playful Singer</span>
+                    </div>
+                    <div class="song-description">
+                        Energetic first-grader who loves singing. Shows how kids naturally add rhythm and energy to their learning - great for active children!
+                    </div>
+                    <div class="audio-controls">
+                        <audio controls>
+                            <source src="audio_output/abc_kids_tommy_age_6.wav" type="audio/wav">
+                        </audio>
+                        <a href="audio_output/abc_kids_tommy_age_6.wav" download class="download-btn">💾 Download</a>
+                    </div>
+                </div>
+
+                <div class="song-card">
+                    <div class="song-title">👧 Emma (Age 4)</div>
+                    <div class="song-stats">
+                        <span class="feature-tag">Kids Voice</span>
+                        <span class="feature-tag">Preschool</span>
+                        <span class="feature-tag">Careful Learner</span>
+                    </div>
+                    <div class="song-description">
+                        Adorable preschooler just learning letters. Shows the careful, thoughtful way younger children approach new learning - perfect for beginners!
+                    </div>
+                    <div class="audio-controls">
+                        <audio controls>
+                            <source src="audio_output/abc_kids_emma_age_4.wav" type="audio/wav">
+                        </audio>
+                        <a href="audio_output/abc_kids_emma_age_4.wav" download class="download-btn">💾 Download</a>
+                    </div>
+                </div>
+
+                <div class="song-card">
+                    <div class="song-title">👥 Kids Chorus</div>
+                    <div class="song-stats">
+                        <span class="feature-tag">Kids Voice</span>
+                        <span class="feature-tag">Group Singing</span>
+                        <span class="feature-tag">Classroom Style</span>
+                    </div>
+                    <div class="song-description">
+                        Group of children singing together! Simulates the classroom experience where kids learn together - builds community and shared learning.
+                    </div>
+                    <div class="audio-controls">
+                        <audio controls>
+                            <source src="audio_output/abc_kids_kids_chorus.wav" type="audio/wav">
+                        </audio>
+                        <a href="audio_output/abc_kids_kids_chorus.wav" download class="download-btn">💾 Download</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Teacher Voices Section -->
+        <div class="section">
+            <h2 class="section-title">👩‍🏫 Professional Teacher Voices</h2>
+            <p>✨ <strong>NEW!</strong> Authentic educator voices • Professional teaching styles • Multi-cultural backgrounds</p>
+            
+            <div class="song-grid">
+                <div class="song-card">
+                    <div class="song-title">👩‍🏫 Ms. Johnson (Kindergarten)</div>
+                    <div class="song-stats">
+                        <span class="feature-tag">Teacher Voice</span>
+                        <span class="feature-tag">Kindergarten</span>
+                        <span class="feature-tag">Nurturing</span>
+                    </div>
+                    <div class="song-description">
+                        Warm kindergarten teacher with 15 years experience. Perfect nurturing voice that makes children feel safe and excited about learning.
+                    </div>
+                    <div class="audio-controls">
+                        <audio controls>
+                            <source src="audio_output/abc_teacher_ms_johnson_kindergarten.wav" type="audio/wav">
+                        </audio>
+                        <a href="audio_output/abc_teacher_ms_johnson_kindergarten.wav" download class="download-btn">💾 Download</a>
+                    </div>
+                </div>
+
+                <div class="song-card">
+                    <div class="song-title">👨‍🏫 Mr. Davis (Elementary)</div>
+                    <div class="song-stats">
+                        <span class="feature-tag">Teacher Voice</span>
+                        <span class="feature-tag">Elementary</span>
+                        <span class="feature-tag">Encouraging</span>
+                    </div>
+                    <div class="song-description">
+                        Enthusiastic elementary teacher who makes learning fun. Great encouraging voice that builds confidence and makes education enjoyable.
+                    </div>
+                    <div class="audio-controls">
+                        <audio controls>
+                            <source src="audio_output/abc_teacher_mr_davis_elementary.wav" type="audio/wav">
+                        </audio>
+                        <a href="audio_output/abc_teacher_mr_davis_elementary.wav" download class="download-btn">💾 Download</a>
+                    </div>
+                </div>
+
+                <div class="song-card">
+                    <div class="song-title">👩‍🏫 Mrs. García (Bilingual)</div>
+                    <div class="song-stats">
+                        <span class="feature-tag">Teacher Voice</span>
+                        <span class="feature-tag">Bilingual</span>
+                        <span class="feature-tag">Clear Articulation</span>
+                    </div>
+                    <div class="song-description">
+                        Bilingual teacher perfect for ESL students. Crystal-clear articulation that helps non-native speakers learn proper pronunciation.
+                    </div>
+                    <div class="audio-controls">
+                        <audio controls>
+                            <source src="audio_output/abc_teacher_mrs_garcia_bilingual.wav" type="audio/wav">
+                        </audio>
+                        <a href="audio_output/abc_teacher_mrs_garcia_bilingual.wav" download class="download-btn">💾 Download</a>
+                    </div>
+                </div>
+
+                <div class="song-card">
+                    <div class="song-title">👵 Grandma Rose (Storyteller)</div>
+                    <div class="song-stats">
+                        <span class="feature-tag">Teacher Voice</span>
+                        <span class="feature-tag">Storytelling</span>
+                        <span class="feature-tag">Loving Grandmother</span>
+                    </div>
+                    <div class="song-description">
+                        Loving grandmother who tells the best ABC stories. Warm, caring voice that brings the comfort of family learning to education.
+                    </div>
+                    <div class="audio-controls">
+                        <audio controls>
+                            <source src="audio_output/abc_teacher_grandma_storyteller.wav" type="audio/wav">
+                        </audio>
+                        <a href="audio_output/abc_teacher_grandma_storyteller.wav" download class="download-btn">💾 Download</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Kids & Teachers Musical Versions -->
+        <div class="section">
+            <h2 class="section-title">🎼 Kids & Teacher Musical Versions</h2>
+            <p>✨ <strong>PREMIUM!</strong> Real voices with real music • Perfect classroom combinations</p>
+            
+            <div class="song-grid">
+                <div class="song-card musical-card">
+                    <div class="song-title">👩‍🏫👶 Teacher + Kids Duet</div>
+                    <div class="song-stats musical-stats">
+                        <span class="feature-tag musical-tag">Teacher + Kids</span>
+                        <span class="feature-tag musical-tag">Classroom Style</span>
+                        <span class="feature-tag musical-tag">25.0s</span>
+                    </div>
+                    <div class="song-description">
+                        <strong>🎉 PERFECT FOR CLASSROOMS!</strong> Teacher leads, kids follow - exactly how real classroom learning works! With full musical backing.
+                    </div>
+                    <div class="audio-controls">
+                        <audio controls>
+                            <source src="audio_output/abc_kids_teacher_duet.wav" type="audio/wav">
+                        </audio>
+                        <a href="audio_output/abc_kids_teacher_duet.wav" download class="download-btn">💾 Download</a>
+                    </div>
+                </div>
+
+                <div class="song-card musical-card">
+                    <div class="song-title">👥🎵 Kids Chorus + Music</div>
+                    <div class="song-stats musical-stats">
+                        <span class="feature-tag musical-tag">Kids Chorus</span>
+                        <span class="feature-tag musical-tag">Full Orchestra</span>
+                        <span class="feature-tag musical-tag">25.0s</span>
+                    </div>
+                    <div class="song-description">
+                        Children singing together with full musical backing! Perfect for singalongs and group learning activities.
+                    </div>
+                    <div class="audio-controls">
+                        <audio controls>
+                            <source src="audio_output/abc_kids_chorus_musical.wav" type="audio/wav">
+                        </audio>
+                        <a href="audio_output/abc_kids_chorus_musical.wav" download class="download-btn">💾 Download</a>
+                    </div>
+                </div>
+
+                <div class="song-card musical-card">
+                    <div class="song-title">👩‍🏫🎹 Teacher + Educational Music</div>
+                    <div class="song-stats musical-stats">
+                        <span class="feature-tag musical-tag">Teacher Voice</span>
+                        <span class="feature-tag musical-tag">Gentle Piano</span>
+                        <span class="feature-tag musical-tag">25.0s</span>
+                    </div>
+                    <div class="song-description">
+                        Professional teacher voice with gentle piano accompaniment. Perfect for focused learning sessions and calm educational environments.
+                    </div>
+                    <div class="audio-controls">
+                        <audio controls>
+                            <source src="audio_output/abc_teacher_educational_music.wav" type="audio/wav">
+                        </audio>
+                        <a href="audio_output/abc_teacher_educational_music.wav" download class="download-btn">💾 Download</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Voice Versions Section -->
+        <div class="section">
+            <h2 class="section-title">🗣️ Voice Learning Versions</h2>
+            <p>AI-generated with Emma's friendly teacher voice • Perfect for learning pronunciation</p>
+            
+            <div class="song-grid">
+                <div class="song-card">
+                    <div class="song-title">🎼 Classic ABC Song</div>
+                    <div class="song-stats">
+                        <span class="feature-tag">Voice Only</span>
+                        <span class="feature-tag">Traditional</span>
+                        <span class="feature-tag">11.9s</span>
+                    </div>
+                    <div class="song-description">
+                        Traditional ABC song perfect for learning. Clear pronunciation of all letters with the classic "Now I know my ABCs" ending.
+                    </div>
+                    <div class="audio-controls">
+                        <audio controls>
+                            <source src="audio_output/abc_song_classic.wav" type="audio/wav">
+                            <source src="audio_output/abc_song_classic.mp3" type="audio/mpeg">
+                        </audio>
+                        <a href="audio_output/abc_song_classic.mp3" download class="download-btn">💾 Download</a>
+                    </div>
+                </div>
+
+                <div class="song-card">
+                    <div class="song-title">🐌 Slow Learning ABC</div>
+                    <div class="song-stats">
+                        <span class="feature-tag">Voice Only</span>
+                        <span class="feature-tag">Beginner</span>
+                        <span class="feature-tag">19.4s</span>
+                    </div>
+                    <div class="song-description">
+                        Letter-by-letter pronunciation for beginners. Slow and clear pronunciation perfect for first-time learners and ESL students.
+                    </div>
+                    <div class="audio-controls">
+                        <audio controls>
+                            <source src="audio_output/abc_song_slow.wav" type="audio/wav">
+                            <source src="audio_output/abc_song_slow.mp3" type="audio/mpeg">
+                        </audio>
+                        <a href="audio_output/abc_song_slow.mp3" download class="download-btn">💾 Download</a>
+                    </div>
+                </div>
+
+                <div class="song-card">
+                    <div class="song-title">🎉 Enthusiastic ABC</div>
+                    <div class="song-stats">
+                        <span class="feature-tag">Voice Only</span>
+                        <span class="feature-tag">High Energy</span>
+                        <span class="feature-tag">14.4s</span>
+                    </div>
+                    <div class="song-description">
+                        High-energy version with encouragement and celebration. Builds confidence and excitement about learning the alphabet.
+                    </div>
+                    <div class="audio-controls">
+                        <audio controls>
+                            <source src="audio_output/abc_song_excited.wav" type="audio/wav">
+                            <source src="audio_output/abc_song_excited.mp3" type="audio/mpeg">
+                        </audio>
+                        <a href="audio_output/abc_song_excited.mp3" download class="download-btn">💾 Download</a>
+                    </div>
+                </div>
+
+                <div class="song-card">
+                    <div class="song-title">🎶 Musical ABC Song (Voice)</div>
+                    <div class="song-stats">
+                        <span class="feature-tag">Voice Only</span>
+                        <span class="feature-tag">Fun Style</span>
+                        <span class="feature-tag">20.9s</span>
+                    </div>
+                    <div class="song-description">
+                        Fun version with musical emojis and rhythm in the speech. More engaging for children who love interactive content.
+                    </div>
+                    <div class="audio-controls">
+                        <audio controls>
+                            <source src="audio_output/abc_song_musical.wav" type="audio/wav">
+                            <source src="audio_output/abc_song_musical.mp3" type="audio/mpeg">
+                        </audio>
+                        <a href="audio_output/abc_song_musical.mp3" download class="download-btn">💾 Download</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="comparison">
+            <h3>🎯 Usage Recommendations:</h3>
+            <p><strong>🏫 For Classrooms:</strong> Use Teacher + Kids Duet for authentic classroom experiences, or individual teacher voices for instruction</p>
+            <p><strong>🏠 For Home:</strong> Kids voices for peer learning, teacher voices for structured learning, musical versions for fun family time</p>
+            <p><strong>� For Young Children:</strong> Start with kids voices (Lily, Tommy, Emma) - children relate better to peer voices</p>
+            <p><strong>🌍 For ESL Students:</strong> Use Mrs. García's clear articulation voice for pronunciation practice</p>
+            <p><strong>📱 For Apps:</strong> Mix kids and teacher voices for realistic educational interactions</p>
+            <p><strong>🎥 For Videos:</strong> Kids voices for peer learning scenes, teacher voices for instruction, musical for entertainment</p>
+            
+            <h3>💡 Pro Tips:</h3>
+            <p><strong>🎉 Most Popular:</strong> Teacher + Kids Duet - it's exactly how real classrooms work!</p>
+            <p><strong>👶 For Beginners:</strong> Start with Emma (Age 4) - perfect for nervous first-time learners</p>
+            <p><strong>🎵 For Engagement:</strong> Use Kids Chorus + Music for group activities and singalongs</p>
+            <p><strong>👵 For Comfort:</strong> Grandma Rose provides the warmth of family learning</p>
+        </div>
+    </div>
+</body>
+</html>

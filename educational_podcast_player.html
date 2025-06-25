@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎙️ ABC Educational Podcasts & Interviews</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+        }
+
+        .header h1 {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+        }
+
+        .header p {
+            font-size: 1.3em;
+            opacity: 0.9;
+        }
+
+        .main-player {
+            text-align: center;
+            margin: 40px auto;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .audio-player {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 30px;
+            border-radius: 25px;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+
+        .audio-player audio {
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .episode-info {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .episode-info h3 {
+            font-size: 1.8em;
+            color: #ffd700;
+            margin-bottom: 10px;
+        }
+
+        .episode-meta {
+            display: flex;
+            justify-content: space-between;
+            margin: 15px 0;
+            opacity: 0.8;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            padding: 40px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .podcast-section {
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 25px;
+            padding: 30px;
+            backdrop-filter: blur(15px);
+        }
+
+        .section-title {
+            font-size: 2em;
+            color: #ffd700;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .episode-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .episode-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255,215,0,0.5);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        .episode-card.active {
+            border-color: #ffd700;
+            box-shadow: 0 0 20px rgba(255,215,0,0.4);
+        }
+
+        .episode-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #ffd700;
+        }
+
+        .episode-description {
+            font-size: 0.95em;
+            opacity: 0.85;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        .episode-duration {
+            background: rgba(0,0,0,0.3);
+            padding: 5px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            display: inline-block;
+        }
+
+        .play-button {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            float: right;
+            margin-top: -40px;
+        }
+
+        .play-button:hover {
+            transform: scale(1.05);
+        }
+
+        .guest-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 15px;
+        }
+
+        .guest-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            float: left;
+            margin-right: 15px;
+        }
+
+        .guest-details h4 {
+            color: #ffd700;
+            margin-bottom: 5px;
+        }
+
+        .controls {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            color: white;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 0 10px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .floating-notes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-note {
+            position: absolute;
+            font-size: 2em;
+            opacity: 0.1;
+            animation: floatMusic 10s ease-in-out infinite;
+            color: #ffd700;
+        }
+
+        @keyframes floatMusic {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-40px) rotate(15deg); }
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+                padding: 20px 15px;
+            }
+            
+            .header h1 {
+                font-size: 2.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-notes">
+        <div class="floating-note" style="top: 10%; left: 15%; animation-delay: 0s;">♪</div>
+        <div class="floating-note" style="top: 20%; right: 20%; animation-delay: 2s;">🎙️</div>
+        <div class="floating-note" style="top: 60%; left: 10%; animation-delay: 4s;">♫</div>
+        <div class="floating-note" style="bottom: 20%; right: 15%; animation-delay: 6s;">🎧</div>
+        <div class="floating-note" style="top: 40%; right: 10%; animation-delay: 8s;">♬</div>
+    </div>
+
+    <div class="header">
+        <h1>🎙️ ABC Educational Podcasts</h1>
+        <p>Stories • Interviews • Quiz Shows • Educational Entertainment</p>
+    </div>
+
+    <div class="main-player">
+        <div class="audio-player">
+            <audio id="mainAudio" controls>
+                <source src="podcast_output/abc_story_episode_0_A.wav" type="audio/wav">
+                Your browser does not support the audio element.
+            </audio>
+            
+            <div class="episode-info" id="episodeInfo">
+                <h3>🌟 ABC Story Time - Letter A Adventure</h3>
+                <div class="episode-meta">
+                    <span>📅 Episode 1</span>
+                    <span>⏱️ Duration: ~5 min</span>
+                    <span>🎯 Educational Story</span>
+                </div>
+                <p>Join us for an exciting adventure with the letter A! Meet Andy the Alligator and discover amazing words that start with A. Perfect for young learners starting their alphabet journey.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-grid">
+        <div class="podcast-section">
+            <h2 class="section-title">📖 ABC Story Time</h2>
+            
+            <div class="episode-card active" data-audio="podcast_output/abc_story_episode_0_A.wav" data-title="🌟 ABC Story Time - Letter A Adventure" data-description="Join us for an exciting adventure with the letter A! Meet Andy the Alligator and discover amazing words that start with A. Perfect for young learners starting their alphabet journey.">
+                <div class="episode-title">Letter A Adventure</div>
+                <div class="episode-description">Alligator Andy's amazing alphabet adventure!</div>
+                <span class="episode-duration">⏱️ ~5 min</span>
+                <button class="play-button">▶ Play</button>
+            </div>
+            
+            <div class="episode-card" data-audio="podcast_output/abc_story_episode_1_B.wav" data-title="🐻 ABC Story Time - Letter B Journey" data-description="Discover the wonderful world of the letter B with Bella the Bear! Learn about berries, bees, and all the beautiful words that begin with B.">
+                <div class="episode-title">Letter B Journey</div>
+                <div class="episode-description">Bella Bear's beautiful berry-picking adventure!</div>
+                <span class="episode-duration">⏱️ ~5 min</span>
+                <button class="play-button">▶ Play</button>
+            </div>
+            
+            <div class="episode-card" data-audio="podcast_output/abc_story_episode_2_C.wav" data-title="🐱 ABC Story Time - Letter C Quest" data-description="Curious Charlie the Cat takes us on a colorful quest to discover all the cool words that start with the letter C!">
+                <div class="episode-title">Letter C Quest</div>
+                <div class="episode-description">Charlie Cat's curious colorful quest!</div>
+                <span class="episode-duration">⏱️ ~5 min</span>
+                <button class="play-button">▶ Play</button>
+            </div>
+        </div>
+
+        <div class="podcast-section">
+            <h2 class="section-title">🎤 Learning Interviews</h2>
+            
+            <div class="episode-card" data-audio="podcast_output/interview_episode_0_dr_alphabet.wav" data-title="🎓 Interview with Dr. Alphabet" data-description="Meet Dr. Alphabet, our friendly letter expert! Learn fascinating facts about the alphabet, discover the history of letters, and get amazing tips for learning your ABCs.">
+                <div class="episode-title">Dr. Alphabet Interview</div>
+                <div class="episode-description">Letter expert shares amazing alphabet secrets!</div>
+                <span class="episode-duration">⏱️ ~10 min</span>
+                <button class="play-button">▶ Play</button>
+                
+                <div class="guest-info">
+                    <div class="guest-avatar">🎓</div>
+                    <div class="guest-details">
+                        <h4>Dr. Alphabet</h4>
+                        <p>Letter Expert & Educational Researcher</p>
+                    </div>
+                    <div style="clear: both;"></div>
+                </div>
+            </div>
+            
+            <div class="episode-card" data-audio="podcast_output/interview_episode_0_miss_words.wav" data-title="📚 Interview with Miss Words" data-description="Join our conversation with Miss Words, the enthusiastic vocabulary teacher! Discover the magic of word building, learn about rhyming, and explore the wonderful world of storytelling.">
+                <div class="episode-title">Miss Words Interview</div>
+                <div class="episode-description">Vocabulary teacher reveals word-building secrets!</div>
+                <span class="episode-duration">⏱️ ~10 min</span>
+                <button class="play-button">▶ Play</button>
+                
+                <div class="guest-info">
+                    <div class="guest-avatar">📚</div>
+                    <div class="guest-details">
+                        <h4>Miss Words</h4>
+                        <p>Vocabulary Teacher & Storytelling Expert</p>
+                    </div>
+                    <div style="clear: both;"></div>
+                </div>
+            </div>
+            
+            <div class="episode-card" data-audio="podcast_output/interview_episode_0_captain_adventure.wav" data-title="🗺️ Interview with Captain Adventure" data-description="Embark on an exciting interview with Captain Adventure! Hear thrilling alphabet adventures, amazing discovery tales, and get inspired to explore the world of letters.">
+                <div class="episode-title">Captain Adventure Interview</div>
+                <div class="episode-description">Explorer shares thrilling alphabet adventures!</div>
+                <span class="episode-duration">⏱️ ~10 min</span>
+                <button class="play-button">▶ Play</button>
+                
+                <div class="guest-info">
+                    <div class="guest-avatar">🗺️</div>
+                    <div class="guest-details">
+                        <h4>Captain Adventure</h4>
+                        <p>World Explorer & Adventure Guide</p>
+                    </div>
+                    <div style="clear: both;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="podcast-section">
+            <h2 class="section-title">🎮 Quiz Shows</h2>
+            
+            <div class="episode-card" data-audio="podcast_output/quiz_show_episode_0.wav" data-title="🏆 Alphabet Quiz Show #1" data-description="Test your alphabet knowledge in our fun quiz show! Answer questions about letters, practice your ABCs, and become an alphabet champion!">
+                <div class="episode-title">Alphabet Quiz Challenge #1</div>
+                <div class="episode-description">Test your alphabet knowledge with fun questions!</div>
+                <span class="episode-duration">⏱️ ~8 min</span>
+                <button class="play-button">▶ Play</button>
+            </div>
+            
+            <div class="episode-card" data-audio="podcast_output/quiz_show_episode_1.wav" data-title="🎯 Alphabet Quiz Show #2" data-description="More exciting alphabet challenges! Practice letter recognition, learn fun facts, and see how much you've learned about the wonderful world of ABCs.">
+                <div class="episode-title">Alphabet Quiz Challenge #2</div>
+                <div class="episode-description">More challenging questions for alphabet masters!</div>
+                <span class="episode-duration">⏱️ ~8 min</span>
+                <button class="play-button">▶ Play</button>
+            </div>
+            
+            <div class="episode-card" data-audio="podcast_output/quiz_show_episode_2.wav" data-title="🌟 Alphabet Quiz Show #3" data-description="The ultimate alphabet quiz experience! Advanced questions, bonus rounds, and special challenges for true alphabet experts and enthusiasts.">
+                <div class="episode-title">Ultimate Alphabet Challenge</div>
+                <div class="episode-description">Advanced quiz for true alphabet experts!</div>
+                <span class="episode-duration">⏱️ ~8 min</span>
+                <button class="play-button">▶ Play</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button onclick="downloadAllPodcasts()" class="btn">📥 Download All Podcasts</button>
+        <button onclick="playPlaylist()" class="btn">🎧 Play All Episodes</button>
+        <a href="youtube_professional_player.html" class="btn">🎬 Watch Videos</a>
+        <a href="ultimate_educational_dashboard.html" class="btn">🚀 Full Platform</a>
+    </div>
+
+    <script>
+        // Podcast data
+        const podcasts = [
+            {
+                src: "podcast_output/abc_story_episode_0_A.wav",
+                title: "🌟 ABC Story Time - Letter A Adventure",
+                description: "Join us for an exciting adventure with the letter A! Meet Andy the Alligator and discover amazing words that start with A. Perfect for young learners starting their alphabet journey.",
+                type: "story"
+            },
+            {
+                src: "podcast_output/abc_story_episode_1_B.wav",
+                title: "🐻 ABC Story Time - Letter B Journey",
+                description: "Discover the wonderful world of the letter B with Bella the Bear! Learn about berries, bees, and all the beautiful words that begin with B.",
+                type: "story"
+            },
+            {
+                src: "podcast_output/abc_story_episode_2_C.wav",
+                title: "🐱 ABC Story Time - Letter C Quest",
+                description: "Curious Charlie the Cat takes us on a colorful quest to discover all the cool words that start with the letter C!",
+                type: "story"
+            },
+            {
+                src: "podcast_output/interview_episode_0_dr_alphabet.wav",
+                title: "🎓 Interview with Dr. Alphabet",
+                description: "Meet Dr. Alphabet, our friendly letter expert! Learn fascinating facts about the alphabet, discover the history of letters, and get amazing tips for learning your ABCs.",
+                type: "interview"
+            },
+            {
+                src: "podcast_output/interview_episode_0_miss_words.wav",
+                title: "📚 Interview with Miss Words",
+                description: "Join our conversation with Miss Words, the enthusiastic vocabulary teacher! Discover the magic of word building, learn about rhyming, and explore the wonderful world of storytelling.",
+                type: "interview"
+            },
+            {
+                src: "podcast_output/interview_episode_0_captain_adventure.wav",
+                title: "🗺️ Interview with Captain Adventure",
+                description: "Embark on an exciting interview with Captain Adventure! Hear thrilling alphabet adventures, amazing discovery tales, and get inspired to explore the world of letters.",
+                type: "interview"
+            }
+        ];
+
+        let currentPodcastIndex = 0;
+        let isPlaylistMode = false;
+
+        // Play selected podcast
+        function playPodcast(src, title, description) {
+            const mainAudio = document.getElementById('mainAudio');
+            const episodeInfo = document.getElementById('episodeInfo');
+            
+            // Update main audio
+            mainAudio.src = src;
+            mainAudio.load();
+            mainAudio.play();
+            
+            // Update episode info
+            episodeInfo.innerHTML = `
+                <h3>${title}</h3>
+                <div class="episode-meta">
+                    <span>📅 Latest Episode</span>
+                    <span>⏱️ Duration: ~5-10 min</span>
+                    <span>🎯 Educational Content</span>
+                </div>
+                <p>${description}</p>
+            `;
+            
+            // Update active card
+            document.querySelectorAll('.episode-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            // Find and activate current card
+            document.querySelectorAll('.episode-card').forEach(card => {
+                const cardSrc = card.getAttribute('data-audio');
+                if (cardSrc === src) {
+                    card.classList.add('active');
+                }
+            });
+        }
+
+        // Download all podcasts
+        function downloadAllPodcasts() {
+            podcasts.forEach((podcast, index) => {
+                setTimeout(() => {
+                    const link = document.createElement('a');
+                    link.href = podcast.src;
+                    link.download = podcast.src.split('/').pop();
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }, index * 1000);
+            });
+            
+            alert('🎧 Starting download of all podcast episodes!\nEducational audio content downloading...');
+        }
+
+        // Play all podcasts in playlist
+        function playPlaylist() {
+            isPlaylistMode = true;
+            currentPodcastIndex = 0;
+            const firstPodcast = podcasts[0];
+            playPodcast(firstPodcast.src, firstPodcast.title, firstPodcast.description);
+            
+            alert('🎧 Podcast playlist activated!\nAll episodes will play automatically...');
+        }
+
+        // Auto-advance playlist
+        document.getElementById('mainAudio').addEventListener('ended', () => {
+            if (isPlaylistMode && currentPodcastIndex < podcasts.length - 1) {
+                currentPodcastIndex++;
+                const nextPodcast = podcasts[currentPodcastIndex];
+                setTimeout(() => {
+                    playPodcast(nextPodcast.src, nextPodcast.title, nextPodcast.description);
+                }, 1000);
+            } else if (isPlaylistMode) {
+                alert('🎉 Podcast playlist complete! All episodes played.');
+                isPlaylistMode = false;
+            }
+        });
+
+        // Add click handlers for episode cards
+        document.querySelectorAll('.episode-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const src = card.getAttribute('data-audio');
+                const title = card.getAttribute('data-title');
+                const description = card.getAttribute('data-description');
+                
+                isPlaylistMode = false;
+                playPodcast(src, title, description);
+            });
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('🎙️ Educational Podcast Player Loaded!');
+            console.log('✅ Story podcasts, interviews, and quiz shows ready');
+            console.log('🎯 Perfect for audio learning and entertainment');
+        });
+    </script>
+</body>
+</html>
