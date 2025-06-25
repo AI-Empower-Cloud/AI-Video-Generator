@@ -1,0 +1,23 @@
+# 🎯 Commit Message Template for AI Video Generator
+
+# Format: <type>(<scope>): <description>
+#
+# Types:
+# ✨ feat:     New feature
+# 🐛 fix:      Bug fix  
+# 📚 docs:     Documentation
+# 🎨 style:    Code style changes
+# ♻️  refactor: Code refactoring
+# ⚡ perf:     Performance improvement
+# ✅ test:     Adding tests
+# 🔧 chore:    Build process or auxiliary tools
+# 🚀 deploy:   Deployment related
+#
+# Scopes:
+# tts, video, audio, podcast, web, storage, integration
+#
+# Examples:
+# ✨ feat(tts): add multi-voice support for educational content
+# 🐛 fix(video): resolve audio sync issue in ABC videos  
+# 📚 docs: add Wasabi integration guide
+# 🚀 deploy(storage): configure bucket permissions and tags

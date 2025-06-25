@@ -44,3 +44,11 @@
 - `Dockerfile` - Container configuration
 - `docker-compose.yml` - Docker setup
 - `requirements.txt` - Dependencies
+
+## ☁️ Cloud Storage & Hosting
+- `deploy_to_wasabi.py` - Wasabi deployment script
+- `test_wasabi_deployment.py` - Connection test
+- `complete_deployment.sh` - One-click deployment
+- `.env.wasabi` - Wasabi credentials
+- `DEPLOYMENT_PLAN.md` - Complete hosting strategy
+- `WASABI_QUICK_SETUP.md` - Quick setup guide

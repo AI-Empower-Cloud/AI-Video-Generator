@@ -1,0 +1,790 @@
+{
+  "platform": "Educational Video/Audio Generation Platform",
+  "deployment_date": "2025-06-25T21:14:49.610343",
+  "bucket": "ai-video-generator-content",
+  "endpoint": "https://s3.wasabisys.com",
+  "content": {
+    "audio": [
+      {
+        "filename": "abc_clear_child_girl_sweet.wav",
+        "local_path": "audio_output/abc_clear_child_girl_sweet.wav",
+        "remote_key": "audio/abc_clear_child_girl_sweet.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/abc_clear_child_girl_sweet.wav",
+        "size_mb": 0.5
+      },
+      {
+        "filename": "enhanced_food_abc.wav",
+        "local_path": "audio_output/enhanced_food_abc.wav",
+        "remote_key": "audio/enhanced_food_abc.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/enhanced_food_abc.wav",
+        "size_mb": 2.35
+      },
+      {
+        "filename": "song_jazz_midnight_blue.wav",
+        "local_path": "audio_output/song_jazz_midnight_blue.wav",
+        "remote_key": "audio/song_jazz_midnight_blue.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/song_jazz_midnight_blue.wav",
+        "size_mb": 2.52
+      },
+      {
+        "filename": "abc_clear_child_boy_excited.wav",
+        "local_path": "audio_output/abc_clear_child_boy_excited.wav",
+        "remote_key": "audio/abc_clear_child_boy_excited.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/abc_clear_child_boy_excited.wav",
+        "size_mb": 0.38
+      },
+      {
+        "filename": "abc_song_with_piano.wav",
+        "local_path": "audio_output/abc_song_with_piano.wav",
+        "remote_key": "audio/abc_song_with_piano.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/abc_song_with_piano.wav",
+        "size_mb": 2.1
+      },
+      {
+        "filename": "song_pop_sunshine_love.wav",
+        "local_path": "audio_output/song_pop_sunshine_love.wav",
+        "remote_key": "audio/song_pop_sunshine_love.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/song_pop_sunshine_love.wav",
+        "size_mb": 1.6
+      },
+      {
+        "filename": "playlist_metadata.json",
+        "local_path": "audio_output/playlist_metadata.json",
+        "remote_key": "audio/playlist_metadata.json",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/playlist_metadata.json",
+        "size_mb": 0.0
+      },
+      {
+        "filename": "abc_clear_grandma_gentle.wav",
+        "local_path": "audio_output/abc_clear_grandma_gentle.wav",
+        "remote_key": "audio/abc_clear_grandma_gentle.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/abc_clear_grandma_gentle.wav",
+        "size_mb": 1.04
+      },
+      {
+        "filename": "abc_real_kids_chorus_clear.wav",
+        "local_path": "audio_output/abc_real_kids_chorus_clear.wav",
+        "remote_key": "audio/abc_real_kids_chorus_clear.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/abc_real_kids_chorus_clear.wav",
+        "size_mb": 0.56
+      },
+      {
+        "filename": "abc_real_grandma_gentle.wav",
+        "local_path": "audio_output/abc_real_grandma_gentle.wav",
+        "remote_key": "audio/abc_real_grandma_gentle.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/abc_real_grandma_gentle.wav",
+        "size_mb": 1.65
+      },
+      {
+        "filename": "song_classical_peaceful_garden.wav",
+        "local_path": "audio_output/song_classical_peaceful_garden.wav",
+        "remote_key": "audio/song_classical_peaceful_garden.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/song_classical_peaceful_garden.wav",
+        "size_mb": 3.15
+      },
+      {
+        "filename": "abc_song_musical.wav",
+        "local_path": "audio_output/abc_song_musical.wav",
+        "remote_key": "audio/abc_song_musical.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/abc_song_musical.wav",
+        "size_mb": 0.88
+      },
+      {
+        "filename": "abc_voice_teacher_lesson.wav",
+        "local_path": "audio_output/abc_voice_teacher_lesson.wav",
+        "remote_key": "audio/abc_voice_teacher_lesson.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/abc_voice_teacher_lesson.wav",
+        "size_mb": 0.01
+      },
+      {
+        "filename": "enhanced_space_abc.wav",
+        "local_path": "audio_output/enhanced_space_abc.wav",
+        "remote_key": "audio/enhanced_space_abc.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/enhanced_space_abc.wav",
+        "size_mb": 2.61
+      },
+      {
+        "filename": "song_blues_lonely_highway.wav",
+        "local_path": "audio_output/song_blues_lonely_highway.wav",
+        "remote_key": "audio/song_blues_lonely_highway.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/song_blues_lonely_highway.wav",
+        "size_mb": 2.1
+      },
+      {
+        "filename": "song_blues_city_blues.wav",
+        "local_path": "audio_output/song_blues_city_blues.wav",
+        "remote_key": "audio/song_blues_city_blues.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/song_blues_city_blues.wav",
+        "size_mb": 1.68
+      },
+      {
+        "filename": "song_jazz_smooth_sailing.wav",
+        "local_path": "audio_output/song_jazz_smooth_sailing.wav",
+        "remote_key": "audio/song_jazz_smooth_sailing.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/song_jazz_smooth_sailing.wav",
+        "size_mb": 2.02
+      },
+      {
+        "filename": "abc_voice_teacher_mr_johnson.wav",
+        "local_path": "audio_output/abc_voice_teacher_mr_johnson.wav",
+        "remote_key": "audio/abc_voice_teacher_mr_johnson.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/abc_voice_teacher_mr_johnson.wav",
+        "size_mb": 0.01
+      },
+      {
+        "filename": "abc_real_teacher_lesson.wav",
+        "local_path": "audio_output/abc_real_teacher_lesson.wav",
+        "remote_key": "audio/abc_real_teacher_lesson.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/abc_real_teacher_lesson.wav",
+        "size_mb": 1.61
+      },
+      {
+        "filename": "abc_clear_teacher_male_professional.wav",
+        "local_path": "audio_output/abc_clear_teacher_male_professional.wav",
+        "remote_key": "audio/abc_clear_teacher_male_professional.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/abc_clear_teacher_male_professional.wav",
+        "size_mb": 0.94
+      },
+      {
+        "filename": "song_pop_summer_dreams.wav",
+        "local_path": "audio_output/song_pop_summer_dreams.wav",
+        "remote_key": "audio/song_pop_summer_dreams.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/song_pop_summer_dreams.wav",
+        "size_mb": 1.89
+      },
+      {
+        "filename": "song_blues_rainy_day_blues.wav",
+        "local_path": "audio_output/song_blues_rainy_day_blues.wav",
+        "remote_key": "audio/song_blues_rainy_day_blues.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/song_blues_rainy_day_blues.wav",
+        "size_mb": 1.89
+      },
+      {
+        "filename": "song_jazz_coffee_house.wav",
+        "local_path": "audio_output/song_jazz_coffee_house.wav",
+        "remote_key": "audio/song_jazz_coffee_house.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/song_jazz_coffee_house.wav",
+        "size_mb": 2.31
+      },
+      {
+        "filename": "song_rock_wild_freedom.wav",
+        "local_path": "audio_output/song_rock_wild_freedom.wav",
+        "remote_key": "audio/song_rock_wild_freedom.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/song_rock_wild_freedom.wav",
+        "size_mb": 1.77
+      },
+      {
+        "filename": "song_classical_morning_serenade.wav",
+        "local_path": "audio_output/song_classical_morning_serenade.wav",
+        "remote_key": "audio/song_classical_morning_serenade.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/song_classical_morning_serenade.wav",
+        "size_mb": 3.79
+      },
+      {
+        "filename": "song_rock_electric_nights.wav",
+        "local_path": "audio_output/song_rock_electric_nights.wav",
+        "remote_key": "audio/song_rock_electric_nights.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/song_rock_electric_nights.wav",
+        "size_mb": 1.89
+      },
+      {
+        "filename": "abc_teacher_educational_music_enhanced.wav",
+        "local_path": "audio_output/abc_teacher_educational_music_enhanced.wav",
+        "remote_key": "audio/abc_teacher_educational_music_enhanced.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/abc_teacher_educational_music_enhanced.wav",
+        "size_mb": 2.1
+      },
+      {
+        "filename": "abc_song_with_drums.wav",
+        "local_path": "audio_output/abc_song_with_drums.wav",
+        "remote_key": "audio/abc_song_with_drums.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/abc_song_with_drums.wav",
+        "size_mb": 2.1
+      },
+      {
+        "filename": "abc_real_boy_excited.wav",
+        "local_path": "audio_output/abc_real_boy_excited.wav",
+        "remote_key": "audio/abc_real_boy_excited.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/abc_real_boy_excited.wav",
+        "size_mb": 0.44
+      },
+      {
+        "filename": "abc_teacher_mrs_garcia_bilingual.wav",
+        "local_path": "audio_output/abc_teacher_mrs_garcia_bilingual.wav",
+        "remote_key": "audio/abc_teacher_mrs_garcia_bilingual.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/abc_teacher_mrs_garcia_bilingual.wav",
+        "size_mb": 0.83
+      },
+      {
+        "filename": "abc_teacher_mr_davis_elementary.wav",
+        "local_path": "audio_output/abc_teacher_mr_davis_elementary.wav",
+        "remote_key": "audio/abc_teacher_mr_davis_elementary.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/abc_teacher_mr_davis_elementary.wav",
+        "size_mb": 0.8
+      },
+      {
+        "filename": "abc_kids_chorus_musical_enhanced.wav",
+        "local_path": "audio_output/abc_kids_chorus_musical_enhanced.wav",
+        "remote_key": "audio/abc_kids_chorus_musical_enhanced.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/abc_kids_chorus_musical_enhanced.wav",
+        "size_mb": 2.1
+      },
+      {
+        "filename": "abc_song_full_orchestra_enhanced.wav",
+        "local_path": "audio_output/abc_song_full_orchestra_enhanced.wav",
+        "remote_key": "audio/abc_song_full_orchestra_enhanced.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/abc_song_full_orchestra_enhanced.wav",
+        "size_mb": 2.1
+      },
+      {
+        "filename": "abc_teacher_ms_johnson_kindergarten.wav",
+        "local_path": "audio_output/abc_teacher_ms_johnson_kindergarten.wav",
+        "remote_key": "audio/abc_teacher_ms_johnson_kindergarten.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/abc_teacher_ms_johnson_kindergarten.wav",
+        "size_mb": 0.65
+      },
+      {
+        "filename": "song_rock_thunder_road.wav",
+        "local_path": "audio_output/song_rock_thunder_road.wav",
+        "remote_key": "audio/song_rock_thunder_road.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/song_rock_thunder_road.wav",
+        "size_mb": 2.1
+      },
+      {
+        "filename": "abc_voice_teacher_excited.wav",
+        "local_path": "audio_output/abc_voice_teacher_excited.wav",
+        "remote_key": "audio/abc_voice_teacher_excited.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/abc_voice_teacher_excited.wav",
+        "size_mb": 0.01
+      },
+      {
+        "filename": "abc_voice_teacher_ms_smith.wav",
+        "local_path": "audio_output/abc_voice_teacher_ms_smith.wav",
+        "remote_key": "audio/abc_voice_teacher_ms_smith.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/abc_voice_teacher_ms_smith.wav",
+        "size_mb": 0.03
+      },
+      {
+        "filename": "abc_real_girl_singing.wav",
+        "local_path": "audio_output/abc_real_girl_singing.wav",
+        "remote_key": "audio/abc_real_girl_singing.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/abc_real_girl_singing.wav",
+        "size_mb": 0.98
+      },
+      {
+        "filename": "abc_teacher_grandma_storyteller.wav",
+        "local_path": "audio_output/abc_teacher_grandma_storyteller.wav",
+        "remote_key": "audio/abc_teacher_grandma_storyteller.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/abc_teacher_grandma_storyteller.wav",
+        "size_mb": 0.84
+      },
+      {
+        "filename": "abc_clear_teacher_female_clear.wav",
+        "local_path": "audio_output/abc_clear_teacher_female_clear.wav",
+        "remote_key": "audio/abc_clear_teacher_female_clear.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/abc_clear_teacher_female_clear.wav",
+        "size_mb": 0.76
+      },
+      {
+        "filename": "song_classical_royal_dance.wav",
+        "local_path": "audio_output/song_classical_royal_dance.wav",
+        "remote_key": "audio/song_classical_royal_dance.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/song_classical_royal_dance.wav",
+        "size_mb": 2.52
+      },
+      {
+        "filename": "enhanced_animals_abc.wav",
+        "local_path": "audio_output/enhanced_animals_abc.wav",
+        "remote_key": "audio/enhanced_animals_abc.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/enhanced_animals_abc.wav",
+        "size_mb": 2.34
+      },
+      {
+        "filename": "song_pop_dancing_tonight.wav",
+        "local_path": "audio_output/song_pop_dancing_tonight.wav",
+        "remote_key": "audio/song_pop_dancing_tonight.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/song_pop_dancing_tonight.wav",
+        "size_mb": 1.68
+      },
+      {
+        "filename": "abc_real_male_teacher.wav",
+        "local_path": "audio_output/abc_real_male_teacher.wav",
+        "remote_key": "audio/abc_real_male_teacher.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/abc_real_male_teacher.wav",
+        "size_mb": 0.68
+      },
+      {
+        "filename": "abc_kids_teacher_duet_enhanced.wav",
+        "local_path": "audio_output/abc_kids_teacher_duet_enhanced.wav",
+        "remote_key": "audio/abc_kids_teacher_duet_enhanced.wav",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/audio/abc_kids_teacher_duet_enhanced.wav",
+        "size_mb": 2.1
+      }
+    ],
+    "videos": [
+      {
+        "filename": "youtube_professional_energetic_boy_tommy.mp4",
+        "local_path": "video_output/youtube_professional_energetic_boy_tommy.mp4",
+        "remote_key": "videos/youtube_professional_energetic_boy_tommy.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/youtube_professional_energetic_boy_tommy.mp4",
+        "size_mb": 6.15
+      },
+      {
+        "filename": "abc_video_teacher_piano_with_audio.mp4",
+        "local_path": "video_output/abc_video_teacher_piano_with_audio.mp4",
+        "remote_key": "videos/abc_video_teacher_piano_with_audio.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/abc_video_teacher_piano_with_audio.mp4",
+        "size_mb": 1.83
+      },
+      {
+        "filename": "abc_real_singing_teacher_lesson_with_audio.mp4",
+        "local_path": "video_output/abc_real_singing_teacher_lesson_with_audio.mp4",
+        "remote_key": "videos/abc_real_singing_teacher_lesson_with_audio.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/abc_real_singing_teacher_lesson_with_audio.mp4",
+        "size_mb": 0.33
+      },
+      {
+        "filename": "enhanced_space_abc.mp4",
+        "local_path": "video_output/enhanced_space_abc.mp4",
+        "remote_key": "videos/enhanced_space_abc.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/enhanced_space_abc.mp4",
+        "size_mb": 3.4
+      },
+      {
+        "filename": "youtube_professional_classroom_teacher.mp4",
+        "local_path": "video_output/youtube_professional_classroom_teacher.mp4",
+        "remote_key": "videos/youtube_professional_classroom_teacher.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/youtube_professional_classroom_teacher.mp4",
+        "size_mb": 11.2
+      },
+      {
+        "filename": "abc_final_teacher_female_with_audio.mp4",
+        "local_path": "video_output/abc_final_teacher_female_with_audio.mp4",
+        "remote_key": "videos/abc_final_teacher_female_with_audio.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/abc_final_teacher_female_with_audio.mp4",
+        "size_mb": 15.86
+      },
+      {
+        "filename": "abc_video_kids_chorus_with_audio.mp4",
+        "local_path": "video_output/abc_video_kids_chorus_with_audio.mp4",
+        "remote_key": "videos/abc_video_kids_chorus_with_audio.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/abc_video_kids_chorus_with_audio.mp4",
+        "size_mb": 1.83
+      },
+      {
+        "filename": "youtube_professional_professional_teacher_female.mp4",
+        "local_path": "video_output/youtube_professional_professional_teacher_female.mp4",
+        "remote_key": "videos/youtube_professional_professional_teacher_female.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/youtube_professional_professional_teacher_female.mp4",
+        "size_mb": 11.67
+      },
+      {
+        "filename": "abc_video_real_male_teacher_with_audio.mp4",
+        "local_path": "video_output/abc_video_real_male_teacher_with_audio.mp4",
+        "remote_key": "videos/abc_video_real_male_teacher_with_audio.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/abc_video_real_male_teacher_with_audio.mp4",
+        "size_mb": 1.41
+      },
+      {
+        "filename": "youtube_professional_gentle_grandma_mary.mp4",
+        "local_path": "video_output/youtube_professional_gentle_grandma_mary.mp4",
+        "remote_key": "videos/youtube_professional_gentle_grandma_mary.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/youtube_professional_gentle_grandma_mary.mp4",
+        "size_mb": 13.31
+      },
+      {
+        "filename": "youtube_style_abc_voice_teacher_ms_smith.mp4",
+        "local_path": "video_output/youtube_style_abc_voice_teacher_ms_smith.mp4",
+        "remote_key": "videos/youtube_style_abc_voice_teacher_ms_smith.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/youtube_style_abc_voice_teacher_ms_smith.mp4",
+        "size_mb": 0.34
+      },
+      {
+        "filename": "abc_real_singing_teacher_female_with_audio.mp4",
+        "local_path": "video_output/abc_real_singing_teacher_female_with_audio.mp4",
+        "remote_key": "videos/abc_real_singing_teacher_female_with_audio.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/abc_real_singing_teacher_female_with_audio.mp4",
+        "size_mb": 0.93
+      },
+      {
+        "filename": "youtube_style_abc_voice_teacher_lesson.mp4",
+        "local_path": "video_output/youtube_style_abc_voice_teacher_lesson.mp4",
+        "remote_key": "videos/youtube_style_abc_voice_teacher_lesson.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/youtube_style_abc_voice_teacher_lesson.mp4",
+        "size_mb": 0.09
+      },
+      {
+        "filename": "enhanced_animals_abc.mp4",
+        "local_path": "video_output/enhanced_animals_abc.mp4",
+        "remote_key": "videos/enhanced_animals_abc.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/enhanced_animals_abc.mp4",
+        "size_mb": 2.78
+      },
+      {
+        "filename": "abc_video_lily_age_5_with_audio.mp4",
+        "local_path": "video_output/abc_video_lily_age_5_with_audio.mp4",
+        "remote_key": "videos/abc_video_lily_age_5_with_audio.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/abc_video_lily_age_5_with_audio.mp4",
+        "size_mb": 1.6
+      },
+      {
+        "filename": "abc_real_singing_child_boy_with_audio.mp4",
+        "local_path": "video_output/abc_real_singing_child_boy_with_audio.mp4",
+        "remote_key": "videos/abc_real_singing_child_boy_with_audio.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/abc_real_singing_child_boy_with_audio.mp4",
+        "size_mb": 1.18
+      },
+      {
+        "filename": "youtube_style_abc_voice_teacher_mr_johnson.mp4",
+        "local_path": "video_output/youtube_style_abc_voice_teacher_mr_johnson.mp4",
+        "remote_key": "videos/youtube_style_abc_voice_teacher_mr_johnson.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/youtube_style_abc_voice_teacher_mr_johnson.mp4",
+        "size_mb": 0.18
+      },
+      {
+        "filename": "youtube_style_abc_voice_emma_classic.mp4",
+        "local_path": "video_output/youtube_style_abc_voice_emma_classic.mp4",
+        "remote_key": "videos/youtube_style_abc_voice_emma_classic.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/youtube_style_abc_voice_emma_classic.mp4",
+        "size_mb": 0.34
+      },
+      {
+        "filename": "abc_video_real_grandma_gentle_with_audio.mp4",
+        "local_path": "video_output/abc_video_real_grandma_gentle_with_audio.mp4",
+        "remote_key": "videos/abc_video_real_grandma_gentle_with_audio.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/abc_video_real_grandma_gentle_with_audio.mp4",
+        "size_mb": 2.76
+      },
+      {
+        "filename": "abc_final_teacher_male_with_audio.mp4",
+        "local_path": "video_output/abc_final_teacher_male_with_audio.mp4",
+        "remote_key": "videos/abc_final_teacher_male_with_audio.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/abc_final_teacher_male_with_audio.mp4",
+        "size_mb": 19.15
+      },
+      {
+        "filename": "abc_video_real_boy_excited_with_audio.mp4",
+        "local_path": "video_output/abc_video_real_boy_excited_with_audio.mp4",
+        "remote_key": "videos/abc_video_real_boy_excited_with_audio.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/abc_video_real_boy_excited_with_audio.mp4",
+        "size_mb": 1.16
+      },
+      {
+        "filename": "abc_final_child_girl_with_audio.mp4",
+        "local_path": "video_output/abc_final_child_girl_with_audio.mp4",
+        "remote_key": "videos/abc_final_child_girl_with_audio.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/abc_final_child_girl_with_audio.mp4",
+        "size_mb": 9.83
+      },
+      {
+        "filename": "abc_final_grandma_with_audio.mp4",
+        "local_path": "video_output/abc_final_grandma_with_audio.mp4",
+        "remote_key": "videos/abc_final_grandma_with_audio.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/abc_final_grandma_with_audio.mp4",
+        "size_mb": 19.88
+      },
+      {
+        "filename": "abc_video_real_teacher_lesson_with_audio.mp4",
+        "local_path": "video_output/abc_video_real_teacher_lesson_with_audio.mp4",
+        "remote_key": "videos/abc_video_real_teacher_lesson_with_audio.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/abc_video_real_teacher_lesson_with_audio.mp4",
+        "size_mb": 2.75
+      },
+      {
+        "filename": "abc_video_ms_johnson_with_audio.mp4",
+        "local_path": "video_output/abc_video_ms_johnson_with_audio.mp4",
+        "remote_key": "videos/abc_video_ms_johnson_with_audio.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/abc_video_ms_johnson_with_audio.mp4",
+        "size_mb": 1.34
+      },
+      {
+        "filename": "youtube_professional_sweet_girl_lily.mp4",
+        "local_path": "video_output/youtube_professional_sweet_girl_lily.mp4",
+        "remote_key": "videos/youtube_professional_sweet_girl_lily.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/youtube_professional_sweet_girl_lily.mp4",
+        "size_mb": 8.25
+      },
+      {
+        "filename": "youtube_professional_super_fun_abc.mp4",
+        "local_path": "video_output/youtube_professional_super_fun_abc.mp4",
+        "remote_key": "videos/youtube_professional_super_fun_abc.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/youtube_professional_super_fun_abc.mp4",
+        "size_mb": 7.27
+      },
+      {
+        "filename": "youtube_style_abc_voice_teacher_excited.mp4",
+        "local_path": "video_output/youtube_style_abc_voice_teacher_excited.mp4",
+        "remote_key": "videos/youtube_style_abc_voice_teacher_excited.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/youtube_style_abc_voice_teacher_excited.mp4",
+        "size_mb": 0.22
+      },
+      {
+        "filename": "abc_real_singing_child_girl_with_audio.mp4",
+        "local_path": "video_output/abc_real_singing_child_girl_with_audio.mp4",
+        "remote_key": "videos/abc_real_singing_child_girl_with_audio.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/abc_real_singing_child_girl_with_audio.mp4",
+        "size_mb": 0.94
+      },
+      {
+        "filename": "abc_final_child_boy_with_audio.mp4",
+        "local_path": "video_output/abc_final_child_boy_with_audio.mp4",
+        "remote_key": "videos/abc_final_child_boy_with_audio.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/abc_final_child_boy_with_audio.mp4",
+        "size_mb": 8.03
+      },
+      {
+        "filename": "abc_real_singing_grandma_with_audio.mp4",
+        "local_path": "video_output/abc_real_singing_grandma_with_audio.mp4",
+        "remote_key": "videos/abc_real_singing_grandma_with_audio.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/abc_real_singing_grandma_with_audio.mp4",
+        "size_mb": 0.84
+      },
+      {
+        "filename": "abc_video_real_girl_singing_with_audio.mp4",
+        "local_path": "video_output/abc_video_real_girl_singing_with_audio.mp4",
+        "remote_key": "videos/abc_video_real_girl_singing_with_audio.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/abc_video_real_girl_singing_with_audio.mp4",
+        "size_mb": 1.84
+      },
+      {
+        "filename": "youtube_style_abc_voice_grandma_mary.mp4",
+        "local_path": "video_output/youtube_style_abc_voice_grandma_mary.mp4",
+        "remote_key": "videos/youtube_style_abc_voice_grandma_mary.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/youtube_style_abc_voice_grandma_mary.mp4",
+        "size_mb": 0.33
+      },
+      {
+        "filename": "abc_video_teacher_kids_duet_with_audio.mp4",
+        "local_path": "video_output/abc_video_teacher_kids_duet_with_audio.mp4",
+        "remote_key": "videos/abc_video_teacher_kids_duet_with_audio.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/abc_video_teacher_kids_duet_with_audio.mp4",
+        "size_mb": 1.83
+      },
+      {
+        "filename": "abc_video_real_kids_chorus_with_audio.mp4",
+        "local_path": "video_output/abc_video_real_kids_chorus_with_audio.mp4",
+        "remote_key": "videos/abc_video_real_kids_chorus_with_audio.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/abc_video_real_kids_chorus_with_audio.mp4",
+        "size_mb": 1.29
+      },
+      {
+        "filename": "youtube_style_abc_voice_lily_age_5.mp4",
+        "local_path": "video_output/youtube_style_abc_voice_lily_age_5.mp4",
+        "remote_key": "videos/youtube_style_abc_voice_lily_age_5.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/youtube_style_abc_voice_lily_age_5.mp4",
+        "size_mb": 0.38
+      },
+      {
+        "filename": "youtube_style_abc_voice_tommy_age_6.mp4",
+        "local_path": "video_output/youtube_style_abc_voice_tommy_age_6.mp4",
+        "remote_key": "videos/youtube_style_abc_voice_tommy_age_6.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/youtube_style_abc_voice_tommy_age_6.mp4",
+        "size_mb": 0.44
+      },
+      {
+        "filename": "enhanced_food_abc.mp4",
+        "local_path": "video_output/enhanced_food_abc.mp4",
+        "remote_key": "videos/enhanced_food_abc.mp4",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/videos/enhanced_food_abc.mp4",
+        "size_mb": 1.38
+      }
+    ],
+    "podcasts": [
+      {
+        "filename": "podcast_math_adventures_20250625_175822.mp3",
+        "local_path": "podcast_output/podcast_math_adventures_20250625_175822.mp3",
+        "remote_key": "podcasts/podcast_math_adventures_20250625_175822.mp3",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/podcasts/podcast_math_adventures_20250625_175822.mp3",
+        "size_mb": 0.53
+      },
+      {
+        "filename": "podcast_science_fun_20250625_175821.mp3",
+        "local_path": "podcast_output/podcast_science_fun_20250625_175821.mp3",
+        "remote_key": "podcasts/podcast_science_fun_20250625_175821.mp3",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/podcasts/podcast_science_fun_20250625_175821.mp3",
+        "size_mb": 0.55
+      },
+      {
+        "filename": "podcast_science_fun_20250625_175820.mp3",
+        "local_path": "podcast_output/podcast_science_fun_20250625_175820.mp3",
+        "remote_key": "podcasts/podcast_science_fun_20250625_175820.mp3",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/podcasts/podcast_science_fun_20250625_175820.mp3",
+        "size_mb": 0.57
+      },
+      {
+        "filename": "podcast_math_adventures_20250625_175823.mp3",
+        "local_path": "podcast_output/podcast_math_adventures_20250625_175823.mp3",
+        "remote_key": "podcasts/podcast_math_adventures_20250625_175823.mp3",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/podcasts/podcast_math_adventures_20250625_175823.mp3",
+        "size_mb": 0.5
+      },
+      {
+        "filename": "interview_teacher_interview_20250625_175823.mp3",
+        "local_path": "podcast_output/interview_teacher_interview_20250625_175823.mp3",
+        "remote_key": "podcasts/interview_teacher_interview_20250625_175823.mp3",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/podcasts/interview_teacher_interview_20250625_175823.mp3",
+        "size_mb": 1.25
+      },
+      {
+        "filename": "podcast_abc_stories_20250625_175820.mp3",
+        "local_path": "podcast_output/podcast_abc_stories_20250625_175820.mp3",
+        "remote_key": "podcasts/podcast_abc_stories_20250625_175820.mp3",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/podcasts/podcast_abc_stories_20250625_175820.mp3",
+        "size_mb": 0.46
+      },
+      {
+        "filename": "podcast_abc_stories_20250625_175819.mp3",
+        "local_path": "podcast_output/podcast_abc_stories_20250625_175819.mp3",
+        "remote_key": "podcasts/podcast_abc_stories_20250625_175819.mp3",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/podcasts/podcast_abc_stories_20250625_175819.mp3",
+        "size_mb": 0.47
+      },
+      {
+        "filename": "podcast_metadata.json",
+        "local_path": "podcast_output/podcast_metadata.json",
+        "remote_key": "podcasts/podcast_metadata.json",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/podcasts/podcast_metadata.json",
+        "size_mb": 0.0
+      },
+      {
+        "filename": "interview_expert_discussion_20250625_175824.mp3",
+        "local_path": "podcast_output/interview_expert_discussion_20250625_175824.mp3",
+        "remote_key": "podcasts/interview_expert_discussion_20250625_175824.mp3",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/podcasts/interview_expert_discussion_20250625_175824.mp3",
+        "size_mb": 1.14
+      },
+      {
+        "filename": "interview_student_showcase_20250625_175823.mp3",
+        "local_path": "podcast_output/interview_student_showcase_20250625_175823.mp3",
+        "remote_key": "podcasts/interview_student_showcase_20250625_175823.mp3",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/podcasts/interview_student_showcase_20250625_175823.mp3",
+        "size_mb": 1.02
+      }
+    ],
+    "interviews": [
+      {
+        "filename": "live_interview_innovative_teaching_20250625_180248.mp3",
+        "local_path": "interview_output/live_interview_innovative_teaching_20250625_180248.mp3",
+        "remote_key": "interviews/live_interview_innovative_teaching_20250625_180248.mp3",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/interviews/live_interview_innovative_teaching_20250625_180248.mp3",
+        "size_mb": 4.24
+      },
+      {
+        "filename": "live_interview_innovative_teaching_20250625_180336.mp3",
+        "local_path": "interview_output/live_interview_innovative_teaching_20250625_180336.mp3",
+        "remote_key": "interviews/live_interview_innovative_teaching_20250625_180336.mp3",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/interviews/live_interview_innovative_teaching_20250625_180336.mp3",
+        "size_mb": 3.92
+      },
+      {
+        "filename": "live_interview_innovative_teaching_20250625_180248_transcript.txt",
+        "local_path": "interview_output/live_interview_innovative_teaching_20250625_180248_transcript.txt",
+        "remote_key": "interviews/live_interview_innovative_teaching_20250625_180248_transcript.txt",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/interviews/live_interview_innovative_teaching_20250625_180248_transcript.txt",
+        "size_mb": 0.0
+      },
+      {
+        "filename": "live_interview_literacy_specialists_20250625_180251.mp3",
+        "local_path": "interview_output/live_interview_literacy_specialists_20250625_180251.mp3",
+        "remote_key": "interviews/live_interview_literacy_specialists_20250625_180251.mp3",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/interviews/live_interview_literacy_specialists_20250625_180251.mp3",
+        "size_mb": 5.21
+      },
+      {
+        "filename": "live_interview_literacy_specialists_20250625_180339.mp3",
+        "local_path": "interview_output/live_interview_literacy_specialists_20250625_180339.mp3",
+        "remote_key": "interviews/live_interview_literacy_specialists_20250625_180339.mp3",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/interviews/live_interview_literacy_specialists_20250625_180339.mp3",
+        "size_mb": 5.81
+      },
+      {
+        "filename": "live_interview_innovative_teaching_20250625_180336_transcript.txt",
+        "local_path": "interview_output/live_interview_innovative_teaching_20250625_180336_transcript.txt",
+        "remote_key": "interviews/live_interview_innovative_teaching_20250625_180336_transcript.txt",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/interviews/live_interview_innovative_teaching_20250625_180336_transcript.txt",
+        "size_mb": 0.0
+      },
+      {
+        "filename": "live_interview_metadata.json",
+        "local_path": "interview_output/live_interview_metadata.json",
+        "remote_key": "interviews/live_interview_metadata.json",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/interviews/live_interview_metadata.json",
+        "size_mb": 0.0
+      },
+      {
+        "filename": "live_interview_student_voice_panel_20250625_180334.mp3",
+        "local_path": "interview_output/live_interview_student_voice_panel_20250625_180334.mp3",
+        "remote_key": "interviews/live_interview_student_voice_panel_20250625_180334.mp3",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/interviews/live_interview_student_voice_panel_20250625_180334.mp3",
+        "size_mb": 5.61
+      },
+      {
+        "filename": "live_interview_education_roundtable_20250625_180330.mp3",
+        "local_path": "interview_output/live_interview_education_roundtable_20250625_180330.mp3",
+        "remote_key": "interviews/live_interview_education_roundtable_20250625_180330.mp3",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/interviews/live_interview_education_roundtable_20250625_180330.mp3",
+        "size_mb": 8.31
+      },
+      {
+        "filename": "live_interview_student_voice_panel_20250625_180245_transcript.txt",
+        "local_path": "interview_output/live_interview_student_voice_panel_20250625_180245_transcript.txt",
+        "remote_key": "interviews/live_interview_student_voice_panel_20250625_180245_transcript.txt",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/interviews/live_interview_student_voice_panel_20250625_180245_transcript.txt",
+        "size_mb": 0.0
+      },
+      {
+        "filename": "live_interview_student_voice_panel_20250625_180334_transcript.txt",
+        "local_path": "interview_output/live_interview_student_voice_panel_20250625_180334_transcript.txt",
+        "remote_key": "interviews/live_interview_student_voice_panel_20250625_180334_transcript.txt",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/interviews/live_interview_student_voice_panel_20250625_180334_transcript.txt",
+        "size_mb": 0.0
+      },
+      {
+        "filename": "live_interview_education_roundtable_20250625_180330_transcript.txt",
+        "local_path": "interview_output/live_interview_education_roundtable_20250625_180330_transcript.txt",
+        "remote_key": "interviews/live_interview_education_roundtable_20250625_180330_transcript.txt",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/interviews/live_interview_education_roundtable_20250625_180330_transcript.txt",
+        "size_mb": 0.01
+      },
+      {
+        "filename": "live_interview_education_roundtable_20250625_180240.mp3",
+        "local_path": "interview_output/live_interview_education_roundtable_20250625_180240.mp3",
+        "remote_key": "interviews/live_interview_education_roundtable_20250625_180240.mp3",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/interviews/live_interview_education_roundtable_20250625_180240.mp3",
+        "size_mb": 9.09
+      },
+      {
+        "filename": "live_interview_literacy_specialists_20250625_180339_transcript.txt",
+        "local_path": "interview_output/live_interview_literacy_specialists_20250625_180339_transcript.txt",
+        "remote_key": "interviews/live_interview_literacy_specialists_20250625_180339_transcript.txt",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/interviews/live_interview_literacy_specialists_20250625_180339_transcript.txt",
+        "size_mb": 0.0
+      },
+      {
+        "filename": "live_interview_education_roundtable_20250625_180240_transcript.txt",
+        "local_path": "interview_output/live_interview_education_roundtable_20250625_180240_transcript.txt",
+        "remote_key": "interviews/live_interview_education_roundtable_20250625_180240_transcript.txt",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/interviews/live_interview_education_roundtable_20250625_180240_transcript.txt",
+        "size_mb": 0.01
+      },
+      {
+        "filename": "live_interview_literacy_specialists_20250625_180251_transcript.txt",
+        "local_path": "interview_output/live_interview_literacy_specialists_20250625_180251_transcript.txt",
+        "remote_key": "interviews/live_interview_literacy_specialists_20250625_180251_transcript.txt",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/interviews/live_interview_literacy_specialists_20250625_180251_transcript.txt",
+        "size_mb": 0.0
+      },
+      {
+        "filename": "live_interview_student_voice_panel_20250625_180245.mp3",
+        "local_path": "interview_output/live_interview_student_voice_panel_20250625_180245.mp3",
+        "remote_key": "interviews/live_interview_student_voice_panel_20250625_180245.mp3",
+        "public_url": "https://s3.wasabisys.com/ai-video-generator-content/interviews/live_interview_student_voice_panel_20250625_180245.mp3",
+        "size_mb": 5.33
+      }
+    ]
+  },
+  "stats": {
+    "total_files": 110,
+    "total_size_mb": 284.78000000000003
+  }
+}
