@@ -29,6 +29,34 @@ env/
 ENV/
 .venv/
 
+# Node.js and Frontend
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.npm
+.eslintcache
+.next/
+.nuxt/
+.vuepress/dist
+.serverless/
+.fusebox/
+.dynamodb/
+.tern-port
+out/
+build/
+dist/
+
+# Frontend build artifacts
+*.tsbuildinfo
+.cache/
+.parcel-cache/
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
 # IDE
 .vscode/
 .idea/
@@ -98,3 +126,34 @@ coverage.xml
 
 # Docker
 .dockerignore
+
+# Large dependency management (handled by Wasabi cloud system)
+frontend/node_modules/
+frontend/.next/
+frontend/.cache/
+frontend/dist/
+frontend/build/
+**/node_modules/
+**/.next/
+**/.cache/
+**/dist/
+**/build/
+
+# Webpack and build caches
+.webpack/
+.babel_cache/
+*.chunk.js
+*.chunk.css
+*.chunk.js.map
+*.chunk.css.map
+
+# Package manager lock files (optional - some teams prefer to commit these)
+# package-lock.json
+# yarn.lock
+
+# Large binary files that should use cloud storage
+*.wasm
+*.node
+*.so.*
+*.dylib
+*.dll
