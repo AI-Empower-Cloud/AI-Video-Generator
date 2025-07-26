@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📋 AI Video Planner - Notion-like Planning</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a1a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .app-container {
+            display: grid;
+            grid-template-areas: 
+                "header header header"
+                "sidebar main activity"
+                "sidebar main activity";
+            grid-template-rows: 70px 1fr;
+            grid-template-columns: 280px 1fr 320px;
+            height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            grid-area: header;
+            background: #2d2d2d;
+            border-bottom: 1px solid #404040;
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            justify-content: space-between;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn:hover {
+            background: #0056b3;
+            transform: translateY(-1px);
+        }
+
+        .btn.secondary {
+            background: #6c757d;
+        }
+
+        .btn.secondary:hover {
+            background: #545b62;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            grid-area: sidebar;
+            background: #2d2d2d;
+            border-right: 1px solid #404040;
+            padding: 24px;
+            overflow-y: auto;
+        }
+
+        .sidebar-section {
+            margin-bottom: 32px;
+        }
+
+        .sidebar-section h3 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .sidebar-item:hover {
+            background: #404040;
+        }
+
+        .sidebar-item.active {
+            background: #007bff;
+        }
+
+        .sidebar-item .icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+        }
+
+        /* Main Content */
+        .main {
+            grid-area: main;
+            background: #1a1a1a;
+            padding: 24px;
+            overflow-y: auto;
+        }
+
+        .main-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .main-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .main-subtitle {
+            font-size: 16px;
+            color: #888;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: #2d2d2d;
+            border: 1px solid #404040;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: #007bff;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #888;
+        }
+
+        /* Document List */
+        .document-list {
+            background: #2d2d2d;
+            border: 1px solid #404040;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        .document-list-header {
+            background: #404040;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .document-list-header h3 {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .document-item {
+            padding: 16px 20px;
+            border-bottom: 1px solid #404040;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .document-item:hover {
+            background: #404040;
+        }
+
+        .document-item:last-child {
+            border-bottom: none;
+        }
+
+        .document-info h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .document-meta {
+            font-size: 14px;
+            color: #888;
+        }
+
+        .document-type {
+            background: #007bff;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* Activity Feed */
+        .activity {
+            grid-area: activity;
+            background: #2d2d2d;
+            border-left: 1px solid #404040;
+            padding: 24px;
+            overflow-y: auto;
+        }
+
+        .activity h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .activity-item {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #404040;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #007bff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-text {
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .activity-time {
+            font-size: 12px;
+            color: #888;
+        }
+
+        /* Task List */
+        .task-list {
+            background: #2d2d2d;
+            border: 1px solid #404040;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .task-item {
+            padding: 12px 16px;
+            border-bottom: 1px solid #404040;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .task-item:last-child {
+            border-bottom: none;
+        }
+
+        .task-checkbox {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #666;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .task-checkbox.completed {
+            background: #28a745;
+            border-color: #28a745;
+        }
+
+        .task-content {
+            flex: 1;
+        }
+
+        .task-title {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .task-meta {
+            font-size: 12px;
+            color: #888;
+            margin-top: 4px;
+        }
+
+        .task-priority {
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .task-priority.high {
+            background: #dc3545;
+            color: white;
+        }
+
+        .task-priority.medium {
+            background: #ffc107;
+            color: black;
+        }
+
+        .task-priority.low {
+            background: #28a745;
+            color: white;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: #2d2d2d;
+            border-radius: 8px;
+            padding: 24px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            background: #404040;
+            border: 1px solid #666;
+            border-radius: 4px;
+            padding: 8px 12px;
+            color: white;
+            font-size: 14px;
+        }
+
+        .form-textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .app-container {
+                grid-template-areas: 
+                    "header header"
+                    "main main";
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar,
+            .activity {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <div class="header">
+            <h1>📋 AI Video Planner</h1>
+            <div class="header-actions">
+                <button class="btn" onclick="showCreateModal()">
+                    ➕ New Document
+                </button>
+                <button class="btn secondary" onclick="showTaskModal()">
+                    ✅ Add Task
+                </button>
+                <button class="btn secondary" onclick="generatePreview()">
+                    🎬 Generate Preview
+                </button>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-section">
+                <h3>Navigation</h3>
+                <div class="sidebar-item active" onclick="showDashboard()">
+                    <span class="icon">📊</span>
+                    Dashboard
+                </div>
+                <div class="sidebar-item" onclick="showDocuments()">
+                    <span class="icon">📝</span>
+                    Documents
+                </div>
+                <div class="sidebar-item" onclick="showTasks()">
+                    <span class="icon">✅</span>
+                    Tasks
+                </div>
+                <div class="sidebar-item" onclick="showStoryboard()">
+                    <span class="icon">🎬</span>
+                    Storyboard
+                </div>
+                <div class="sidebar-item" onclick="showPreviews()">
+                    <span class="icon">📹</span>
+                    Previews
+                </div>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3>Templates</h3>
+                <div class="sidebar-item" onclick="createFromTemplate('video_brief')">
+                    <span class="icon">🎯</span>
+                    Video Brief
+                </div>
+                <div class="sidebar-item" onclick="createFromTemplate('production_checklist')">
+                    <span class="icon">📋</span>
+                    Production Checklist
+                </div>
+                <div class="sidebar-item" onclick="createFromTemplate('storyboard_template')">
+                    <span class="icon">🎨</span>
+                    Storyboard
+                </div>
+                <div class="sidebar-item" onclick="createFromTemplate('script_template')">
+                    <span class="icon">📜</span>
+                    Script
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main">
+            <!-- Dashboard View -->
+            <div id="dashboard-view">
+                <div class="main-header">
+                    <div>
+                        <h2 class="main-title">Project Dashboard</h2>
+                        <p class="main-subtitle">Manage your video project planning and documentation</p>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="stat-documents">0</div>
+                        <div class="stat-label">Documents</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="stat-tasks">0</div>
+                        <div class="stat-label">Tasks</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="stat-completed">0</div>
+                        <div class="stat-label">Completed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="stat-comments">0</div>
+                        <div class="stat-label">Comments</div>
+                    </div>
+                </div>
+
+                <div class="document-list">
+                    <div class="document-list-header">
+                        <h3>Recent Documents</h3>
+                        <button class="btn" onclick="showCreateModal()">Add Document</button>
+                    </div>
+                    <div id="recent-documents">
+                        <!-- Documents will be loaded here -->
+                    </div>
+                </div>
+
+                <div class="task-list">
+                    <div class="document-list-header">
+                        <h3>Active Tasks</h3>
+                        <button class="btn" onclick="showTaskModal()">Add Task</button>
+                    </div>
+                    <div id="active-tasks">
+                        <!-- Tasks will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other views will be added here -->
+        </div>
+
+        <!-- Activity Feed -->
+        <div class="activity">
+            <h3>Recent Activity</h3>
+            <div id="activity-feed">
+                <!-- Activity items will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Document Modal -->
+    <div class="modal" id="create-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Create New Document</h3>
+                <button class="close-btn" onclick="hideModal('create-modal')">&times;</button>
+            </div>
+            <form id="create-form">
+                <div class="form-group">
+                    <label class="form-label">Title</label>
+                    <input type="text" class="form-input" id="doc-title" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Type</label>
+                    <select class="form-select" id="doc-type" required>
+                        <option value="project_brief">Project Brief</option>
+                        <option value="storyboard">Storyboard</option>
+                        <option value="script">Script</option>
+                        <option value="task_list">Task List</option>
+                        <option value="notes">Notes</option>
+                        <option value="reference">Reference</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Author</label>
+                    <input type="text" class="form-input" id="doc-author" value="user">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn">Create Document</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Create Task Modal -->
+    <div class="modal" id="task-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Create New Task</h3>
+                <button class="close-btn" onclick="hideModal('task-modal')">&times;</button>
+            </div>
+            <form id="task-form">
+                <div class="form-group">
+                    <label class="form-label">Title</label>
+                    <input type="text" class="form-input" id="task-title" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-textarea" id="task-description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Priority</label>
+                    <select class="form-select" id="task-priority">
+                        <option value="low">Low</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="high">High</option>
+                        <option value="urgent">Urgent</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Assignee</label>
+                    <input type="text" class="form-input" id="task-assignee">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Due Date</label>
+                    <input type="date" class="form-input" id="task-due-date">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn">Create Task</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentProject = 'demo_project';
+        let documents = [];
+        let tasks = [];
+        let stats = { documents: 0, tasks: 0, completed: 0, comments: 0 };
+
+        // API Base URL
+        const API_BASE = '/api/notion';
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            loadDashboard();
+            loadDocuments();
+            loadTasks();
+            loadActivity();
+        });
+
+        // Modal functions
+        function showModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+
+        function hideModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        function showCreateModal() {
+            showModal('create-modal');
+        }
+
+        function showTaskModal() {
+            showModal('task-modal');
+        }
+
+        // Navigation functions
+        function showDashboard() {
+            // Update active sidebar item
+            document.querySelectorAll('.sidebar-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            loadDashboard();
+        }
+
+        // Load dashboard data
+        async function loadDashboard() {
+            try {
+                const response = await fetch(`${API_BASE}/dashboard/${currentProject}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    updateStats(data.dashboard.stats);
+                    updateRecentDocuments(data.dashboard.documents || []);
+                    updateActiveTasks(data.dashboard.tasks || []);
+                }
+            } catch (error) {
+                console.error('Failed to load dashboard:', error);
+            }
+        }
+
+        // Load documents
+        async function loadDocuments() {
+            try {
+                const response = await fetch(`${API_BASE}/documents/${currentProject}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    documents = data.documents;
+                    updateRecentDocuments(documents.slice(0, 5));
+                }
+            } catch (error) {
+                console.error('Failed to load documents:', error);
+            }
+        }
+
+        // Load tasks
+        async function loadTasks() {
+            try {
+                const response = await fetch(`${API_BASE}/tasks`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    tasks = data.tasks;
+                    updateActiveTasks(tasks.filter(task => task.status !== 'completed').slice(0, 5));
+                    updateTaskStats();
+                }
+            } catch (error) {
+                console.error('Failed to load tasks:', error);
+            }
+        }
+
+        // Update statistics
+        function updateStats(statsData) {
+            document.getElementById('stat-documents').textContent = statsData.total_documents || 0;
+            document.getElementById('stat-tasks').textContent = statsData.total_tasks || 0;
+            document.getElementById('stat-completed').textContent = statsData.completed_tasks || 0;
+            document.getElementById('stat-comments').textContent = statsData.total_comments || 0;
+        }
+
+        // Update recent documents
+        function updateRecentDocuments(docs) {
+            const container = document.getElementById('recent-documents');
+            
+            if (docs.length === 0) {
+                container.innerHTML = `
+                    <div class="document-item">
+                        <div class="document-info">
+                            <h4>No documents yet</h4>
+                            <p class="document-meta">Create your first document to get started</p>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = docs.map(doc => `
+                <div class="document-item" onclick="openDocument('${doc.id}')">
+                    <div class="document-info">
+                        <h4>${doc.title}</h4>
+                        <p class="document-meta">
+                            by ${doc.author} • ${new Date(doc.updated_at).toLocaleDateString()}
+                            ${doc.comment_count ? ` • ${doc.comment_count} comments` : ''}
+                        </p>
+                    </div>
+                    <div class="document-type">${doc.type.replace('_', ' ')}</div>
+                </div>
+            `).join('');
+        }
+
+        // Update active tasks
+        function updateActiveTasks(taskList) {
+            const container = document.getElementById('active-tasks');
+            
+            if (taskList.length === 0) {
+                container.innerHTML = `
+                    <div class="task-item">
+                        <div class="task-content">
+                            <div class="task-title">No active tasks</div>
+                            <div class="task-meta">All caught up! 🎉</div>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = taskList.map(task => `
+                <div class="task-item">
+                    <div class="task-checkbox ${task.status === 'completed' ? 'completed' : ''}" 
+                         onclick="toggleTask('${task.id}', '${task.status}')"></div>
+                    <div class="task-content">
+                        <div class="task-title">${task.title}</div>
+                        <div class="task-meta">
+                            <span class="task-priority ${task.priority}">${task.priority}</span>
+                            ${task.assignee ? ` • ${task.assignee}` : ''}
+                            ${task.due_date ? ` • Due: ${new Date(task.due_date).toLocaleDateString()}` : ''}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Update task statistics
+        function updateTaskStats() {
+            const completedTasks = tasks.filter(task => task.status === 'completed').length;
+            stats.tasks = tasks.length;
+            stats.completed = completedTasks;
+        }
+
+        // Load activity feed
+        async function loadActivity() {
+            const container = document.getElementById('activity-feed');
+            
+            // Mock activity data for demonstration
+            const activities = [
+                { type: 'document_update', author: 'John', action: 'updated Project Brief', time: '2 hours ago' },
+                { type: 'task_complete', author: 'Sarah', action: 'completed Script Review', time: '4 hours ago' },
+                { type: 'comment', author: 'Mike', action: 'commented on Storyboard', time: '1 day ago' },
+                { type: 'document_create', author: 'Lisa', action: 'created Production Notes', time: '2 days ago' }
+            ];
+            
+            container.innerHTML = activities.map(activity => `
+                <div class="activity-item">
+                    <div class="activity-avatar">${activity.author[0]}</div>
+                    <div class="activity-content">
+                        <div class="activity-text">
+                            <strong>${activity.author}</strong> ${activity.action}
+                        </div>
+                        <div class="activity-time">${activity.time}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Create document
+        document.getElementById('create-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                title: document.getElementById('doc-title').value,
+                doc_type: document.getElementById('doc-type').value,
+                project_id: currentProject,
+                author: document.getElementById('doc-author').value
+            };
+            
+            try {
+                const response = await fetch(`${API_BASE}/documents`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    hideModal('create-modal');
+                    document.getElementById('create-form').reset();
+                    loadDashboard();
+                    loadDocuments();
+                    showNotification('Document created successfully!', 'success');
+                } else {
+                    showNotification('Failed to create document: ' + data.detail, 'error');
+                }
+            } catch (error) {
+                console.error('Failed to create document:', error);
+                showNotification('Failed to create document', 'error');
+            }
+        });
+
+        // Create task
+        document.getElementById('task-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                title: document.getElementById('task-title').value,
+                description: document.getElementById('task-description').value,
+                priority: document.getElementById('task-priority').value,
+                assignee: document.getElementById('task-assignee').value || null,
+                due_date: document.getElementById('task-due-date').value || null
+            };
+            
+            try {
+                const response = await fetch(`${API_BASE}/tasks`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    hideModal('task-modal');
+                    document.getElementById('task-form').reset();
+                    loadDashboard();
+                    loadTasks();
+                    showNotification('Task created successfully!', 'success');
+                } else {
+                    showNotification('Failed to create task: ' + data.detail, 'error');
+                }
+            } catch (error) {
+                console.error('Failed to create task:', error);
+                showNotification('Failed to create task', 'error');
+            }
+        });
+
+        // Create from template
+        async function createFromTemplate(templateName) {
+            try {
+                const response = await fetch(`${API_BASE}/templates/${templateName}?project_id=${currentProject}`, {
+                    method: 'POST'
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    loadDashboard();
+                    loadDocuments();
+                    showNotification(`Created ${templateName.replace('_', ' ')} from template!`, 'success');
+                } else {
+                    showNotification('Failed to create from template: ' + data.detail, 'error');
+                }
+            } catch (error) {
+                console.error('Failed to create from template:', error);
+                showNotification('Failed to create from template', 'error');
+            }
+        }
+
+        // Toggle task completion
+        async function toggleTask(taskId, currentStatus) {
+            const newStatus = currentStatus === 'completed' ? 'todo' : 'completed';
+            
+            try {
+                const response = await fetch(`${API_BASE}/tasks/${taskId}/status?status=${newStatus}`, {
+                    method: 'PUT'
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    loadDashboard();
+                    loadTasks();
+                } else {
+                    showNotification('Failed to update task', 'error');
+                }
+            } catch (error) {
+                console.error('Failed to update task:', error);
+                showNotification('Failed to update task', 'error');
+            }
+        }
+
+        // Generate preview
+        async function generatePreview() {
+            try {
+                const response = await fetch(`${API_BASE}/previews/generate`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        project_id: currentProject,
+                        canvas_project_id: 'demo_canvas_project',
+                        preview_type: 'thumbnail',
+                        quality: 'medium'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showNotification('Video preview generation started!', 'success');
+                } else {
+                    showNotification('Failed to start preview generation', 'error');
+                }
+            } catch (error) {
+                console.error('Failed to generate preview:', error);
+                showNotification('Failed to generate preview', 'error');
+            }
+        }
+
+        // Open document (placeholder)
+        function openDocument(docId) {
+            showNotification('Document editor coming soon!', 'info');
+        }
+
+        // Show notification
+        function showNotification(message, type = 'info') {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#007bff'};
+                color: white;
+                padding: 12px 20px;
+                border-radius: 6px;
+                font-size: 14px;
+                font-weight: 500;
+                z-index: 1001;
+                opacity: 0;
+                transform: translateY(-20px);
+                transition: all 0.3s ease;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.style.opacity = '1';
+                notification.style.transform = 'translateY(0)';
+            }, 10);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateY(-20px)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Close modals when clicking outside
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

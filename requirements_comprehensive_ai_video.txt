@@ -1,0 +1,304 @@
+# =============================================================================
+# COMPREHENSIVE AI VIDEO GENERATOR REQUIREMENTS
+# Full Python & Dependency List for AI Video Creator
+# =============================================================================
+
+# Core Environment
+python>=3.8,<=3.12
+pip>=21.0
+setuptools>=60.0
+wheel>=0.37.0
+
+# =============================================================================
+# FASTAPI BACKEND & WEB FRAMEWORK
+# =============================================================================
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+pydantic>=2.0.0
+python-multipart>=0.0.6
+jinja2>=3.1.0
+aiofiles>=23.0.0
+httpx>=0.25.0
+websockets>=11.0.0
+
+# =============================================================================
+# TEXT-TO-SPEECH (TTS) ENGINES
+# =============================================================================
+# Tortoise TTS - High-quality expressive speech
+tortoise-tts>=2.4.0
+# Coqui TTS / XTTS - Advanced multilingual TTS with voice cloning
+TTS>=0.20.0
+coqui-ai-tts>=0.20.0
+# Additional TTS support
+gTTS>=2.4.0
+pyttsx3>=2.90
+edge-tts>=6.1.0
+bark-tts>=0.0.10
+
+# =============================================================================
+# LIP SYNC (WAV2LIP + SADTALKER)
+# =============================================================================
+# Wav2Lip - Core dependencies for lip sync
+torch>=2.0.0
+torchvision>=0.15.0
+torchaudio>=2.0.0
+opencv-python>=4.8.0
+face-recognition>=1.3.0
+dlib>=19.24.0
+Pillow>=10.0.0
+scipy>=1.11.0
+scikit-image>=0.21.0
+librosa>=0.10.0
+numba>=0.57.0
+
+# SadTalker - Advanced face tracking & mouth movement
+sadtalker>=0.0.5
+facexlib>=0.3.0
+basicsr>=1.4.2
+gfpgan>=1.3.8
+realesrgan>=0.3.0
+
+# =============================================================================
+# VIDEO COMPOSITION & PROCESSING
+# =============================================================================
+moviepy>=1.0.3
+# ffmpeg - Professional audio/video mixing and processing
+ffmpeg-python>=0.2.0
+imageio>=2.31.0
+imageio-ffmpeg>=0.4.9
+opencv-contrib-python>=4.8.0
+
+# Professional Video Editing & Mastering
+vidgear>=0.3.2
+av>=10.0.0
+python-ffmpeg>=2.0.12
+ffmpeg-normalize>=1.27.0
+
+# HD/4K Video Processing
+colorama>=0.4.6
+coloredlogs>=15.0.1
+progressbar2>=4.2.0
+
+# =============================================================================
+# AUDIO EDITING & MUSIC
+# =============================================================================
+# pydub - Core audio manipulation (mixing, volume balancing, looping, trimming)
+pydub>=0.25.1
+pydub[scipy]>=0.25.1
+pydub-utils>=0.1.2
+
+# Additional audio processing
+pygame>=2.5.0
+mutagen>=1.47.0
+pyaudio>=0.2.11
+soundfile>=0.12.1
+aubio>=0.4.9
+essentia>=2.1b6.dev858
+music21>=9.1.0
+
+# Freesound.org API integration - Free music & SFX (no licensing issues)
+# Note: Using requests-based integration (see modules/freesound_integrator.py)
+soundcloud>=0.5.0
+requests>=2.31.0
+urllib3>=2.0.0
+
+# BBC Sound FX integration (custom scraper)
+requests-html>=0.10.0
+beautifulsoup4>=4.12.0
+lxml>=4.9.0
+
+# AI Music Generation - MusicGen
+musicgen>=0.0.6
+audiocraft>=1.3.0
+encodec>=0.1.1
+julius>=0.2.7
+
+# Enhanced audio processing
+pedalboard>=0.7.0
+pyrubberband>=0.3.0
+pysndfx>=0.3.6
+
+# Cinematic Music & Audio Mastering
+sounddevice>=0.4.6
+pydub-utils>=0.1.2
+audio-separator>=0.12.0
+spleeter>=2.3.2
+crepe>=0.0.13
+
+# Audacity-style Audio Processing
+audacity-python>=0.1.0
+noisereduce>=3.0.0
+librosa[display]>=0.10.0
+
+# Music Theory & Composition
+mingus>=0.6.1
+pretty-midi>=0.2.10
+mido>=1.3.0
+python-rtmidi>=1.5.5
+
+# =============================================================================
+# SUBTITLE & TRANSCRIPTION (WHISPER)
+# =============================================================================
+# OpenAI Whisper (local)
+openai-whisper>=20231117
+# Faster Whisper implementation
+faster-whisper>=0.9.0
+# Additional transcription tools
+speech-recognition>=3.10.0
+vosk>=0.3.45
+webrtcvad>=2.0.10
+
+# =============================================================================
+# STABLE DIFFUSION & IMAGE GENERATION
+# =============================================================================
+diffusers>=0.24.0
+transformers>=4.35.0
+accelerate>=0.24.0
+xformers>=0.0.22
+safetensors>=0.4.0
+compel>=2.0.2
+
+# 3D Animation & Scene Generation
+bpy>=3.6.0  # Blender Python API
+trimesh>=4.0.0
+open3d>=0.18.0
+maya-usd>=0.24.0  # Maya/USD pipeline
+moderngl>=5.8.2
+pyrr>=0.10.3
+mathutils>=3.3.0
+
+# AnimateDiff + ComfyUI - AI-guided animation
+animatediff>=0.3.0
+comfyui>=0.1.0
+controlnet-aux>=0.4.0
+diffusers[controlnet]>=0.24.0
+
+# Advanced Scene Rendering
+pyrender>=0.1.45
+pyglet>=2.0.0
+pillow-simd>=10.0.0
+wand>=0.6.13
+
+# =============================================================================
+# CLOUD STORAGE (WASABI/S3 COMPATIBLE)
+# =============================================================================
+boto3>=1.34.0
+botocore>=1.34.0
+s3transfer>=0.8.0
+awscli>=1.32.0
+python-dotenv>=1.0.0
+
+# =============================================================================
+# NATURAL LANGUAGE PROCESSING
+# =============================================================================
+nltk>=3.8.1
+spacy>=3.7.0
+textblob>=0.17.1
+sentence-transformers>=2.2.2
+langchain>=0.0.340
+openai>=1.3.0
+
+# =============================================================================
+# DATA PROCESSING & SCIENTIFIC COMPUTING
+# =============================================================================
+numpy>=1.24.0
+pandas>=2.1.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+plotly>=5.17.0
+jupyter>=1.0.0
+ipython>=8.16.0
+
+# =============================================================================
+# TESTING, DEBUGGING & DEV TOOLS
+# =============================================================================
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+pytest-cov>=4.1.0
+black>=23.9.0
+flake8>=6.1.0
+mypy>=1.6.0
+pre-commit>=3.5.0
+bandit>=1.7.5
+
+# =============================================================================
+# MONITORING & LOGGING
+# =============================================================================
+loguru>=0.7.2
+prometheus-client>=0.18.0
+psutil>=5.9.0
+memory-profiler>=0.61.0
+
+# =============================================================================
+# DATABASE & CACHING
+# =============================================================================
+redis>=5.0.0
+sqlite3  # Built-in
+sqlalchemy>=2.0.0
+alembic>=1.12.0
+
+# =============================================================================
+# ASYNC & CONCURRENCY
+# =============================================================================
+asyncio  # Built-in
+aiohttp>=3.9.0
+aioboto3>=12.0.0
+celery>=5.3.0
+
+# =============================================================================
+# UTILITY & MISCELLANEOUS
+# =============================================================================
+requests>=2.31.0
+tqdm>=4.66.0
+click>=8.1.0
+rich>=13.6.0
+typer>=0.9.0
+python-magic>=0.4.27
+filetype>=1.2.0
+qrcode>=7.4.2
+shortuuid>=1.0.11
+
+# =============================================================================
+# SECURITY & AUTHENTICATION
+# =============================================================================
+cryptography>=41.0.0
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
+
+# =============================================================================
+# DEPLOYMENT & CONTAINERIZATION
+# =============================================================================
+gunicorn>=21.2.0
+docker>=6.1.0
+kubernetes>=28.1.0
+
+# =============================================================================
+# ADDITIONAL MULTIMEDIA PROCESSING
+# =============================================================================
+youtube-dl>=2021.12.17
+yt-dlp>=2023.10.13
+pytube>=15.0.0
+mutagen>=1.47.0
+
+# Professional Video Composition & Mastering
+colour-science>=0.4.3
+ffmpeg-quality-metrics>=2.1.0
+vmaf>=3.0.0
+psnr-hvsm>=1.0.0
+
+# HD/4K Output & Encoding
+x264>=0.164
+x265>=3.5
+vpx-python>=1.0.0
+av1-python>=1.0.0
+
+# Long-form Video Processing (5-60 min)
+multiprocessing-logging>=0.3.4
+concurrent-futures>=3.1.1
+
+# =============================================================================
+# GPU ACCELERATION (OPTIONAL - INSTALL SEPARATELY)
+# =============================================================================
+# torch-audio>=2.0.0+cu118
+# torch-vision>=0.15.0+cu118
+# torch>=2.0.0+cu118

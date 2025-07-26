@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎨 AI Video Generator - Canvas Editor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a1a;
+            color: #ffffff;
+            overflow: hidden;
+        }
+
+        .app-container {
+            display: grid;
+            grid-template-areas: 
+                "toolbar toolbar toolbar"
+                "sidebar canvas properties"
+                "timeline timeline timeline";
+            grid-template-rows: 60px 1fr 200px;
+            grid-template-columns: 250px 1fr 250px;
+            height: 100vh;
+        }
+
+        /* Toolbar */
+        .toolbar {
+            grid-area: toolbar;
+            background: #2d2d2d;
+            border-bottom: 1px solid #404040;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            gap: 15px;
+        }
+
+        .toolbar h1 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .toolbar button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .toolbar button:hover {
+            background: #0056b3;
+        }
+
+        .toolbar .project-info {
+            margin-left: auto;
+            font-size: 14px;
+            color: #888;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            grid-area: sidebar;
+            background: #2d2d2d;
+            border-right: 1px solid #404040;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .sidebar h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        .element-button {
+            display: block;
+            width: 100%;
+            background: #404040;
+            color: white;
+            border: none;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: left;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .element-button:hover {
+            background: #505050;
+        }
+
+        .template-section {
+            margin-top: 30px;
+        }
+
+        .template-button {
+            display: block;
+            width: 100%;
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .template-button:hover {
+            background: #218838;
+        }
+
+        /* Canvas Area */
+        .canvas-area {
+            grid-area: canvas;
+            background: #1a1a1a;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .canvas {
+            width: 1920px;
+            height: 1080px;
+            background: #000000;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.4);
+            border: 2px solid #404040;
+            cursor: crosshair;
+        }
+
+        .canvas-element {
+            position: absolute;
+            border: 2px solid transparent;
+            cursor: move;
+            user-select: none;
+        }
+
+        .canvas-element.selected {
+            border-color: #007bff;
+        }
+
+        .canvas-element.text {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .canvas-element.image {
+            background: rgba(0, 123, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+        }
+
+        /* Properties Panel */
+        .properties {
+            grid-area: properties;
+            background: #2d2d2d;
+            border-left: 1px solid #404040;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .properties h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        .property-group {
+            margin-bottom: 20px;
+        }
+
+        .property-group label {
+            display: block;
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 5px;
+        }
+
+        .property-group input,
+        .property-group select {
+            width: 100%;
+            background: #404040;
+            border: 1px solid #555;
+            color: white;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        /* Timeline */
+        .timeline {
+            grid-area: timeline;
+            background: #2d2d2d;
+            border-top: 1px solid #404040;
+            padding: 20px;
+        }
+
+        .timeline h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        .timeline-tracks {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .timeline-track {
+            height: 40px;
+            background: #404040;
+            border-radius: 4px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+        }
+
+        .timeline-element {
+            position: absolute;
+            height: 30px;
+            background: #007bff;
+            border-radius: 3px;
+            color: white;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+            cursor: pointer;
+        }
+
+        .status {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #2d2d2d;
+            padding: 30px;
+            border-radius: 8px;
+            width: 400px;
+        }
+
+        .modal-content h3 {
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .modal-content input {
+            width: 100%;
+            background: #404040;
+            border: 1px solid #555;
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .modal-buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Toolbar -->
+        <div class="toolbar">
+            <h1>🎨 Canvas Video Editor</h1>
+            <button onclick="newProject()">New Project</button>
+            <button onclick="saveProject()">Save</button>
+            <button onclick="exportVideo()">Export Video</button>
+            <div class="project-info">
+                <span id="project-name">Untitled Project</span> | 
+                <span id="project-duration">30s</span>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h3>Elements</h3>
+            <button class="element-button" onclick="addTextElement()">
+                📝 Add Text
+            </button>
+            <button class="element-button" onclick="document.getElementById('image-upload').click()">
+                🖼️ Add Image
+            </button>
+            <button class="element-button" onclick="addVideoElement()">
+                🎥 Add Video
+            </button>
+            <button class="element-button" onclick="addAudioElement()">
+                🎵 Add Audio
+            </button>
+
+            <div class="template-section">
+                <h3>Templates</h3>
+                <button class="template-button" onclick="useTemplate('social_media_post')">
+                    Social Media Post
+                </button>
+                <button class="template-button" onclick="useTemplate('youtube_intro')">
+                    YouTube Intro
+                </button>
+                <button class="template-button" onclick="useTemplate('educational_video')">
+                    Educational Video
+                </button>
+            </div>
+
+            <input type="file" id="image-upload" style="display: none;" accept="image/*" onchange="uploadImage(this)">
+        </div>
+
+        <!-- Canvas Area -->
+        <div class="canvas-area">
+            <div class="canvas" id="canvas" onclick="canvasClick(event)">
+                <!-- Canvas elements will be dynamically added here -->
+            </div>
+        </div>
+
+        <!-- Properties Panel -->
+        <div class="properties">
+            <h3>Properties</h3>
+            <div id="properties-content">
+                <p style="color: #888;">Select an element to edit properties</p>
+            </div>
+        </div>
+
+        <!-- Timeline -->
+        <div class="timeline">
+            <h3>Timeline</h3>
+            <div class="timeline-tracks" id="timeline-tracks">
+                <!-- Timeline tracks will be dynamically added here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Status Messages -->
+    <div class="status" id="status"></div>
+
+    <!-- New Project Modal -->
+    <div class="modal" id="new-project-modal">
+        <div class="modal-content">
+            <h3>Create New Project</h3>
+            <input type="text" id="project-name-input" placeholder="Project Name" value="My Video Project">
+            <input type="number" id="project-width" placeholder="Width" value="1920">
+            <input type="number" id="project-height" placeholder="Height" value="1080">
+            <input type="number" id="project-duration" placeholder="Duration (seconds)" value="30">
+            <div class="modal-buttons">
+                <button class="btn-secondary" onclick="closeModal('new-project-modal')">Cancel</button>
+                <button class="btn-primary" onclick="createProject()">Create</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global state
+        let currentProject = null;
+        let selectedElement = null;
+        let elements = [];
+        let dragOffset = { x: 0, y: 0 };
+        let isDragging = false;
+
+        // API base URL
+        const API_BASE = 'http://localhost:8000';
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create a default project
+            createDefaultProject();
+        });
+
+        // Project Management
+        function newProject() {
+            document.getElementById('new-project-modal').style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        async function createProject() {
+            const name = document.getElementById('project-name-input').value;
+            const width = parseInt(document.getElementById('project-width').value);
+            const height = parseInt(document.getElementById('project-height').value);
+            const duration = parseFloat(document.getElementById('project-duration').value);
+
+            try {
+                const response = await fetch(`${API_BASE}/canvas/projects`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, width, height, duration })
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    currentProject = result.project;
+                    updateProjectInfo();
+                    clearCanvas();
+                    showStatus('Project created successfully!');
+                    closeModal('new-project-modal');
+                }
+            } catch (error) {
+                showStatus('Failed to create project: ' + error.message, 'error');
+            }
+        }
+
+        function createDefaultProject() {
+            currentProject = {
+                id: 'default',
+                name: 'Untitled Project',
+                width: 1920,
+                height: 1080,
+                duration: 30
+            };
+            updateProjectInfo();
+        }
+
+        function updateProjectInfo() {
+            document.getElementById('project-name').textContent = currentProject.name;
+            document.getElementById('project-duration').textContent = currentProject.duration + 's';
+        }
+
+        // Element Management
+        async function addTextElement() {
+            const text = prompt('Enter text:', 'Hello World!');
+            if (!text) return;
+
+            if (!currentProject.id || currentProject.id === 'default') {
+                // Add locally for demo
+                addElementToCanvas({
+                    id: 'text_' + Date.now(),
+                    type: 'text',
+                    x: 400,
+                    y: 300,
+                    width: 300,
+                    height: 60,
+                    properties: { text, font_size: 24, color: '#FFFFFF' }
+                });
+                return;
+            }
+
+            try {
+                const formData = new FormData();
+                formData.append('project_id', currentProject.id);
+                formData.append('text', text);
+                formData.append('x', '400');
+                formData.append('y', '300');
+                formData.append('font_size', '24');
+
+                const response = await fetch(`${API_BASE}/canvas/elements/text`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    addElementToCanvas(result.element);
+                    showStatus('Text element added!');
+                }
+            } catch (error) {
+                showStatus('Failed to add text: ' + error.message, 'error');
+            }
+        }
+
+        function addElementToCanvas(element) {
+            const canvas = document.getElementById('canvas');
+            const elementDiv = document.createElement('div');
+            elementDiv.className = `canvas-element ${element.type}`;
+            elementDiv.id = element.id;
+            elementDiv.style.left = element.x + 'px';
+            elementDiv.style.top = element.y + 'px';
+            elementDiv.style.width = element.width + 'px';
+            elementDiv.style.height = element.height + 'px';
+
+            if (element.type === 'text') {
+                elementDiv.textContent = element.properties.text;
+                elementDiv.style.fontSize = (element.properties.font_size || 24) + 'px';
+                elementDiv.style.color = element.properties.color || '#FFFFFF';
+            } else if (element.type === 'image') {
+                elementDiv.innerHTML = '🖼️ Image';
+                elementDiv.style.textAlign = 'center';
+                elementDiv.style.lineHeight = element.height + 'px';
+            }
+
+            // Add event listeners
+            elementDiv.addEventListener('click', (e) => {
+                e.stopPropagation();
+                selectElement(element);
+            });
+
+            elementDiv.addEventListener('mousedown', (e) => {
+                startDrag(e, element);
+            });
+
+            canvas.appendChild(elementDiv);
+            elements.push(element);
+            updateTimeline();
+        }
+
+        async function uploadImage(input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            if (!currentProject.id || currentProject.id === 'default') {
+                // Add locally for demo
+                addElementToCanvas({
+                    id: 'image_' + Date.now(),
+                    type: 'image',
+                    x: 400,
+                    y: 300,
+                    width: 300,
+                    height: 200,
+                    properties: { source: file.name }
+                });
+                return;
+            }
+
+            try {
+                const formData = new FormData();
+                formData.append('project_id', currentProject.id);
+                formData.append('file', file);
+                formData.append('x', '400');
+                formData.append('y', '300');
+                formData.append('width', '300');
+                formData.append('height', '200');
+
+                const response = await fetch(`${API_BASE}/canvas/elements/upload`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    addElementToCanvas(result.element);
+                    showStatus('Image uploaded!');
+                }
+            } catch (error) {
+                showStatus('Failed to upload image: ' + error.message, 'error');
+            }
+        }
+
+        // Element Selection and Dragging
+        function selectElement(element) {
+            // Deselect previous
+            if (selectedElement) {
+                document.getElementById(selectedElement.id).classList.remove('selected');
+            }
+
+            selectedElement = element;
+            document.getElementById(element.id).classList.add('selected');
+            showProperties(element);
+        }
+
+        function startDrag(e, element) {
+            isDragging = true;
+            const rect = document.getElementById('canvas').getBoundingClientRect();
+            const scale = 0.4; // Canvas scale
+            dragOffset.x = (e.clientX - rect.left) / scale - element.x;
+            dragOffset.y = (e.clientY - rect.top) / scale - element.y;
+
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', stopDrag);
+        }
+
+        function drag(e) {
+            if (!isDragging || !selectedElement) return;
+
+            const rect = document.getElementById('canvas').getBoundingClientRect();
+            const scale = 0.4;
+            
+            selectedElement.x = (e.clientX - rect.left) / scale - dragOffset.x;
+            selectedElement.y = (e.clientY - rect.top) / scale - dragOffset.y;
+
+            // Update element position
+            const elementDiv = document.getElementById(selectedElement.id);
+            elementDiv.style.left = selectedElement.x + 'px';
+            elementDiv.style.top = selectedElement.y + 'px';
+
+            showProperties(selectedElement);
+        }
+
+        function stopDrag() {
+            isDragging = false;
+            document.removeEventListener('mousemove', drag);
+            document.removeEventListener('mouseup', stopDrag);
+        }
+
+        // Properties Panel
+        function showProperties(element) {
+            const content = document.getElementById('properties-content');
+            
+            let html = `
+                <div class="property-group">
+                    <label>X Position</label>
+                    <input type="number" value="${element.x}" onchange="updateElementProperty('x', this.value)">
+                </div>
+                <div class="property-group">
+                    <label>Y Position</label>
+                    <input type="number" value="${element.y}" onchange="updateElementProperty('y', this.value)">
+                </div>
+                <div class="property-group">
+                    <label>Width</label>
+                    <input type="number" value="${element.width}" onchange="updateElementProperty('width', this.value)">
+                </div>
+                <div class="property-group">
+                    <label>Height</label>
+                    <input type="number" value="${element.height}" onchange="updateElementProperty('height', this.value)">
+                </div>
+            `;
+
+            if (element.type === 'text') {
+                html += `
+                    <div class="property-group">
+                        <label>Text</label>
+                        <input type="text" value="${element.properties.text}" onchange="updateElementProperty('text', this.value)">
+                    </div>
+                    <div class="property-group">
+                        <label>Font Size</label>
+                        <input type="number" value="${element.properties.font_size}" onchange="updateElementProperty('font_size', this.value)">
+                    </div>
+                    <div class="property-group">
+                        <label>Color</label>
+                        <input type="color" value="${element.properties.color}" onchange="updateElementProperty('color', this.value)">
+                    </div>
+                `;
+            }
+
+            content.innerHTML = html;
+        }
+
+        function updateElementProperty(property, value) {
+            if (!selectedElement) return;
+
+            if (['x', 'y', 'width', 'height'].includes(property)) {
+                selectedElement[property] = parseFloat(value);
+                const elementDiv = document.getElementById(selectedElement.id);
+                elementDiv.style[property === 'x' ? 'left' : property === 'y' ? 'top' : property] = value + 'px';
+            } else {
+                selectedElement.properties[property] = value;
+                const elementDiv = document.getElementById(selectedElement.id);
+                
+                if (property === 'text') {
+                    elementDiv.textContent = value;
+                } else if (property === 'font_size') {
+                    elementDiv.style.fontSize = value + 'px';
+                } else if (property === 'color') {
+                    elementDiv.style.color = value;
+                }
+            }
+        }
+
+        // Timeline
+        function updateTimeline() {
+            const tracks = document.getElementById('timeline-tracks');
+            tracks.innerHTML = '';
+
+            // Group elements by layer
+            const layers = {};
+            elements.forEach(element => {
+                const layer = element.layer || 1;
+                if (!layers[layer]) layers[layer] = [];
+                layers[layer].push(element);
+            });
+
+            // Create tracks
+            Object.keys(layers).forEach(layer => {
+                const trackDiv = document.createElement('div');
+                trackDiv.className = 'timeline-track';
+                trackDiv.innerHTML = `<span>Layer ${layer}</span>`;
+
+                layers[layer].forEach(element => {
+                    const elementDiv = document.createElement('div');
+                    elementDiv.className = 'timeline-element';
+                    elementDiv.style.left = (element.start_time || 0) * 50 + 'px'; // 50px per second
+                    elementDiv.style.width = (element.duration || 5) * 50 + 'px';
+                    elementDiv.textContent = element.type === 'text' ? element.properties.text : element.type;
+                    trackDiv.appendChild(elementDiv);
+                });
+
+                tracks.appendChild(trackDiv);
+            });
+        }
+
+        // Canvas interactions
+        function canvasClick(e) {
+            // Deselect if clicking on empty canvas
+            if (e.target.id === 'canvas') {
+                if (selectedElement) {
+                    document.getElementById(selectedElement.id).classList.remove('selected');
+                    selectedElement = null;
+                    document.getElementById('properties-content').innerHTML = '<p style="color: #888;">Select an element to edit properties</p>';
+                }
+            }
+        }
+
+        // Templates
+        async function useTemplate(templateName) {
+            try {
+                const response = await fetch(`${API_BASE}/canvas/templates/${templateName}?project_name=Template Project`, {
+                    method: 'POST'
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    currentProject = result.project;
+                    updateProjectInfo();
+                    clearCanvas();
+                    showStatus(`Created project from ${templateName} template!`);
+                } else {
+                    // Fallback for demo
+                    currentProject.name = `${templateName} Project`;
+                    updateProjectInfo();
+                    showStatus(`Applied ${templateName} template!`);
+                }
+            } catch (error) {
+                showStatus('Template applied locally (demo mode)', 'info');
+            }
+        }
+
+        // Utility functions
+        function clearCanvas() {
+            document.getElementById('canvas').innerHTML = '';
+            elements = [];
+            selectedElement = null;
+            updateTimeline();
+        }
+
+        function showStatus(message, type = 'success') {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.className = `status ${type}`;
+            status.style.display = 'block';
+            
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, 3000);
+        }
+
+        function saveProject() {
+            showStatus('Project saved! (Demo mode)');
+        }
+
+        function exportVideo() {
+            showStatus('Video export started! (Demo mode)');
+        }
+
+        function addVideoElement() {
+            showStatus('Video element feature coming soon!');
+        }
+
+        function addAudioElement() {
+            showStatus('Audio element feature coming soon!');
+        }
+    </script>
+</body>
+</html>

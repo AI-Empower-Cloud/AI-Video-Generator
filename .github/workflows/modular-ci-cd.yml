@@ -1,0 +1,365 @@
+name: 🚀 Modular AI Video Generator
+
+on:
+  push:
+    branches: [ main, develop, feature/* ]
+    tags: [ 'v*' ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  PYTHON_VERSION: "3.11"
+  NODE_VERSION: "18"
+
+jobs:
+  # Test Core Modules
+  test-core:
+    name: 🧩 Test Core Modules
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest pytest-cov black flake8 mypy
+    
+    - name: Code formatting check
+      run: black --check --diff core/
+    
+    - name: Lint core modules
+      run: flake8 core/ --count --select=E9,F63,F7,F82 --show-source --statistics
+    
+    - name: Type checking
+      run: mypy core/ --ignore-missing-imports
+    
+    - name: Test core modules
+      run: |
+        python -m pytest core/ -v --cov=core --cov-report=xml
+        
+    - name: Test modular editor
+      run: |
+        python -c "
+        import sys
+        sys.path.append('.')
+        from test_core_modules import run_all_tests
+        run_all_tests()
+        "
+    
+    - name: Test Wasabi Node Modules Manager
+      run: |
+        pip install boto3 python-dotenv
+        python test_wasabi_node_modules.py
+      env:
+        # Wasabi credentials from secrets (optional for CI)
+        WASABI_ACCESS_KEY: ${{ secrets.WASABI_ACCESS_KEY }}
+        WASABI_SECRET_KEY: ${{ secrets.WASABI_SECRET_KEY }}
+        WASABI_BUCKET: ${{ secrets.WASABI_BUCKET }}
+        
+  # Test Frontend
+  test-frontend:
+    name: ⚛️ Test Frontend
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
+    
+    - name: Install dependencies
+      working-directory: ./frontend
+      run: npm ci
+    
+    - name: Lint frontend
+      working-directory: ./frontend
+      run: npm run lint
+    
+    - name: Type check
+      working-directory: ./frontend
+      run: npx tsc --noEmit
+    
+    - name: Build frontend
+      working-directory: ./frontend
+      run: npm run build
+
+  # Integration Tests
+  integration-test:
+    name: 🔗 Integration Tests
+    needs: [test-core, test-frontend]
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Run integration tests
+      run: |
+        python -c "
+        import sys
+        sys.path.append('.')
+        
+        # Test the full workflow
+        try:
+            from core import (
+                CanvasProject, TagManager, ProjectManager, 
+                create_project_from_template
+            )
+            
+            # Test project creation
+            project = create_project_from_template('social_media_post', 'Test Project')
+            print(f'✅ Created project: {project.name}')
+            
+            # Test managers
+            tag_manager = TagManager('test_storage')
+            project_manager = ProjectManager('test_storage')
+            
+            print('✅ All integration tests passed')
+        except Exception as e:
+            print(f'❌ Integration test failed: {e}')
+            sys.exit(1)
+        "
+
+  # Build Release Package
+  build-package:
+    name: 📦 Build Package
+    needs: [test-core, test-frontend, integration-test]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/'))
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
+    
+    - name: Build frontend
+      working-directory: ./frontend
+      run: |
+        npm ci
+        npm run build
+    
+    - name: Create release package
+      run: |
+        mkdir -p dist/{backend,frontend,docs}
+        
+        # Package backend
+        cp -r core/ dist/backend/
+        cp modular_canvas_editor.py dist/backend/
+        cp requirements.txt dist/backend/
+        
+        # Package frontend
+        cp -r frontend/out/* dist/frontend/ 2>/dev/null || echo "No frontend build"
+        
+        # Package docs
+        cp README.md CHANGELOG.md dist/docs/
+        
+        # Create archive
+        tar -czf ai-video-generator-modular-${{ github.sha }}.tar.gz dist/
+    
+    - name: Upload package
+      uses: actions/upload-artifact@v3
+      with:
+        name: ai-video-generator-package
+        path: ai-video-generator-modular-${{ github.sha }}.tar.gz
+
+  # Deploy to Wasabi
+  deploy-wasabi:
+    name: 🚀 Deploy to Wasabi
+    needs: [build-package]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Download package
+      uses: actions/download-artifact@v3
+      with:
+        name: ai-video-generator-package
+    
+    - name: Deploy to Wasabi
+      env:
+        WASABI_ACCESS_KEY: ${{ secrets.WASABI_ACCESS_KEY }}
+        WASABI_SECRET_KEY: ${{ secrets.WASABI_SECRET_KEY }}
+        WASABI_BUCKET: ${{ secrets.WASABI_BUCKET }}
+        WASABI_ENDPOINT: ${{ secrets.WASABI_ENDPOINT }}
+      run: |
+        python -c "
+        import boto3
+        import os
+        
+        # Configure Wasabi client
+        s3_client = boto3.client(
+            's3',
+            endpoint_url=os.environ['WASABI_ENDPOINT'],
+            aws_access_key_id=os.environ['WASABI_ACCESS_KEY'],
+            aws_secret_access_key=os.environ['WASABI_SECRET_KEY']
+        )
+        
+        # Upload package
+        package_name = 'ai-video-generator-modular-${{ github.sha }}.tar.gz'
+        s3_client.upload_file(
+            package_name,
+            os.environ['WASABI_BUCKET'],
+            f'releases/{package_name}'
+        )
+        
+        print(f'✅ Deployed {package_name} to Wasabi')
+        "
+
+  # Docker Build and Push
+  docker-build:
+    name: 🐳 Build & Push Docker Images
+    runs-on: ubuntu-latest
+    needs: [test-core, test-backend, test-frontend]
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/'))
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+    
+    - name: Log in to GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Extract metadata
+      id: meta
+      uses: docker/metadata-action@v5
+      with:
+        images: ghcr.io/${{ github.repository_owner }}/ai-video-generator
+        tags: |
+          type=ref,event=branch
+          type=ref,event=pr
+          type=semver,pattern={{version}}
+          type=semver,pattern={{major}}.{{minor}}
+          type=raw,value=latest,enable={{is_default_branch}}
+    
+    - name: Build and push Production image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: ./Dockerfile
+        push: true
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+        build-args: |
+          VERSION=${{ github.ref_name }}
+          COMMIT_SHA=${{ github.sha }}
+          BUILD_DATE=${{ steps.meta.outputs.created }}
+    
+    - name: Build and push Development image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: ./Dockerfile.dev
+        push: true
+        tags: |
+          ghcr.io/${{ github.repository_owner }}/ai-video-generator:dev
+          ghcr.io/${{ github.repository_owner }}/ai-video-generator:dev-${{ github.sha }}
+        labels: ${{ steps.meta.outputs.labels }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+
+  # Container Security Scan
+  security-scan:
+    name: 🔒 Security Scan
+    runs-on: ubuntu-latest
+    needs: [docker-build]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: 'ghcr.io/${{ github.repository_owner }}/ai-video-generator:latest'
+        format: 'sarif'
+        output: 'trivy-results.sarif'
+    
+    - name: Upload Trivy scan results to GitHub Security tab
+      uses: github/codeql-action/upload-sarif@v2
+      with:
+        sarif_file: 'trivy-results.sarif'
+
+  # Deploy to Staging
+  deploy-staging:
+    name: 🚀 Deploy to Staging
+    runs-on: ubuntu-latest
+    needs: [docker-build, security-scan]
+    if: github.ref == 'refs/heads/main'
+    environment: staging
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Deploy to staging environment
+      run: |
+        echo "🚀 Deploying to staging..."
+        # Add your staging deployment logic here
+        # Example: kubectl apply, docker-compose, etc.
+        
+    - name: Run smoke tests
+      run: |
+        echo "🧪 Running smoke tests..."
+        # Add smoke tests here
+
+  # Deploy to Production
+  deploy-production:
+    name: 🏭 Deploy to Production
+    runs-on: ubuntu-latest
+    needs: [deploy-staging]
+    if: startsWith(github.ref, 'refs/tags/v')
+    environment: production
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Deploy to production
+      run: |
+        echo "🏭 Deploying to production..."
+        # Add your production deployment logic here
+        
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        draft: false
+        prerelease: false
+        generate_release_notes: true
+        files: |
+          docker-compose.yml
+          docker-compose.prod.yml
